@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-//#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_fft_complex.h>
 
 //Damn c99!!!
 #ifndef M_PI
@@ -22,7 +23,7 @@ saveGrid(double* grid, int size,char* filename) {
 	
 	fp = fopen(filename, "w");
 	for(i=0; i<size; i++)
-		fprintf(fp,"%g\n",grid[i]);
+		fprintf(fp,"%g\n",REAL(grid,i));
 	fclose(fp);
 	return;
 }
@@ -40,7 +41,10 @@ int main(){
 	}
 	saveGrid(grid,SIZE,"init");
 	
-	
-
+	gsl_fft_complex_radix2_forward(grid, 1, SIZE);
+	//if( gsl_fft_complex_radix2_forward(grid, 1, SIZE) != GSL_SUCCESS) {
+	//	fprintf(stderr, "Something went awry with the fourier transformation");
+	//}
+	saveGrid(grid, SIZE, "afterTransform");
 }
 
