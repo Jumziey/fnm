@@ -21,7 +21,6 @@ saveGrid(double* grid, int size,char* realFile, char* imFile) {
 	int i;
 	FILE* fp;	
 	
-	
 	if(realFile) {
 		fp = fopen(realFile, "w");
 		for(i=0; i<size; i++)
@@ -48,15 +47,10 @@ int main(){
 		REAL(grid,i) = c*exp(exponent*i*i);
 		IMAG(grid,i) = 0;
 	}
-	fprintf(stderr, "choo!\n");
 		
+	//Saving before and after Fourier transform
 	saveGrid(grid,SIZE,"init", NULL);
-
-	//gsl_fft_complex_radix2_forward(grid, 1, SIZE);
 	gsl_fft_complex_radix2_dif_forward(grid,1,SIZE);
-	//if( gsl_fft_complex_radix2_forward(grid, 1, SIZE) != GSL_SUCCESS) {
-	//	fprintf(stderr, "Something went awry with the fourier transformation");
-	//}
 	saveGrid(grid, SIZE, "realTrans", "imTrans");
 	}
 

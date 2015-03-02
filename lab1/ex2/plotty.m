@@ -22,7 +22,8 @@ subplot(2,1,2)
 %Now the minus frequency is the same as the positive counterpart
 trans = (realTrans.*realTrans + imTrans.*imTrans);
 dt = 1/N;
-f = linspace(-1/(2*dt),1/(2*dt), 1024);
+f = linspace(-1/(2*dt),1/(2*dt), 1025);
+f = f(1:end-1)
 %trans goes from 0 to 1/(dt*2), -1/(dt*2) to 0, due to fft implementation.
 trans = [trans(N/2+1:N); trans(2:N/2); 0]; %This must be cheating
 %trans = trans - min(trans); %Remove offset 

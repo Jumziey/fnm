@@ -35,8 +35,10 @@ subplot(2,1,1)
 trans = (realTrans);
 dt = 1/N;
 f = linspace(-1/(2*dt),1/(2*dt), N);
+f = linspace(0,1/(N*dt), N/2)
+f = [f f];
 %trans goes from 0 to 1/(dt*2), -1/(dt*2) to 0, due to fft implementation.
-trans = [trans(N/2+1:N); trans(2:N/2); 0]; %This must be cheating
+origTrans = trans;
 %trans = trans - min(trans); %Remove offset 
 %trans = trans./max(trans); %Normalize
 
@@ -48,12 +50,15 @@ ylabel('Power Magnitude (normalized)');
 title('Fourier Transform of Signal Data ')
 
 %Filter
-fc = 1152;
-bandwidth = 1280-895.6;
+fc = 1280;
+bandwidth = 1792-767.6;
 filter = exp( (-1/2)* ( (abs(f)-fc)./bandwidth).^2);
 subplot(2,1,2)
 plot(f,(filter'.*trans).^2)
-title('Filtered Fourier Transform');
+title('Filtered Fourier Transform 1');
+
+
+
 
 %Filtered Signal 
 figure(3)
@@ -62,3 +67,9 @@ filtered = load('filteredSignal');
 plot(t,filtered);
 subplot(2,1,2)
 plot(t,filtered.^2)
+filtered - orig
+
+figure(4)
+FF = load('FilteredFourier');
+FF = [FF(N/2+1:N); FF(2:N/2); 0]
+plot(f,FF.^2)
