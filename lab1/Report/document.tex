@@ -68,6 +68,27 @@ Its interesting to see that if we double the carrier wave frequency and want to 
 
 On a side note one could say that you get double the information since you could count a double zero as a number 2 and a double 1 as a number 3. Ontop of that you could go to 3,4,5,6 zeros and ones and let it signify different values, while still be within the bandwidth. Thus you could push more information through the same bandwidth requirement, by only changing the carrier frequency. 
 
+\newpage
 \section{Extracting Information from a Noisy Signal}
+In this exercise we simply wanna apply the given gaussian filter onto a given noisy signal. Using this we then wanna decode a bit message in the noisy signal. The signal was given in the file \verb+am26.dat+, and the message was decoded to be \verb+FNM15|jg;.""HAD+. In figure \ref{fig:freqPowSpec} we can see how the signal looks in the fourier space before and after the filter was applied. In figure \ref{fig:signal} we can see how large an impact the filter has onto the original signal. 
+\begin{figure}[H]
+	\centering
+	\newlength\figureheight 
+	\newlength\figurewidth 
+	\setlength\figureheight{8cm} 
+	\setlength\figurewidth{6cm}
+	\input{../ex3/freqPowSpec.tikz}
+	\caption{Here we clearly depict the difference in the fourier space before and after the filtering.}
+	\label{fig:freqPowSpec}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{8cm} 
+	\setlength\figurewidth{6cm}
+	\input{../ex3/signal.tikz}
+	\caption{Here we clearly depict the difference in the time space before and after the filtering.}
+	\label{fig:signal}
+\end{figure}
 
 \end{document}
