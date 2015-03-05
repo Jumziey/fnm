@@ -7,7 +7,7 @@ orig = load('am26.dat');
 %origIm = orig(2:2:N*2);
 %orig = origReal.^2.*origIm.^2;
 realTrans = load('realTrans');
-%imTrans = load('imTrans');
+imTrans = load('imTrans');
 
 t = linspace(0,1,N) ;
 %Plot how it looks initially
@@ -32,7 +32,7 @@ subplot(2,1,1)
 
 %Much simpler way to put it is that we go from minimum nyquist freq to cax. with N values all and all. 
 %Now the minus frequency is the same as the positive counterpart
-trans = (realTrans);
+trans = (realTrans.^2 + imTrans.^2);
 dt = 1/N;
 f = linspace(-1/(2*dt),1/(2*dt), N);
 f = linspace(0,1/(N*dt), N/2)
