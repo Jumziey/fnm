@@ -5,9 +5,54 @@
 \section{Introduction}
 Placeholder
 \section{Theory}
-The structure of crystals is typically described by using a lattice $\bar{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every atom in a crystal structure in terms of a lattice constant $a$. If one then go on to describe an atoms displacement in this structure as $\bar{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can use this to get an expression of the 
-\
-%Explain the formulas and what they solve
+\subsection{Potential in a Crystal}
+The structure of crystals is typically described by using a lattice $\bar{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every atom in a crystal structure in terms of a lattice constant $a$. If one then go on to describe an atoms displacement in this structure as $\bar{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion around the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing to do} 
+\begin{equation}
+	m \ddot{u}^l_{\alpha} = - \sum_{\mathbf{l}'\beta} D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} u^{\mathbf{l}'}_{\beta}
+	\label{eq:motion}
+\end{equation}
+where $\alpha$ and $\beta$ can be 1,2 and 3\footnote{Representing the spacial dimensions}, $m$ is the mass of the atoms in the crystal\footnote{we are only gonna look at monoatomic gases so $m$ should be the same for all the atoms}, $\mathbf{l}$ and $\mathbf{l}'$ are only different displacements. Lastly we have term $D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta}$ which actually is written
+\begin{equation}
+	D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} = \delta_{\mathbf{l} \mathbf{l}'} \sum_{\mathbf{l}''} \frac{\partial^2 \phi (\mathbf{l}-\mathbf{l}'')}{\partial x_{\alpha} \partial x_{\beta}}
+	-
+	\frac{\partial^2 \phi (\mathbf{l}-\mathbf{l}')}{\partial x_{\alpha} \partial x_{\beta}}
+\end{equation}
+where $\phi$ is the potential force felt by every individual site in the lattice. 
+\subsection{Model for a Rare Gas Crystal}
+Looking at equation \ref{eq:motion} we can see that we have some harmonic oscillators to solve thus we can start to see that we will be able to form an eigenvalue problem to solve for the different frequencies that can propagete through a crystal. But in order to simplify things we will only look at a couple of rare gases: Ne, Ar, Kr and Xe. One beutiful thing with these gases is that the crystal structure is so arranged that all the lattice sites are a $\sqrt{2}a$ distance away from its closest neighbour. We can then also use the Mie-Lennard-Jones potential to simulate the individual potential forces at each site, this gives a potential of
+\begin{equation}
+	\phi(r) = 2 \epsilon \big[\frac{1}{2} \big(\frac{\sigma}{r}\big)^{12} - \big(\frac{\sigma}{r}\big)^6\big]
+	\label{eq:pot}
+\end{equation}
+where $\sigma$ is the distance between to sites in the lattice where the potential is zero, $\epsilon$ is the depth of the lennard-jones potential well\cite{bib:wiki:mlj} and $r$ is the actually distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
+\begin{equation}
+	u^l_{\alpha} = \frac{\epsilon_{\alpha}}{\sqrt{m}}e^{i(\mathbf{k}\cdot\mathbf{r}_l-\omega t)}
+\end{equation}
+and we end up with 
+\begin{align}
+	\omega^2\varepsilon_x = &\big( \frac{1}{2m} [A+B][8-4\cos{q_x\pi}\cos{q_y\pi}-4\cos{q_x\pi}\cos{q_z\pi}] \\
+	&+ \frac{B}{m}[4-4\cos{q_y\pi}\cos{q_z\pi}]\big)\varepsilon_x \\
+	&+\frac{1}{2m}[A-B][4\sin{q_x\pi}\sin{q_y\pi}]\varepsilon_y \\
+	&+\frac{1}{2m}[A-B][4\sin{q_x\pi}\sin{q_z\pi}]\varepsilon_z
+\end{align}
+If one were to look at the crystal structure for these gases we can see that they are symetric in x,y and z-direction. Thus with some simple permutations we get
+\begin{align}
+	\omega^2\varepsilon_y = &\big( \frac{1}{2m} [A+B][8-4\cos{q_y\pi}\cos{q_z\pi}-4\cos{q_y\pi}\cos{q_x\pi}] \\
+	&+ \frac{B}{m}[4-4\cos{q_z\pi}\cos{q_x\pi}]\big)\varepsilon_y \\
+	&+\frac{1}{2m}[A-B][4\sin{q_y\pi}\sin{q_z\pi}]\varepsilon_z \\
+	&+\frac{1}{2m}[A-B][4\sin{q_y\pi}\sin{q_x\pi}]\varepsilon_x \\
+	\omega^2\varepsilon_z = &\big( \frac{1}{2m} [A+B][8-4\cos{q_z\pi}\cos{q_x\pi}-4\cos{q_z\pi}\cos{q_y\pi}] \\
+	&+ \frac{B}{m}[4-4\cos{q_x\pi}\cos{q_y\pi}]\big)\varepsilon_z \\
+	&+\frac{1}{2m}[A-B][4\sin{q_z\pi}\sin{q_x\pi}]\varepsilon_x \\
+	&+\frac{1}{2m}[A-B][4\sin{q_z\pi}\sin{q_y\pi}]\varepsilon_y \\
+\end{align}
+where
+\begin{align}
+	A &\equiv \frac{1}{r_{nn}} \phi'(r_{nn}) \\
+	B &\equiv \phi''(r_{nn}).
+\end{align}
+With this we have eigenvalue problems in every direction to solve so that we can get the frequency of the phonons that can move through the crystals. 
+\subsection{Volume Dependency of Phonon frequencies}
 \section{Code}
 \subsection{Algorithm design}
 \subsection{System description}
@@ -16,6 +61,7 @@ The structure of crystals is typically described by using a lattice $\bar{l} = (
 
 \section{Conclusions}
 \begin{thebibliography}{99}
+\bibitem{bib:wiki:mlj} [2015-03-15] \url{http://en.wikipedia.org/wiki/Lennard-Jones_potential}
 \bibitem{bib:solid} Neil W. Ashcroft , N. David Mermin, \textit{Solid State Physics} 
 \bibitem{bib:ph} Carl Nordling, Jonny Östermann, \textit{Physics handbook}
 \end{thebibliography}
