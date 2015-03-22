@@ -101,8 +101,7 @@ freqEval(sp sub, double* q)
 {
 	double A,B, pdir[9], *omega;
 	
-	
-	
+	//We will return omega
 	omega = calloc(3,sizeof(double));
 	
 	//Calculating constants A and B from the problem specification
@@ -334,7 +333,7 @@ main(int argc, char** argv)
 			}
 			break;
 		default:
-			error("Mode is not implemented\n");
+			error("Congratz, you've reached what the programmer thought to be an unreachable part of the program\n");
 	}
 	
 	return 0;	
