@@ -6,12 +6,12 @@
 Placeholder
 \section{Theory}
 \subsection{Potential in a Crystal}
-The structure of crystals is typically described by using a lattice $\mathbf{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every atom in a crystal structure in terms of a lattice constant $a$. If one then go on to describe an atoms displacement in this structure as $\mathbf{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion around the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing to do} 
+The structure of crystals is typically described by using a lattice $\mathbf{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every possible site\footnote{Sites are usually where a molecule or atom resides} in a crystal structure in terms of a lattice constant $a$. If one then go on to describe a sites displacement in this structure as $\mathbf{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion of the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing to do} 
 \begin{equation}
 	m \ddot{u}^l_{\alpha} = - \sum_{\mathbf{l}'\beta} D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} u^{\mathbf{l}'}_{\beta}
 	\label{eq:motion}
 \end{equation}
-where $\alpha$ and $\beta$ can have the integer value of one, two or three\footnote{Representing the spacial dimensions}, $m$ is the mass of the atoms in the crystal\footnote{we are only gonna look at monoatomic gases so $m$ should be the same for all the atoms}, $\mathbf{l}$ and $\mathbf{l}'$ are only different site positions in the lattice. Lastly we have term $D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta}$ which actually is written
+where $\alpha$ and $\beta$ can have the integer value of one, two or three\footnote{Representing the spacial dimensions}, $m$ is the mass of whatever inhabit the sites in the crystal\footnote{we are only gonna look at monoatomic gases so $m$ should be the same for all the sites}, $\mathbf{l}$ and $\mathbf{l}'$ are only different site positions in the lattice. Lastly we have term $D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta}$ which actually is written
 \begin{equation}
 	D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} = \delta_{\mathbf{l} \mathbf{l}'} \sum_{\mathbf{l}''} \frac{\partial^2 \phi (\mathbf{l}-\mathbf{l}'')}{\partial x_{\alpha} \partial x_{\beta}}
 	-
@@ -19,12 +19,12 @@ where $\alpha$ and $\beta$ can have the integer value of one, two or three\footn
 \end{equation}
 where $\phi$ is the potential force felt by every individual site in the lattice, $\delta_{\mathbf{l}\mathbf{l}'}$ is the kronecker delta and $\mathbf{l}''$ is yet another seperate index for the different sites in the lattice.
 \subsection{Model for a Rare Gas Crystal}
-Looking at equation \ref{eq:motion} we can see that we have some harmonic oscillators to solve thus we can start to see that we will be able to form an eigenvalue problem to solve for the different frequencies that can propagete through a crystal. But in order to simplify things we will only look at a couple of rare gases: Ne, Ar, Kr and Xe. One beutiful thing with these gases is that the crystal structure is so arranged that all the lattice sites are a $\sqrt{2}a$ distance away from its closest neighbour. We can then also use the Mie-Lennard-Jones potential to simulate the individual potential forces at each site, this gives a potential of
+Looking at equation \ref{eq:motion} we can see that we have a number of harmonic oscillators, thus we can start to see that we will be able to form an eigenvalue problem to solve for the different frequencies that can propagete through a crystal. But in order to simplify things we will only look at a couple of rare gases: Ne, Ar, Kr and Xe. One beutiful thing with these gases is that the crystal structure is so arranged that all the lattice sites are a $\sqrt{2}a$ distance away from its closest neighbour. We can then also use the Mie-Lennard-Jones potential to simulate the individual potential forces at each site, this gives a potential of
 \begin{equation}
 	\phi(r) = 2 \epsilon \big[\frac{1}{2} \big(\frac{\sigma}{r}\big)^{12} - \big(\frac{\sigma}{r}\big)^6\big]
 	\label{eq:pot}
 \end{equation}
-where $\sigma$ is the distance between two sites in the lattice where the potential is zero, $\epsilon$ is the depth of the lennard-jones potential well\cite{bib:wiki:mlj} and $r$ is the actually distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
+where $\sigma$ is the distance between two sites in the lattice where the potential is zero, $\epsilon$ is the depth of the lennard-jones potential well\footnote{This is expanded on in \cite{bib:wiki:mlj}} and $r$ is the actually distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
 \begin{equation}
 	u^l_{\alpha} = \frac{\epsilon_{\alpha}}{\sqrt{m}}e^{i(\mathbf{k}\cdot\mathbf{r}_l-\omega t)}
 \end{equation}
@@ -56,17 +56,19 @@ where
 \end{align}
 With this we have eigenvalue problems in every direction to solve so that we can get the frequency of the phonons that can move through the crystals. 
 \subsection{Volume Dependency of Phonon frequencies}
-We want to go on and look how the dependency of the volume of the lattice changes the frequencies of the phonons that can propegate through the crystal. By doing a simple approximation we say that $\sigma$ and $\epsilon$ in equation \ref{eq:pot} is not affected by this change in volume. This will make the later implementation simpler. We can then calculate the volume dependence as 
+We want to go on and look how the volume of a crystal changes the frequencies of the phonons that can propegate through the crystal. By doing a simple approximation we say that $\sigma$ and $\epsilon$ in equation \ref{eq:pot} is not affected by this change in volume. This will make the later implementation simpler. We can then calculate the volume dependence as 
 \begin{equation}
 	\gamma_j(\mathbf{q}) = - \frac{\partial \ln{ \omega(\mathbf{q},j)}}{\partial \ln{V}}
 \end{equation}
-where $V$ is the volume of the crystal structure in the lattice. Why we have some $\ln$ terms is basically due to the fact that everyone else are doing it. If one expands the derivate abit we end up with the  expression
+where $V$ is the volume of the crystal structure in the lattice. Why we have some $\ln$ terms is basically due to the fact that everyone else are doing it\footnote{Yes, the author would jump of a cliff if everyone else did it}. If one expands the derivate we end up with the expression
 \begin{equation}
 	\gamma_j(\mathbf{q}) =  -\frac{V}{\omega(\mathbf{q},j)} \frac{\partial \omega(\mathbf{q},j)}{\partial V}
+	\label{eq:volDep}
 \end{equation}
-Which then can be solved using a finite difference approximation scheme for the derivate for example
+Which then can be solved using a finite difference approximation scheme for the derivate; for example
 \begin{equation}
 	\frac{df(x)}{dx} \approx \frac{f(x+h)-f(x-h)}{2h}
+	\label{eq:derivate}
 \end{equation}
 \subsection{Heat Capacity}
 One can derive an expression for the heat capacity as follows\cite{bib:solid}
@@ -75,25 +77,65 @@ One can derive an expression for the heat capacity as follows\cite{bib:solid}
 	\frac{\exp{\Big[\frac{\hbar \omega(\mathbf{q},j)}{k_B T}\Big]}}{\Big(\exp{\Big[\frac{\hbar \omega(\mathbf{q},j)}{k_B T}\Big]}-1\Big)^2}
 	\label{eq:CV}
 \end{equation}
-where $k_B$ is the Boltzmann constant and $j$ just represent each direction possible. 
+where $k_B$ is the Boltzmann constant and $j$ just represent each spacial direction possible. 
 
-Where not quite happy yet though, the most relevant information would be heat capacity per unit volume. To do this we look divide with the volume we have calculated the heat capacity for. This end up being for one brillouin zone. Here we take great care to not overdoing the summing of values at every site, thus we divide with the appropriate "sphere volume'' and avoid summing the sphere volume at every site that is outside the brilliouin zone. Thus we get some weight at every site described by $\mathbf{q}$\footnote{$\mathbf{q}$ is a simple rewrite of the familiar $\mathbf{k}$ with some constants}. The final expression becomes
+Where not quite happy yet though, the most relevant information would be heat capacity per unit volume. To do this we look divide with the volume we have calculated the heat capacity for. This end up being for one brillouin zone. Here we take great care to not overdoing the summing of values at every site, thus we divide with the appropriate ''sphere volume'', inhabited by each site in the crystal, and avoid summing the sphere volume at every site that is outside the brilliouin zone. Thus we get some weight at every site described by $\mathbf{q}$ \footnote{$\mathbf{q}$ is a simple rewrite of the familiar $\mathbf{k}$ with some constants}. The final expression becomes
 \begin{equation}
 	\frac{C_V}{V} = \frac{1}{(2\pi)^3} \frac{4}{1000} \big(\frac{\pi}{a})^3 \sum_j \sum_{\mathbf{q}} W(\mathbf{q})f_j(\mathbf{q}) 
 \end{equation}
-where $f_j$ is the expression within the sum sign in equation \ref{eq:CV} multiplied with boltzmann constant, $W(\mathbf{q})$ is the weight for a certain $mathbf{q}$, to compensate for the volume added that is outside the brillouin zone. 
+where $f_j$ is the expression within the sum sign in equation \ref{eq:CV} multiplied with boltzmann constant, $W(\mathbf{q})$ is the weight for a certain $\mathbf{q}$, to compensate for the volume added that is outside the brillouin zone. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CODE
 \section{Code}
-In to obtain usuable values for the volume dependency of phonon frequencies in one of the rare gases and the heat capacity using solid state physics theory, we have developed some code that calculate this. We will go through both the algorithm design and the code in more detail. 
+In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. We will go through both the algorithm design and the code in more detail. 
 \subsection{Algorithm design}
-The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate, via a declared frequency function, the frequencies possible in different gases at different sites given certain properties. This is done using the eigenvalue problem described in equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function  is as follows
+The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the frequencies possible in different gases at different sites given certain properties. This is done using the eigenvalue problem described in equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calcualtion in this file is as follows
 \begin{lstlisting}
  void frequencies(double A, double B, double m, double *q, 
 				double *omega, double *eps);
 \end{lstlisting}
-where A and B are the constants described in equation \ref{eq:AB}, m is the mass of the atoms at the sites in the lattice, q is the modified k vector values, omega and eps are the return values where omega is the frequencies in the tree different directions and eps is the vector correponding to each frequency describing its direction. This is a sperate function since it is essential in not only calculating the frequency but the volume dependency of the frequency aswell as the heat capacity of the rare gas. 
+where A and B are the constants described in equation \ref{eq:AB}, $m$ is the mass of the atoms at the sites in the lattice, q is the modified k vector values, omega and eps are the return values where omega is the frequencies in the tree different directions and eps is the vector corresponding to each frequency describing its direction. This is a separate function since it is essential in not only calculating the frequency but the volume dependency of the frequency as well as the heat capacity of the rare gas. 
 
-In \verb+phonons.c+ the rest of the program resides. Its main function is to use the frequency function to calculate volume dependency of the phonon frequencies aswell as heat capacity in the gases. Outside of that the code is responsible for user input/output. Making sure that the input is correctly interepred and that the output follows a proper output formatting that was described in the program specification.
-\subsection{Detailed Code Description}
+In \verb+phonons.c+ the rest of the program resides. Its main function is to use the frequency function to calculate volume dependency of the phonon frequencies as well as heat capacity in the gases. In order to keep track of all the different gas properties a structure is declared in \verb+phonons.c+ as follows
+\begin{lstlisting}
+typedef struct sp{
+	double sigma;
+	double eps;
+	double rnn;
+	double m;
+}sp;
+\end{lstlisting}
+where \verb+sigma+, \verb+eps+, \verb+rnn+ and \verb+m+ represents $\sigma$, $\epsilon$, $r$ and $m$ respectively from equation \ref{eq:pot}. These different substance properties structures are then passed to different functions that calculates the volume dependency of the phonon frequencies and heat capacity of the different gases.
+
+In order to use the \verb+frequencies+ function and write out different phonon frequencies propagating at certain positions in a crystal a function declared as 
+\begin{lstlisting}
+double* freqEval(sp sub, double* q)
+\end{lstlisting} 
+has been written. The inputs are simply a substance properties structure \verb+sub+ and a \verb+q+ vector, describing for which point the frequencies should be evaluated. The function returns an array with the three frequencies at the position described by \verb+q+. In order to calculate multiple frequencies evenly distributed between two positions described by two \verb+q+ vectors a function declared as 
+\begin{lstlisting}
+void nEval(sp sub, double *q1, double *q2, int n, double* (*evalFunc)(sp, double*))
+\end{lstlisting}
+has been written. The inputs are the substance properties structure \verb+sub+, two \verb+q+ vectors \verb+q1+ and \verb+q2+, the number of \verb+n+ evenly spaced points to evaluate between \verb+q1+ and \verb+q2+ and a function pointer 
+\verb+evalFunc+ that gets called at every point. If the frequencies is what is interesting the \verb+freqEval+ is the function passed as the last argument.
+
+
+In order to calculate the volume dependency of the phonon frequencies a function declared as
+\begin{lstlisting}
+double* volDepEval(sp sub, double *q)
+\end{lstlisting} 
+has been written. The input is the substance properties structure \verb+sub+ and a vector \verb+q+ again describing the position we are interested in. The return value are the volume dependencies for the phonon frequencies. In order to calculate the volume dependency equation \ref{eq:volDep} has been used, then to estimate the derivate equation \ref{eq:derivate} is used. In order to calculate multiple frequencies evenly distributed between two positions described by two \verb+q+ vectors we can use \verb+nEval+ again as done previously with \verb+freqEval+. The difference is that the last argument in \verb+freqEval+ becomes \verb+volDepEval+.
+
+If one instead are only interested in the heat capacity for one of the gases the function declared as
+\begin{lstlisting}
+double cvEval(sp sub, double T)
+\end{lstlisting} 
+has been written. Here the input is only the substance properties structure \verb+sub+ and the temperature in Kelvin \verb+T+. Th e function returns the heat capacity. The heat capacity is calculated using equation \ref{eq:CV} and a some predefined values for \verb+q+ and the weights that holds for all gases that the program is implemented for. Since this equation do not follow the same structure as \verb+freqEval+ and \verb+volDepEval+ a separate function to calculate multiple heat capacities between two temperatures has been written. This function is declared
+\begin{lstlisting}
+void nCvEval(sp sub, double T1, double T2, int n)
+\end{lstlisting}
+where the input is the substance properties structure \verb+sub+, the two temperatures \verb+T1+ and \verb+T2+ which between the heat capacity shall be calculated in \verb+n+ points.  
+
+Outside of that the code is responsible for user input/output. Making sure that the input is correctly interpreted and that the output follows a proper output formatting that was described in the program specification. This is mainly done via the nested switch statement in the \verb+main+ function and \verb+printVal+ function.
 \subsection{System description}
 
 \section{Results}
