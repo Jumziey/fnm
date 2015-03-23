@@ -312,7 +312,6 @@ main(int argc, char** argv)
 					printf("%g %g\n", T1, Cv);
 					break;
 				case 5:
-					//printf("blaoeuhtn\n");
 					//Two points, need to be spaced 11
 					T1 = atof(argv[3]);
 					T2 = atof(argv[4]);

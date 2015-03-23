@@ -6,7 +6,7 @@
 Placeholder
 \section{Theory}
 \subsection{Potential in a Crystal}
-The structure of crystals is typically described by using a lattice $\mathbf{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every possible site\footnote{Sites are usually where a molecule or atom resides} in a crystal structure in terms of a lattice constant $a$. If one then go on to describe a sites displacement in this structure as $\mathbf{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion of the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing to do} 
+The structure of crystals is typically described by using a lattice $\mathbf{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every possible site\footnote{Sites are usually where a molecule or atom resides} in a crystal structure in terms of a lattice constant $a$. If one then go on to describe a sites displacement in this structure as $\mathbf{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion of the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing  to do} 
 \begin{equation}
 	m \ddot{u}^l_{\alpha} = - \sum_{\mathbf{l}'\beta} D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} u^{\mathbf{l}'}_{\beta}
 	\label{eq:motion}
@@ -87,7 +87,7 @@ where $f_j$ is the expression within the sum sign in equation \ref{eq:CV} multip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CODE
 \section{Code}
-In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. We will go through both the algorithm design and the code in more detail. 
+In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases discussed and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. We will go through both the algorithm design and the code in more detail. 
 \subsection{Algorithm design}
 The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the frequencies possible in different gases at different sites given certain properties. This is done using the eigenvalue problem described in equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calcualtion in this file is as follows
 \begin{lstlisting}
@@ -96,7 +96,7 @@ The code is written in $C$ and has been divided into two files: \verb+phonons.c+
 \end{lstlisting}
 where A and B are the constants described in equation \ref{eq:AB}, $m$ is the mass of the atoms at the sites in the lattice, q is the modified k vector values, omega and eps are the return values where omega is the frequencies in the tree different directions and eps is the vector corresponding to each frequency describing its direction. This is a separate function since it is essential in not only calculating the frequency but the volume dependency of the frequency as well as the heat capacity of the rare gas. 
 
-In \verb+phonons.c+ the rest of the program resides. Its main function is to use the frequency function to calculate volume dependency of the phonon frequencies as well as heat capacity in the gases. In order to keep track of all the different gas properties a structure is declared in \verb+phonons.c+ as follows
+In \verb+phonons.c+ the rest of the program resides. Its main function is to use the frequency function to use the frequencies function to print usuable data, calcualate the volume dependency of the phonon frequencies as well as calculating heat capacity in the gases. In order to keep track of all the different gas properties a structure is declared in \verb+phonons.c+ as follows
 \begin{lstlisting}
 typedef struct sp{
 	double sigma;
@@ -136,15 +136,72 @@ void nCvEval(sp sub, double T1, double T2, int n)
 where the input is the substance properties structure \verb+sub+, the two temperatures \verb+T1+ and \verb+T2+ which between the heat capacity shall be calculated in \verb+n+ points.  
 
 Outside of that the code is responsible for user input/output. Making sure that the input is correctly interpreted and that the output follows a proper output formatting that was described in the program specification. This is mainly done via the nested switch statement in the \verb+main+ function and \verb+printVal+ function.
-\subsection{System description}
 
+\subsection{Typical Program Execution}
+When the arguments are passed to the program at execution the proper substance structure is loaded and the calculation starts. Depending on what one are interested in, phonon frequencies, volume dependency of phonon frequencies or heat capacity of the gas, different functions are called in a nested switch statement in the main function. The code has been clearly divided for the different use cases so the sturcture should be very clear for a beginner who reads the code. There is also basic error checking made to make sure that the input is properly formatted.
+
+An example command could be
+\begin{lstlisting}
+>phonons Xe cv 50 100
+50 678837
+55 685602
+60 690814
+65 694912
+70 698189
+75 700850
+80 703039
+85 704861
+90 706393
+95 707694
+\end{lstlisting}
+Then the program loads the substance structure related to \verb+Xe+ and the function \verb+nCvEval+ is be called so that it evaluate the heat capacity of a Xe-gas at ten points between 50 and 100 Kelvin spaced equally. \verb+nCvEval+ in turns call \verb+cvEval+ for every point that needs to be evaluated and \verb+cvEval+ calculate the heat capacity with help of the \verb+frequencies+ function and outputs the results so the user can read it.
+
+\newpage
 \section{Results}
+\begin{figure}[H]
+	\centering
+	\newlength\figureheight 
+	\newlength\figurewidth 
+	\setlength\figureheight{15cm} 
+	\setlength\figurewidth{15cm}
+	\input{../src/plots/Freq.tikz}
+	\caption{The dispersion relation plotted in different symmetry directions for different rare gases. The x-axis shows the position in the lattice as it goes in different symmetry directions.}
+	\label{fig:Freq}
+\end{figure}
+\newpage
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{18cm} 
+	\setlength\figurewidth{14cm}
+	\input{../src/plots/VolDep.tikz}
+	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
+	\label{fig:VolDep}
+\end{figure}
+\newpage
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{8cm} 
+	\setlength\figurewidth{14cm}
+	\input{../src/plots/Ne440.tikz}
+	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
+	\label{fig:Ne440}
+\end{figure}
+\newpage
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{16cm} 
+	\setlength\figurewidth{14cm}
+	\input{../src/plots/Cv.tikz}
+	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
+	\label{fig:Cv}
+\end{figure}
+
+
 
 \section{Conclusions}
 \begin{thebibliography}{99}
 \bibitem{bib:wiki:mlj} [2015-03-15] \url{http://en.wikipedia.org/wiki/Lennard-Jones_potential}
 \bibitem{bib:solid} Neil W. Ashcroft , N. David Mermin, \textit{Solid State Physics} (Cengage Learning 1976)
-\bibitem{bib:ph} Carl Nordling, Jonny Östermann, \textit{Physics handbook}
 \end{thebibliography}
 
 \end{document}
