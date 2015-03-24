@@ -13,6 +13,7 @@ top(double x, void* params)
 	return M_PI*top_y(x)*top_y(x)*top_rho(x);
 }
 
+//For reverse engineering
 void
 saveData(double (*func)(double), char* file, double s, double e, int n)
 {
@@ -30,7 +31,7 @@ saveData(double (*func)(double), char* file, double s, double e, int n)
 int
 main()
 {
-	double result, abserr;
+	double M, l, I1, I3, abserr;
 	size_t limit;
 	gsl_integration_workspace *w;
 	gsl_function F;
@@ -39,7 +40,9 @@ main()
 
 	limit = 1000;
 	w = gsl_integration_workspace_alloc(limit);
-	gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &result, &abserr);
+	gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &M, &abserr);
+	
+	printf("M: %g\n", M);
 	
 	return 0;
 	
