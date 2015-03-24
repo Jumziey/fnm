@@ -85,11 +85,13 @@ Where not quite happy yet though, the most relevant information would be heat ca
 \end{equation}
 where $f_j$ is the expression within the sum sign in equation \ref{eq:CV} multiplied with boltzmann constant, $W(\mathbf{q})$ is the weight for a certain $\mathbf{q}$, to compensate for the volume added that is outside the brillouin zone. 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CODE
 \section{Code}
 In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases discussed and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. We will go through both the algorithm design and the code in more detail. 
 \subsection{Algorithm design}
-The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the frequencies possible in different gases at different sites given certain properties. This is done using the eigenvalue problem described in equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calcualtion in this file is as follows
+The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the frequencies possible in different gases at different sites given certain properties. This is done by solving the eigenvalue problem described in equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calcualtion in this file is as follows
 \begin{lstlisting}
  void frequencies(double A, double B, double m, double *q, 
 				double *omega, double *eps);
@@ -156,6 +158,13 @@ An example command could be
 \end{lstlisting}
 Then the program loads the substance structure related to \verb+Xe+ and the function \verb+nCvEval+ is be called so that it evaluate the heat capacity of a Xe-gas at ten points between 50 and 100 Kelvin spaced equally. \verb+nCvEval+ in turns call \verb+cvEval+ for every point that needs to be evaluated and \verb+cvEval+ calculate the heat capacity with help of the \verb+frequencies+ function and outputs the results so the user can read it.
 
+\subsection{Solving the Eigenvalue Problem}
+In order to solve the eigenvalue problem in the \verb+frequencies+ function we have used the GSL library. More specifically the function declared as
+\begin{lstlisting}
+int gsl_eigen_symmv (gsl_matrix * A, gsl_vector * eval, gsl_matrix * evec, gsl_eigen_symmv_workspace * w)
+\end{lstlisting}
+where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+evec+ gives the eigenvalues and eigenvectors respectively. The last input in the function \verb+w+ is nothing more than some work space for the function to do its numerical scheme. The function uses the symmetric bidiagonalization and QR reduction method described in section 8.3 of \cite{bib:num}.
+
 \newpage
 \section{Results}
 \begin{figure}[H]
@@ -202,6 +211,7 @@ Then the program loads the substance structure related to \verb+Xe+ and the func
 \begin{thebibliography}{99}
 \bibitem{bib:wiki:mlj} [2015-03-15] \url{http://en.wikipedia.org/wiki/Lennard-Jones_potential}
 \bibitem{bib:solid} Neil W. Ashcroft , N. David Mermin, \textit{Solid State Physics} (Cengage Learning 1976)
+\bibitem{bib:num} Gene H. Golub, Charles F. Van Loan \textit{Matrix Computations} (JHU Press 1996)
 \end{thebibliography}
 
 \end{document}
