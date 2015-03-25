@@ -82,7 +82,7 @@ main()
 
 
 	int i;
-	double abserr, c[funcs];
+	double abserr, k[2], c[funcs];
 	size_t limit;
 	gsl_integration_workspace *w;
 	gsl_function F;
@@ -110,7 +110,7 @@ main()
 	int status;
 	double t = 0.0;
 	double tEnd = 4.0;
-	double h = 1e-3;
+	double h = 1e-5;
 	double ti;
 	gsl_odeiv2_system sys = {topLagrange, NULL, 6, NULL};
 	gsl_odeiv2_driver *d = 
@@ -124,7 +124,9 @@ main()
 			fprintf(stderr,"Problems!\n");
 			break;
 		} 
-		printf("%.6f %.6f %.6f\n", v[0], v[1], v[2]);
+		k[0] = i1*v[3]*pow(sin(v[2]),2) + i3*(v[4]+v[3]*cos(v[2]))*cos(v[2]);
+		k[1] = i3*(v[4]+v[3]*cos(v[2]));
+		printf("%.6f %.6f %.6f \t%.6f %.6f\n", v[0], v[1], v[2], k[0], k[1]);
 	}
 	return 0;
 }
