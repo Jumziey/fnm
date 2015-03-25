@@ -128,12 +128,10 @@ main()
 	double v[] = {0.0, 0.0, 20.0, 0.0, 10.0, 0.0};
 	k[0] = i1*v[3]*pow(sin(v[2]),2) + i3*(v[4]+v[3]*cos(v[2]))*cos(v[2]);
 	k[1] = i3*(v[4]+v[3]*cos(v[2]));
-	printf("%g %g\n", k[0], k[1]);
-	
 
 	s = sin(v[2]);c = cos(v[2]);
-	energy =  (i1/2 * (v[5]*v[5] + v[3]*v[3]*s) + i3/2 * pow((v[4] + v[3]*c),2) + M*g*l*c);
-	printf("energy: %g\n", energy);
+	energy =  (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + M*g*l*c);
+	
 	while(t<tEnd) {
 		ti = t+res;
 		status = gsl_odeiv2_driver_apply(d, &t, ti, v);
@@ -144,7 +142,7 @@ main()
 		c = cos(v[2]);s = sin(v[2]);
 		kDiff[0] =k[0]- i1*v[3]*pow(sin(v[2]),2) - i3*(v[4]+v[3]*c)*c;
 		kDiff[1] =k[1]- i3*(v[4]+v[3]*cos(v[2]));
-		eDiff = energy- (i1/2 * (v[5]*v[5] + v[3]*v[3]*s) + i3/2 * pow((v[4] + v[3]*c),2) + M*g*l*c);
+		eDiff = energy- (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + M*g*l*c);
 		printf("%.6f %.6f %.6f \t %g %g %g\n", v[0], v[1], v[2], kDiff[0], kDiff[1], eDiff);
 	}
 	return 0;
