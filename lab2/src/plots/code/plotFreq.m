@@ -1,5 +1,8 @@
 close all; clear all;
 
+NeFreq200
+NeGamma200
+
 gases = {'Ne', 'Ar', 'Kr', 'Xe'};
 directions = [200 220 222];
 res = 200;
@@ -26,15 +29,20 @@ for gas=gases
 		plot(data(:,5), 'color', [1 .5 0])
 		plot(data(:,6), 'black')
 		title(sprintf('%s %s in [%d]', char(gas),prop, dir/2))
+		
 		hdir=sprintf('[%d]',dir/2);
 		ddir=sprintf('[%d]', dir);
 		ylabel('$\omega(\mathbf{q})$ (rad/s)')
 		set(gca,'XTickLabel',{'[000]' hdir ddir})
 		set(gca, 'XTick', [0 res/2 res])
+
 		j=j+1;
 	end
 	i=i+1;
 end
+
+
+
 
 filename = sprintf('../%s.tikz',prop);
 matlab2tikz(filename, 'parseStrings', false,'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['title style={font=\small},'...

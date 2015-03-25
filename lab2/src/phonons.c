@@ -236,6 +236,8 @@ main(int argc, char** argv)
 	double q1[3], q2[3],T1,T2, *ret, Cv;
 	//Index ordering is coupled with subInd()
 	const sp subs[4] = {Ne, Ar, Kr, Xe};
+	if(argc < 2)
+		error("Cmon man... This waay to few arguments, ARGUE MORE!\n");
 		
 	if((subindex = subInd(argv[1]))<0)
 		error("Unkown (for the program) substance\n");
@@ -281,7 +283,10 @@ main(int argc, char** argv)
 					//Calculating volume dep. of phonon frequency in one point
 					q1[0] = atof(argv[3]); q1[1] = atof(argv[4]); q1[2] = atof(argv[5]);
 					ret = volDepEval(subs[subindex], q1);
-					printVal(q1,ret);
+					if(ret != NULL)
+						printVal(q1,ret);
+					else
+						error("Not defined at [0 0 0]\n");
 					break;
 				case 9:
 					//Two points, need to be spaced 11

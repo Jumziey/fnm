@@ -60,17 +60,25 @@ i3Func(double x, void* params)
 
 
 int
-topLagrange(double t, const double v[], double d[], void *params)
+topLagrange(double time, const double v[], double d[], void *params)
 {
+	const double c = cos(v[2]);
+	const double s = sin(v[2]);
+	const double t = tan(v[2]);
+	const double ct = 1.0/tan(v[2]);
+	
 	d[0] = v[3];
 	d[1] = v[4];
 	d[2] = v[5];
 	
-	d[3] = i3/i1*( v[3]*v[4]*(1/tan(v[2])) + v[4]*v[5]/sin(v[2]) )-2*v[3]*v[5];
-	d[4] = v[3]*v[5]*sin(v[2]) + 2*v[3]*v[5]*pow(cos(v[2]),2)/sin(v[2]) - 
-					i3/i1 * ( v[3]*v[5]*pow(cos(v[2]),2)/sin(v[2]) + v[4]*v[5]*(1/tan(v[2])) );
-	d[5] = M*g*l/i1 * sin(v[2]) + pow(v[3],2)*sin(v[2])*cos(v[2]) - 
-					i3/i1 * (v[4]+v[3]*cos(v[2]))*v[3]*sin(v[2]);
+	d[3] = i3/i1*( v[3]*v[5]*ct + v[4]*v[5]/s )-2*v[3]*v[5]*ct;
+	
+	
+	d[4] = v[3]*v[5]*s + 2*v[3]*v[5]*ct*c - 
+					i3/i1 * ( v[3]*v[5]*pow(c,2)/s + v[4]*v[5]*ct );
+					
+	d[5] = M*g*l/i1 * s + pow(v[3],2)*s*c - 
+					i3/i1 * (v[4]+v[3]*c)*v[3]*s;
 	
 	return GSL_SUCCESS;
 }
@@ -82,7 +90,7 @@ main()
 
 
 	int i;
-	double abserr, k[2], c[funcs];
+	double abserr, consts[funcs];
 	size_t limit;
 	gsl_integration_workspace *w;
 	gsl_function F;
@@ -95,38 +103,49 @@ main()
 	for(i=0; i<funcs; i++) {
 		F.function = intFunc[i];
 		F.params = NULL;
-		gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &c[i] , &abserr);
+		gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &consts[i] , &abserr);
 	}
 	//M, l, i1, i3
-	M = c[0];
-	l = c[1] /= c[0];
-	i1 = c[2];
-	i3 = c[3];
-	//+g!
+	M = consts[0];
+	l = consts[1] /= consts[0];
+	i1 = consts[2];
+	i3 = consts[3];
 	g = 9.81;
-	printf("ans: %f\n", tan(2));
 	
 	//Now lets do some ode solving
 	int status;
+	double k[2], kDiff[2], energy, eDiff, c, s;
 	double t = 0.0;
 	double tEnd = 4.0;
-	double h = 1e-5;
+	double res = 1e-4;
+	double h = 1e-4;
 	double ti;
 	gsl_odeiv2_system sys = {topLagrange, NULL, 6, NULL};
 	gsl_odeiv2_driver *d = 
 		gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45, h,epsabs, epsrel);
 	
+	//initial values
 	double v[] = {0.0, 0.0, 20.0, 0.0, 10.0, 0.0};
+	k[0] = i1*v[3]*pow(sin(v[2]),2) + i3*(v[4]+v[3]*cos(v[2]))*cos(v[2]);
+	k[1] = i3*(v[4]+v[3]*cos(v[2]));
+	printf("%g %g\n", k[0], k[1]);
+	
+
+	s = sin(v[2]);c = cos(v[2]);
+	energy =  (i1/2 * (v[5]*v[5] + v[3]*v[3]*s) + i3/2 * pow((v[4] + v[3]*c),2) + M*g*l*c);
+	printf("energy: %g\n", energy);
 	while(t<tEnd) {
-		ti = t+h;
+		ti = t+res;
 		status = gsl_odeiv2_driver_apply(d, &t, ti, v);
 		if(status != GSL_SUCCESS){
 			fprintf(stderr,"Problems!\n");
 			break;
-		} 
-		k[0] = i1*v[3]*pow(sin(v[2]),2) + i3*(v[4]+v[3]*cos(v[2]))*cos(v[2]);
-		k[1] = i3*(v[4]+v[3]*cos(v[2]));
-		printf("%.6f %.6f %.6f \t%.6f %.6f\n", v[0], v[1], v[2], k[0], k[1]);
+		}
+		c = cos(v[2]);s = sin(v[2]);
+		kDiff[0] =k[0]- i1*v[3]*pow(sin(v[2]),2) - i3*(v[4]+v[3]*c)*c;
+		kDiff[1] =k[1]- i3*(v[4]+v[3]*cos(v[2]));
+		eDiff = energy- (i1/2 * (v[5]*v[5] + v[3]*v[3]*s) + i3/2 * pow((v[4] + v[3]*c),2) + M*g*l*c);
+		printf("%.6f %.6f %.6f \t %g %g %g\n", v[0], v[1], v[2], kDiff[0], kDiff[1], eDiff);
 	}
 	return 0;
 }
