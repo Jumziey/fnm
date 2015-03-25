@@ -60,23 +60,75 @@ i3Func(double x, void* params)
 
 
 int
-topLagrange(double time, const double v[], double d[], void *params)
+topHam(double time, const double v[], double d[], void *params)
 {
 	const double c = cos(v[2]);
 	const double s = sin(v[2]);
-	const double t = tan(v[2]);
-	const double ct = 1.0/tan(v[2]);
 	
-	d[0] = v[3];
-	d[1] = v[4];
-	d[2] = v[5];
+	d[0] = (2*v[3] - 2*v[4]*c)/(2*i1*s*s);
+	d[1] = v[4]/i3 - (c*(v[3] - v[4]*c))/(i1*s*s);
+	d[2] = v[5]/i1;
 	
-	d[3] = i3/i1*( v[3]*v[5]*ct + v[4]*v[5]/s )-2*v[3]*v[5]*ct;
-	d[4] = v[3]*v[5]*s + 2*v[3]*v[5]*ct*c - 
-					i3/i1 * ( v[3]*v[5]*pow(c,2)/s + v[4]*v[5]*ct );		
-	d[5] = M*g*l/i1 * s + pow(v[3],2)*s*c - 
-					i3/i1 * (v[4]+v[3]*c)*v[3]*s;
+	d[3] = 0;
+	d[4] = 0;
+	d[5] = M*l*g*s - (v[4]*(v[3] - v[4]*c))/(i1*s) + (c*pow((v[3] - v[4]*c),2))/(i1*s*s*s);
 	
+	return GSL_SUCCESS;
+}
+
+int
+topJac(double time, const double v[], double *dfdv, double *dfdt, void *params)
+{
+	int i;
+	gsl_matrix_view dfdv_mat;
+	gsl_matrix *m;
+	
+	const double c = cos(v[2]);
+ 	const double s = sin(v[2]);
+ 	
+	dfdv_mat = gsl_matrix_view_array(dfdv, 6, 6);
+	m = &dfdv_mat.matrix; 
+ 	
+	gsl_matrix_set(m,0,0,0);
+	gsl_matrix_set(m,0,1,0);
+	gsl_matrix_set(m,0,2,v[4]/(i1*s) - (c*(2*v[3] - 2*v[4]*c))/(i1*pow(s,3)));
+	gsl_matrix_set(m,0,3,1/(i1*s*s));
+	gsl_matrix_set(m,0,4,-c/(i1*s*s));
+	gsl_matrix_set(m,0,5,0);
+	gsl_matrix_set(m,1,0,0);
+	gsl_matrix_set(m,1,1,0);
+	gsl_matrix_set(m,1,2,(v[3] - v[4]*c)/(i1*s) - (v[4]*c)/(i1*s) + (2*c*c*(v[3] - v[4]*c))/(i1*s*s*s));
+	gsl_matrix_set(m,1,3,-c/(i1*s*s));
+	gsl_matrix_set(m,1,4,1/i3 + c*s/(i1*s*s));
+	gsl_matrix_set(m,1,5,0);
+	gsl_matrix_set(m,2,0,0);
+	gsl_matrix_set(m,2,1,0);
+	gsl_matrix_set(m,2,2,0);
+	gsl_matrix_set(m,2,3,0);
+	gsl_matrix_set(m,2,4,0);
+	gsl_matrix_set(m,2,5,1/i1);
+	gsl_matrix_set(m,3,0,0);
+	gsl_matrix_set(m,3,1,0);
+	gsl_matrix_set(m,3,2,0);
+	gsl_matrix_set(m,3,3,0);
+	gsl_matrix_set(m,3,4,0);
+	gsl_matrix_set(m,3,5,0);
+	gsl_matrix_set(m,4,0,0);
+	gsl_matrix_set(m,4,1,0);
+	gsl_matrix_set(m,4,2,0);
+	gsl_matrix_set(m,4,3,0);
+	gsl_matrix_set(m,4,4,0);
+	gsl_matrix_set(m,4,5,0);
+	gsl_matrix_set(m,5,0,0);
+	gsl_matrix_set(m,5,1,0);
+	gsl_matrix_set(m,5,2,M*l*g*c - v[4]*v[4]/i1 - pow((v[3] - v[4]*c),2)/(i1*s*s) - (3*c*c*pow((v[3] - v[4]*c),2))/(i1*pow(s,4)) + (3*v[4]*c*(v[3] - v[4]*c))/(i1*s*s));
+	gsl_matrix_set(m,5,3,(c*(2*v[3] - 2*v[4]*c))/(i1*s*s*s) - v[4]/(i1*s));
+	gsl_matrix_set(m,5,4,(v[4]*c)/(i1*s) - (v[3] - v[4]*c)/(i1*s) - (2*c*c*(v[3] - v[4]*c))/(i1*s*s*s));
+	gsl_matrix_set(m,5,5,0);
+	
+	for(i=0;i<6;i++)
+		dfdt[i] = 0;
+		
 	return GSL_SUCCESS;
 }
 
@@ -116,9 +168,9 @@ main()
 	double tEnd = 4.0;
 	double h = 2e-3;
 	double ti;
-	gsl_odeiv2_system sys = {topLagrange, NULL, 6, NULL};
+	gsl_odeiv2_system sys = {topHam, topJac, 6, NULL};
 	gsl_odeiv2_driver *d = 
-		gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45, h,epsabs, epsrel);
+		gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_bsimp, h,epsabs, epsrel);
 	
 	//initial values
 	double v[] = {0.0, 0.0, 20.0, 0.0, 10.0, 0.0};
