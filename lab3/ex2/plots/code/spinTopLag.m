@@ -10,14 +10,14 @@ for d=dataList
 	data = load(dataFile);
 	time = linspace(0,4,length(data));
 	
-	plot(time,data(:,1))
+	plot(time,data(:,1)*180/pi)
 	hold on
-	plot(time,data(:,2))
-	plot(time,data(:,3))
+	plot(time,data(:,2)*180/pi)
+	plot(time,data(:,3)*180/pi)
 	
-	plot(time,data(:,4))
-	plot(time,data(:,5))
-	plot(time,data(:,6))
+	plot(time,data(:,4)*180/pi)
+	plot(time,data(:,5)*180/pi)
+	plot(time,data(:,6)*180/pi)
 	if i == 1
 		legend('\phi','\psi','\theta', 'c1', 'c2', 'Energy Diff', 'Location', 'northwest')
 	else
@@ -36,10 +36,10 @@ for d=dataList
                        						
 	figure(i+1)
 	ax = gca;
-	plot(time,data(:,4))
+	plot(time,data(:,4)*180/pi)
 	hold on
-	plot(time,data(:,5))
-	plot(time,data(:,6))
+	plot(time,data(:,5)*180/pi)
+	plot(time,data(:,6)*180/pi)
 	if j ~= 1
 		ax.XTickLabel = flip(ax.XTickLabel);
 	end

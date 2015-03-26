@@ -12,8 +12,11 @@ const double epsrel = 1E-12;
 const double epsabs = 1E-8;
 
 //System Constants
-//Yes i could use params... But LAZY! :D
-double M,l,g,i1,i3;
+typedef struct par {
+	double mgl;
+	double i1;
+	double i3;
+}par;
 
 //Integral expressions
 double
@@ -42,87 +45,93 @@ i3Func(double x, void* params)
 	return M_PI/2 * top_rho(x)*pow(top_y(x),4);
 }
 
-
+//System equations
 int
 topHam(double time, const double v[], double d[], void *params)
 {
+	par *p = (par*)params;
+
+	double mgl = p->mgl;
+	double i1 = p->i1;
+	double i3 = p->i3;
+
 	const double c = cos(v[2]);
 	const double s = sin(v[2]);
-	double phi,psi,theta,pphi,ppsi,ptheta,I1,I3;
-	phi = v[0]; psi=v[1];theta=v[2];pphi=v[3];ppsi=v[4];ptheta=v[5];
-	I1=i1;I3=i3;
+	
+	d[0] = (2.0*v[3] - 2.0*v[4]*c)/(2.0*i1*pow(s,2));
+	d[1] = v[4]/i3 - (c*(v[3] - v[4]*c))/(i1*pow(s,2));
+	d[2] = v[5]/i1;
 	
 	d[3] = 0;
 	d[4] = 0;
-	d[5] = M*l*g*sin(theta) - (ppsi*(pphi - ppsi*cos(theta)))/(I1*sin(theta)) + (cos(theta)*pow((pphi - ppsi*cos(theta)),2))/(I1*pow(sin(theta),3));
-	
-	d[0] = (2.0*pphi - 2.0*ppsi*cos(theta))/(2.0*I1*pow(sin(theta),2));
-	d[1] = ppsi/I3 - (cos(theta)*(pphi - ppsi*cos(theta)))/(I1*pow(sin(theta),2));
-	d[2] = ptheta/I1;
-	
+	d[5] = mgl*s - (v[4]*(v[3] - v[4]*c))/(i1*s) + (c*pow((v[3] - v[4]*c),2))/(i1*pow(s,3));
 	
 	
 	return GSL_SUCCESS;
 }
-
-/*
-phi_dot = (2*pphi - 2*ppsi*cos(theta))/(2*I1*sin(theta)^2)
-psi_dot = ppsi/I3 - (cos(theta)*(pphi - ppsi*cos(theta)))/(I1*sin(theta)^2)
-theta_dot = ptheta/I1
-pphi_dot =0
-ppsi_dot =0
-ptheta_dot =Mlg*sin(theta) - (ppsi*(pphi - ppsi*cos(theta)))/(I1*sin(theta)) + (cos(theta)*(pphi - ppsi*cos(theta))^2)/(I1*sin(theta)^3)
- */
 
 
 int
 topJac(double time, const double v[], double *dfdv, double *dfdt, void *params)
 {
 	int i;
+
+	par *p = (par*)params;
+
+	double mgl = p->mgl;
+	double i1 = p->i1;
+	double i3 = p->i3;
+	double v0=v[0],v1=v[1],v2=v[2],v3=v[3],v4=v[4],v5=v[5];
+	
 	gsl_matrix_view dfdv_mat;
 	gsl_matrix *m;
 	
-	const double c = cos(v[2]);
- 	const double s = sin(v[2]);
+	const double ct = cos(v[2]);
+ 	const double st = sin(v[2]);
  	
 	dfdv_mat = gsl_matrix_view_array(dfdv, 6, 6);
 	m = &dfdv_mat.matrix; 
  	
 	gsl_matrix_set(m,0,0,0);
 	gsl_matrix_set(m,0,1,0);
-	gsl_matrix_set(m,0,2,v[4]/(i1*s) - (c*(2.0*v[3] - 2.0*v[4]*c))/(i1*pow(s,3)));
-	gsl_matrix_set(m,0,3,1/(i1*s*s));
-	gsl_matrix_set(m,0,4,-c/(i1*s*s));
+	gsl_matrix_set(m,0,2,v4/(i1*st) - (ct*(2.0*v3 - 2.0*v4*ct))/(i1*pow(st,3)));
+	gsl_matrix_set(m,0,3,1/(i1*pow(st,2)));
+	gsl_matrix_set(m,0,4,-ct/(i1*pow(st,2)));
 	gsl_matrix_set(m,0,5,0);
+	
 	gsl_matrix_set(m,1,0,0);
 	gsl_matrix_set(m,1,1,0);
-	gsl_matrix_set(m,1,2,(v[3] - v[4]*c)/(i1*s) - (v[4]*c)/(i1*s) + (2.0*c*c*(v[3] - v[4]*c))/(i1*s*s*s));
-	gsl_matrix_set(m,1,3,-c/(i1*s*s));
-	gsl_matrix_set(m,1,4,1/i3 + c*s/(i1*s*s));
+	gsl_matrix_set(m,1,2,(v3 - v4*ct)/(i1*st) + (2.0*pow(ct,2)*(v3 - v4*ct))/(i1*pow(st,3)) - (v4*ct)/(i1*st));
+	gsl_matrix_set(m,1,3,-ct/(i1*pow(st,2)));
+	gsl_matrix_set(m,1,4,1/i3 + pow(ct,2)/(i1*pow(st,2)));
 	gsl_matrix_set(m,1,5,0);
+	
 	gsl_matrix_set(m,2,0,0);
 	gsl_matrix_set(m,2,1,0);
 	gsl_matrix_set(m,2,2,0);
 	gsl_matrix_set(m,2,3,0);
 	gsl_matrix_set(m,2,4,0);
 	gsl_matrix_set(m,2,5,1/i1);
+	
 	gsl_matrix_set(m,3,0,0);
 	gsl_matrix_set(m,3,1,0);
 	gsl_matrix_set(m,3,2,0);
 	gsl_matrix_set(m,3,3,0);
 	gsl_matrix_set(m,3,4,0);
 	gsl_matrix_set(m,3,5,0);
+	
 	gsl_matrix_set(m,4,0,0);
 	gsl_matrix_set(m,4,1,0);
 	gsl_matrix_set(m,4,2,0);
 	gsl_matrix_set(m,4,3,0);
 	gsl_matrix_set(m,4,4,0);
 	gsl_matrix_set(m,4,5,0);
+	
 	gsl_matrix_set(m,5,0,0);
 	gsl_matrix_set(m,5,1,0);
-	gsl_matrix_set(m,5,2,M*l*g*c - v[4]*v[4]/i1 - pow((v[3] - v[4]*c),2)/(i1*s*s) - (3.0*c*c*pow((v[3] - v[4]*c),2))/(i1*pow(s,4)) + (3.0*v[4]*c*(v[3] - v[4]*c))/(i1*s*s));
-	gsl_matrix_set(m,5,3,(c*(2.0*v[3] - 2.0*v[4]*c))/(i1*s*s*s) - v[4]/(i1*s));
-	gsl_matrix_set(m,5,4,(v[4]*c)/(i1*s) - (v[3] - v[4]*c)/(i1*s) - (2.0*c*c*(v[3] - v[4]*c))/(i1*s*s*s));
+	gsl_matrix_set(m,5,2,mgl*ct - pow(v4,2)/i1 - pow((v3 - v4*ct),2)/(i1*pow(st,2)) - (3.0*pow(ct,2)*pow((v3 - v4*ct),2))/(i1*pow(st,4)) + (3.0*v4*ct*(v3 - v4*ct))/(i1*pow(st,2)));
+	gsl_matrix_set(m,5,3,(ct*(2.0*v3 - 2.0*v4*ct))/(i1*pow(st,3)) - v4/(i1*st));
+	gsl_matrix_set(m,5,4,(v4*ct)/(i1*st) - (2.0*pow(ct,2)*(v3 - v4*ct))/(i1*pow(st,3)) - (v3 - v4*ct)/(i1*st));
 	gsl_matrix_set(m,5,5,0);
 	
 	for(i=0;i<6;i++)
@@ -131,61 +140,86 @@ topJac(double time, const double v[], double *dfdv, double *dfdt, void *params)
 	return GSL_SUCCESS;
 }
 
+void
+spin(double *v, double h, double t, double tEnd, double res, par *p, char* file, 
+	int (*func)(double,const double*,double*,void*),
+	int (*jac) (double,const double*,double*,double*,void*)) 
+{
+	int status,i,steps;
+	double k[2], verr[6], kDiff[2],tMeas, energy, eDiff, c, s;
+	gsl_odeiv2_system sys = {func, jac, 6, p};
+	gsl_odeiv2_step *stepMem = gsl_odeiv2_step_alloc(gsl_odeiv2_step_bsimp, 6);
+	
+	//Constants
+	double i1 = p->i1;
+	double i3 = p->i3;
+	double mgl = p->mgl;
+	s = sin(v[2]);c = cos(v[2]);
+	k[0] = i1*v[3]*pow(s,2) + i3*(v[4]+v[3]*c)*c;
+	k[1] = i3*(v[4]+v[3]*c);
+	energy =  (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + mgl*c);
+	
+	//Lets run simulation
+	FILE *fp;
+	fp = fopen(file,"w");
+	tMeas = res;
+	steps = ceil(abs((tEnd-t)/h));
+	for(i=0;i<steps;i++){
+		status = gsl_odeiv2_step_apply(stepMem, t, h, v, verr, NULL, NULL, &sys);
+		if(status != GSL_SUCCESS){
+			fprintf(stderr,"Problems!\n");
+			break;
+		}
+		if(fabs(tMeas) > res) {
+			c = cos(v[2]);s = sin(v[2]);
+			kDiff[0] =k[0]- i1*v[3]*pow(s,2) - i3*(v[4]+v[3]*c)*c;
+			kDiff[1] =k[1]- i3*(v[4]+v[3]*c);
+			eDiff = energy- (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + mgl*c);
+			fprintf(fp,"%.6f %.6f %.6f \t %g %g %g\n", v[0], v[1], v[2], kDiff[0], kDiff[1], eDiff);
+			tMeas = 0;
+		}
+		tMeas = tMeas+h;
+		t = t+h;
+	}
+	fclose(fp);
+	return;
+}
+
 int
 main()
 {
-	int funcs = 4;
-
 	int i;
-	double abserr, consts[funcs];
+	double abserr;
 	size_t limit;
+	par p;
 	gsl_integration_workspace *w;
 	gsl_function F;
 	
+	//We begin with integrating for the constants
+	int funcs = 4;
+	double consts[funcs];
+	void *intFunc[] = {&mFunc, &mlFunc, &i1Func, &i3Func};
+	
 	limit = 1000;
 	w = gsl_integration_workspace_alloc(limit);
-
-
-	void *intFunc[] = {&mFunc, &mlFunc, &i1Func, &i3Func};
+	
 	for(i=0; i<funcs; i++) {
 		F.function = intFunc[i];
 		F.params = NULL;
 		gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &consts[i] , &abserr);
 	}
-	//M, l, i1, i3
-	M = consts[0];
-	l = consts[1] /= consts[0];
-	i1 = consts[2];
-	i3 = consts[3];
-	g = 9.81;
-	
-	//Now lets do some ode solving
-	int status;
-	double t = 0.0;
-	double tEnd = 4.0;
-	double h = 2e-4;
-	double ti;
-	gsl_odeiv2_system sys = {topHam, topJac, 6, NULL};
-	gsl_odeiv2_driver *d = 
-		gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45, h, epsabs, epsrel);
-	
-	//initial values
-	double v[] = {0.0, 0.0, 20.0, 0.0, 10.0, 0.0};
-	
-	//Running simulation forwards
-	FILE *fp;
-	fp = fopen("./plots/data/forwardData","w");
-	while(t<tEnd) {
-		ti = t+h;
-		status = gsl_odeiv2_driver_apply(d, &t, ti, v);
-		if(status != GSL_SUCCESS){
-			fprintf(stderr,"Problems!\n");
-			break;
-		}
-		fprintf(fp,"%.6f %.6f %.6f\n", v[0], v[1], v[2]);
-	}
-	printf("t: %f\n",t);
-	fclose(fp);
+	//M, Ml, i1, i3
+	p.mgl = consts[1]*9.82;
+	p.i1 = consts[2];
+	p.i3 = consts[3];
+
+	//Here we run the simulation
+	double v[] = {0.0, 0.0, M_PI/9, p.i3*20*M_PI*cos(M_PI/9), p.i3*20*M_PI, 0.0};
+	double h = 1e-4;
+	double res = 2e-3;
+	spin(v, h, 0, 4, res, &p,"./plots/data/forwardData", &topHam, &topJac);
+	//spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topHam);
 
 	return 0;
 }
+
