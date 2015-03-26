@@ -94,7 +94,7 @@ topJac(double time, const double v[], double *dfdv, double *dfdt, void *params)
  	
 	gsl_matrix_set(m,0,0,0);
 	gsl_matrix_set(m,0,1,0);
-	gsl_matrix_set(m,0,2,v4/(i1*st) - (ct*(2.0*v3 - 2.0*v4*ct))/(i1*pow(st,3)));
+	gsl_matrix_set(m,0,2,v4/(i1*st) - ct*(2.0*v3 - 2.0*v4*ct)/(i1*pow(st,3)));
 	gsl_matrix_set(m,0,3,1/(i1*pow(st,2)));
 	gsl_matrix_set(m,0,4,-ct/(i1*pow(st,2)));
 	gsl_matrix_set(m,0,5,0);
@@ -129,8 +129,10 @@ topJac(double time, const double v[], double *dfdv, double *dfdt, void *params)
 	
 	gsl_matrix_set(m,5,0,0);
 	gsl_matrix_set(m,5,1,0);
-	gsl_matrix_set(m,5,2,mgl*ct - pow(v4,2)/i1 - pow((v3 - v4*ct),2)/(i1*pow(st,2)) - (3.0*pow(ct,2)*pow((v3 - v4*ct),2))/(i1*pow(st,4)) + (3.0*v4*ct*(v3 - v4*ct))/(i1*pow(st,2)));
+	gsl_matrix_set(m,5,2,mgl*ct - v4*st/i1 - pow((v3 - v4*ct),2)/(i1*pow(st,2)) - (3.0*pow(ct,2)*pow((v3 - v4*ct),2))/(i1*pow(st,4)) + (3.0*v4*ct*(v3 - v4*ct))/(i1*pow(st,2)));
+	
 	gsl_matrix_set(m,5,3,(ct*(2.0*v3 - 2.0*v4*ct))/(i1*pow(st,3)) - v4/(i1*st));
+	
 	gsl_matrix_set(m,5,4,(v4*ct)/(i1*st) - (2.0*pow(ct,2)*(v3 - v4*ct))/(i1*pow(st,3)) - (v3 - v4*ct)/(i1*st));
 	gsl_matrix_set(m,5,5,0);
 	
@@ -146,18 +148,14 @@ spin(double *v, double h, double t, double tEnd, double res, par *p, char* file,
 	int (*jac) (double,const double*,double*,double*,void*)) 
 {
 	int status,i,steps;
-	double k[2], verr[6], kDiff[2],tMeas, energy, eDiff, c, s;
+	double  verr[6],tMeas, energy, eDiff, c, s;
 	gsl_odeiv2_system sys = {func, jac, 6, p};
-	gsl_odeiv2_step *stepMem = gsl_odeiv2_step_alloc(gsl_odeiv2_step_bsimp, 6);
+	gsl_odeiv2_step *stepMem = gsl_odeiv2_step_alloc(gsl_odeiv2_step_rkf45, 6);
 	
 	//Constants
 	double i1 = p->i1;
 	double i3 = p->i3;
 	double mgl = p->mgl;
-	s = sin(v[2]);c = cos(v[2]);
-	k[0] = i1*v[3]*pow(s,2) + i3*(v[4]+v[3]*c)*c;
-	k[1] = i3*(v[4]+v[3]*c);
-	energy =  (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + mgl*c);
 	
 	//Lets run simulation
 	FILE *fp;
@@ -171,11 +169,7 @@ spin(double *v, double h, double t, double tEnd, double res, par *p, char* file,
 			break;
 		}
 		if(fabs(tMeas) > res) {
-			c = cos(v[2]);s = sin(v[2]);
-			kDiff[0] =k[0]- i1*v[3]*pow(s,2) - i3*(v[4]+v[3]*c)*c;
-			kDiff[1] =k[1]- i3*(v[4]+v[3]*c);
-			eDiff = energy- (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + mgl*c);
-			fprintf(fp,"%.6f %.6f %.6f \t %g %g %g\n", v[0], v[1], v[2], kDiff[0], kDiff[1], eDiff);
+			fprintf(fp,"%.6f %.6f %.6f\n", v[0], v[1], v[2]);
 			tMeas = 0;
 		}
 		tMeas = tMeas+h;
@@ -209,7 +203,7 @@ main()
 		gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &consts[i] , &abserr);
 	}
 	//M, Ml, i1, i3
-	p.mgl = consts[1]*9.82;
+	p.mgl = consts[1]*982;
 	p.i1 = consts[2];
 	p.i3 = consts[3];
 
@@ -218,7 +212,7 @@ main()
 	double h = 1e-4;
 	double res = 2e-3;
 	spin(v, h, 0, 4, res, &p,"./plots/data/forwardData", &topHam, &topJac);
-	//spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topHam);
+	spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topHam, &topJac);
 
 	return 0;
 }

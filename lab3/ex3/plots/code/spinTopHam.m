@@ -3,17 +3,17 @@ dataList = {'forwardData' 'backwardData'};
 titles = {'Top Spin [0,4] (s)' 'Top Spin [4,0] (s)'};
 
 i=1;j=1;
-d=dataList(1);
+for d=dataList
 	figure(i)
 	ax = gca;
 	dataFile = sprintf('../data/%s',char(d));
 	data = load(dataFile);
 	time = linspace(0,4,length(data));
 	
-	plot(time,data(:,1))
+	plot(time,data(:,1)*180/pi)
 	hold on
-	plot(time,data(:,2))
-	plot(time,data(:,3))
+	plot(time,data(:,2)*180/pi)
+	plot(time,data(:,3)*180/pi)
 	
 	if i == 1
 		legend('\phi','\psi','\theta', 'Location', 'northwest')
@@ -27,7 +27,10 @@ d=dataList(1);
 	xlabel('Time (s)')
 	ylabel('Degrees')
 	
-                    						
+	filename = sprintf('../%s.tikz',char(d));
+	matlab2tikz(filename, 'parseStrings', true,'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['title style={font=\small},'...
+                       					'ticklabel style={font=\tiny}']);
+                       						
 	i = i+2;
 	j = j+1;
-
+end
