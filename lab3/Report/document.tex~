@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\usepackage{report}
+\newif\iftikz
+\tikztrue
+
+\begin{document}
+\section{Exercise 1}
+\subsection{How to run the code}
+In the directory \verb+~jeve0010/Documents/jesper/fnm/lab3/ex1+ the written code resides. To execute the code simply write \verb+make+ in the console to be sure to use the updated code, then execute it by writing \verb+./ex1+ in the console.
+
+\subsection{Result}
+In table \ref{table:ex1Res} we can see the obtained results for \verb+top1.o+.
+\begin{table}[h]\center\Large
+  \caption{The obtained obtained values}
+  \begin{tabular}{c|l}
+  M & 100.995g \\ \hline
+  l & 3.00630cm \\ \hline
+  $I_1$ & 1215.00 gcm$^2$ \\ \hline
+  $I_3$ & 482.568 gcm$^2$ 
+  \end{tabular}
+  \label{table:ex1Res}
+\end{table}
+
+\section{Exercise 2}
+In this exercise we start with rewriting equations (21)-(23) from the lab instructions to six ordinary differential equations. The resulting equations are
+\begin{align}
+	\dot{\phi} &= q \\
+	\dot{\psi} &= r \\
+	\dot{\theta} &= s \\
+	\dot{q} &= \frac{I_3}{I_1} \Bigg[ \dot{\phi}\dot{\theta}\cot{\theta} + \frac{\dot{\psi}\dot{\theta}}{\sin{\theta}} \Bigg] - 2 \dot{\theta}\dot{\psi}\cot{\theta} \\
+	\dot{r} &= \dot{\psi}\dot{\theta}\sin{\theta} + 2\dot{\theta}\dot{\psi}\cot{\theta}\cos{\theta} - \frac{I_3}{I_1} \Bigg[\dot{\psi}\dot{\theta}\cos{\theta} + \dot{\psi}\dot{\theta}\Bigg]\cot{\theta}\\
+	\dot{s} &= \frac{Mgl}{I_1}\sin{\theta} + \dot{\phi}^2\sin{\theta}\cos{\theta}-\frac{I_3}{I_1}\Big(\dot{\psi}+\dot{\phi}\cos{\theta}\Big)\dot{\psi}\sin{\theta}
+\end{align}
+The function implementing the Lagrangian ode is declared as
+\begin{lstlisting}
+int
+topLagrange(double time, const double v[], double d[], void *params)
+\end{lstlisting}
+And the function code exists in the file 
+\begin{verbatim}
+~jeve0010/Documents/jesper/fnm/lab3/ex2/ex2.c.
+\end{verbatim}
+\subsection{Running the Code}
+To run the code simply run the \verb+make+ command inside the directory 
+\begin{verbatim}
+~jeve0010/Documents/jesper/fnm/lab3/ex2+
+\end{verbatim}
+ then run the program with the command \verb+./ex2+. If one wants to obtain the plots showed in this document simply execute the matlab script 
+\begin{verbatim}
+ ~jeve0010/Documents/jesper/fnm/lab3/ex2/plots/code/topSpin.m.
+\end{verbatim}
+Note that the resulting tikz file produced from that script is used in this document, not the plots that matlab create itself.
+
+
+\subsection{Results}
+In figure \ref{fig:forwardData} and \ref{fig:backwardData} we can se the evolution of $\psi$, $\phi$ and $\theta$ going from zero to four seconds and then backward to zero again. The error is plotted in the same plot, but is clearly so low that another error plot is required to get a clearer picture of the error evolution. In figure \ref{fig:forwardDataError} and \ref{fig:backwardDataError} we can see the error when going forward and backwards in the time evolution. In the legend $c1$ and $c2$ stand for the constants given by equation 18 and 20 from the lab instructions. These errors are clearly negligebly small since it is about 10 orders of magnitude smaller then the values obtain for $\psi$, $\phi$ and $\theta$. The time step of $2\cdot10^{-3}$ was used with the \verb+gsl_odeiv2_step_rkf45+ function to get this result.
+\iftikz
+\begin{figure}[H]
+	\centering
+	\newlength\figureheight 
+	\newlength\figurewidth 
+	\setlength\figureheight{7cm} 
+	\setlength\figurewidth{14cm}
+	\input{../ex2/plots/forwardData.tikz}
+	\caption{Showing the angle evolution for the spinning top problem over 4 seconds.}
+	\label{fig:forwardData}
+\end{figure}
+\fi
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{7cm} 
+	\setlength\figurewidth{14cm}
+	\input{../ex2/plots/backwardData.tikz}
+	\caption{Showing the angle evolution for the spinning top problem when going backwards in time.}
+	\label{fig:backwardData}
+\end{figure}
+\fi
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{7cm} 
+	\setlength\figurewidth{14cm}
+	\input{../ex2/plots/forwardDataError.tikz}
+	\caption{A zoom in on the error when stepping forward in time.}
+	\label{fig:forwardDataError}
+\end{figure}
+\fi
+oe
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{7cm} 
+	\setlength\figurewidth{14cm}
+	\input{../ex2/plots/backwardDataError.tikz}
+	\caption{A zoom in on the error when stepping backwards in time.}
+	\label{fig:backwardDataError}
+\end{figure}
+\fi
+
+
+\end{document}
