@@ -50,6 +50,8 @@ i3Func(double x, void* params)
 	return M_PI/2 * top_rho(x)*pow(top_y(x),4);
 }
 
+
+
 int
 main()
 {
@@ -62,9 +64,9 @@ main()
 	gsl_integration_workspace *w;
 	gsl_function F;
 	
+	limit = 1000;
 	w = gsl_integration_workspace_alloc(limit);
-		limit = 1000;
-
+		
 	for(i=0; i<funcs; i++) {
 		F.function = intFunc[i];
 		F.params = NULL;
