@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.13)  28 MAR 2015 15:24
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.13)  28 MAR 2015 16:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1837,7 +1837,7 @@ Overfull \hbox (34.40538pt too wide) in paragraph at lines 7811--238
  []
 
 [9] [10] (../src/plots/VolDep.tikz)
-Overfull \hbox (7.35005pt too wide) in paragraph at lines 7787--250
+Overfull \hbox (7.35005pt too wide) in paragraph at lines 7739--250
  [][] 
  []
 
@@ -1859,10 +1859,10 @@ Package rerunfilecheck Info: File `document.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 278.
  ) 
 Here is how much of TeX's memory you used:
- 38765 strings out of 494958
- 1083381 string characters out of 6179213
- 1302773 words of memory out of 5000000
- 41021 multiletter control sequences out of 15000+600000
+ 38766 strings out of 494958
+ 1083034 string characters out of 6179213
+ 1301773 words of memory out of 5000000
+ 41022 multiletter control sequences out of 15000+600000
  104957 words of font info for 134 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  70i,12n,89p,10449b,1820s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1884,7 +1884,7 @@ b></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type
 ic/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/
 texmf/fonts/type1/public/lm/lmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/public/amsfonts/symbols/msbm10.pfb>
-Output written on document.pdf (14 pages, 550001 bytes).
+Output written on document.pdf (14 pages, 550299 bytes).
 PDF statistics:
  384 PDF objects out of 1000 (max. 8388607)
  341 compressed objects within 4 object streams
