@@ -4,9 +4,15 @@
 \BOOKMARK [2][-]{subsection.2.2}{Model for a Rare Gas Crystal}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Volume Dependency of Phonon frequencies}{section.2}% 5
 \BOOKMARK [2][-]{subsection.2.4}{Heat Capacity}{section.2}% 6
-\BOOKMARK [1][-]{section.3}{Code}{}% 7
-\BOOKMARK [2][-]{subsection.3.1}{Algorithm design}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.2}{Typical Program Execution}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.3}{Solving the Eigenvalue Problem}{section.3}% 10
-\BOOKMARK [1][-]{section.4}{Results}{}% 11
-\BOOKMARK [1][-]{section.5}{Conclusions}{}% 12
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Solid State Physics}{subsection.2.4}% 7
+\BOOKMARK [3][-]{subsubsection.2.4.2}{Thermal Physics}{subsection.2.4}% 8
+\BOOKMARK [1][-]{section.3}{Code}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Algorithm design}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Typical Program Execution}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Solving the Eigenvalue Problem}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Results}{}% 13
+\BOOKMARK [1][-]{section.5}{Discussion}{}% 14
+\BOOKMARK [1][-]{appendix.A}{Phonon Frequencies in Symmetry Directions}{}% 15
+\BOOKMARK [1][-]{appendix.B}{Volume Depdence for Phonon Frequencies in Symmetry Direction}{}% 16
+\BOOKMARK [1][-]{appendix.C}{Heat Capacities for all Considered Rare Gases}{}% 17
+\BOOKMARK [1][-]{appendix.D}{Conclusions}{}% 18

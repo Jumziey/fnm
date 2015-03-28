@@ -4,7 +4,7 @@
 #include <math.h>
 #include <gsl/gsl_math.h>
 
-//Need to declare
+//I do declare
 void frequencies(double A, double B, double m, double *q,
 				double *omega, double *eps);
 
@@ -94,8 +94,6 @@ printVal(double *q, double *val) {
 	printf("\n");
 }
 
-
-
 double*
 freqEval(sp sub, double* q)
 {
@@ -119,7 +117,7 @@ volDepEval(sp sub, double *q)
 	int i;
 	//minus,normal, plus
 	double omega[3][3], pdir[3][9], rnn[3], A[3], B[3], *gamma;
-	double h = 1E-20;// small compared to rnn
+	double h = 1E-12;// small compared to rnn
 	
 	if(q[0]+q[1]+q[2] < 1E-20)
 		return NULL; // Not defined for this point
@@ -143,9 +141,12 @@ volDepEval(sp sub, double *q)
 	
 	//Array order is minus, normal, plus
 	for(i=0; i<3; i++) {
+		if((omega[2][i] - omega[0][i]) == 0 && omega[1][i] == 0)
+			return NULL;
 		gamma[i] = (omega[2][i] - omega[0][i])/(pow(rnn[2],3)-pow(rnn[0],3));
 		gamma[i] = fabs(gamma[i]*pow(rnn[1],3)/omega[1][i]);
 	}
+	printf("\n");
 	return gamma;
 }
 

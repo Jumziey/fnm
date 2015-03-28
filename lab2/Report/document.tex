@@ -1,12 +1,17 @@
 \documentclass[11pt]{article}
 \usepackage{report}
+\newlength\figureheight 
+\newlength\figurewidth
+\newif\iftikz
+\tikztrue
+
 
 \begin{document}
 \section{Introduction}
 Placeholder
 \section{Theory}
 \subsection{Potential in a Crystal}
-The structure of crystals is typically described by using a lattice $\mathbf{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every possible site\footnote{Sites are usually where a molecule or atom resides} in a crystal structure in terms of a lattice constant $a$. If one then go on to describe a sites displacement in this structure as $\mathbf{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion of the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing  to do} 
+The structure of crystals is typically described by using a lattice $\mathbf{l} = (l_{x1}, l_{x2}, l_{x3})$, which is a vector of integers that describes the position of every possible site\footnote{Sites are usually where an certain atom resides for solids} in a crystal structure in terms of a lattice constant $a$. If one then go on to describe a sites displacement in this structure as $\mathbf{u}^l = (u^l_{x1},u^l_{x2},u^l_{x3})$, we can begin to describe the potential energy in the system. By using a simple Taylor expansion of the potential energy in the crystal and expanding it to the second term and noting that the first order term is vanishing we can get the equations of motion\footnote{By no means a straightforward thing  to do} 
 \begin{equation}
 	m \ddot{u}^l_{\alpha} = - \sum_{\mathbf{l}'\beta} D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} u^{\mathbf{l}'}_{\beta}
 	\label{eq:motion}
@@ -19,12 +24,12 @@ where $\alpha$ and $\beta$ can have the integer value of one, two or three\footn
 \end{equation}
 where $\phi$ is the potential force felt by every individual site in the lattice, $\delta_{\mathbf{l}\mathbf{l}'}$ is the kronecker delta and $\mathbf{l}''$ is yet another seperate index for the different sites in the lattice.
 \subsection{Model for a Rare Gas Crystal}
-Looking at equation \ref{eq:motion} we can see that we have a number of harmonic oscillators, thus we can start to see that we will be able to form an eigenvalue problem to solve for the different frequencies that can propagete through a crystal. But in order to simplify things we will only look at a couple of rare gases: Ne, Ar, Kr and Xe. One beutiful thing with these gases is that the crystal structure is so arranged that all the lattice sites are a $\sqrt{2}a$ distance away from its closest neighbour. We can then also use the Mie-Lennard-Jones potential to simulate the individual potential forces at each site, this gives a potential of
+Looking at equation \ref{eq:motion} we can see that we have a number of harmonic oscillators, thus we can start to see that we will be able to form an eigenvalue problem to solve for the different frequencies that can propagate through a crystal. But in order to simplify things we will only look at a couple of rare gases: Ne, Ar, Kr and Xe. One beautiful thing with these gases is that the crystal structure is so arranged that all the sites are a $\sqrt{2}a$ distance away from its closest neighbor. We can then use as simple version of the Mie-Lennard-Jones potential to simulate the individual potential forces at each site, this gives a potential of
 \begin{equation}
 	\phi(r) = 2 \epsilon \big[\frac{1}{2} \big(\frac{\sigma}{r}\big)^{12} - \big(\frac{\sigma}{r}\big)^6\big]
 	\label{eq:pot}
 \end{equation}
-where $\sigma$ is the distance between two sites in the lattice where the potential is zero, $\epsilon$ is the depth of the lennard-jones potential well\footnote{This is expanded on in \cite{bib:wiki:mlj}} and $r$ is the actually distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
+where $\sigma$ is the distance between two sites in the lattice where the potential is zero, $\epsilon$ is the depth of the lennard-jones potential well\footnote{This is expanded on in \cite{bib:wiki:mlj}} and $r$ are the distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
 \begin{equation}
 	u^l_{\alpha} = \frac{\epsilon_{\alpha}}{\sqrt{m}}e^{i(\mathbf{k}\cdot\mathbf{r}_l-\omega t)}
 \end{equation}
@@ -36,6 +41,14 @@ and we end up with
 	&+\frac{1}{2m}[A-B][4\sin{q_x\pi}\sin{q_z\pi}]\varepsilon_z
 	\label{eq:omega}
 \end{align}
+where
+\begin{align}
+	A &\equiv \frac{1}{r_{nn}} \phi'(r_{nn}) \\
+	B &\equiv \phi''(r_{nn}).
+	\label{eq:AB}
+\end{align}
+And we have replaced the vector $\mathbf{k}$ with the vector $\mathbf{q} = \mathbf{k}a/\pi$. And the subindexes $x,y,z$ corresponds to a spacial direction.
+
 If one were to look at the crystal structure for these gases we can see that they are symetric in x,y and z-direction. Thus with some simple permutations we get
 \begin{align}
 	\omega^2\varepsilon_y = &\big( \frac{1}{2m} [A+B][8-4\cos{q_y\pi}\cos{q_z\pi}-4\cos{q_y\pi}\cos{q_x\pi}] \\
@@ -48,15 +61,9 @@ If one were to look at the crystal structure for these gases we can see that the
 	&+\frac{1}{2m}[A-B][4\sin{q_z\pi}\sin{q_y\pi}]\varepsilon_y \\
 	\label{eq:omegaRest}
 \end{align}
-where
-\begin{align}
-	A &\equiv \frac{1}{r_{nn}} \phi'(r_{nn}) \\
-	B &\equiv \phi''(r_{nn}).
-	\label{eq:AB}
-\end{align}
-With this we have eigenvalue problems in every direction to solve so that we can get the frequency of the phonons that can move through the crystals. 
+With this we have eigenvalue problems in every direction to solve for so that we can get the frequencies of the phonons in a rare gas crystal.
 \subsection{Volume Dependency of Phonon frequencies}
-We want to go on and look how the volume of a crystal changes the frequencies of the phonons that can propegate through the crystal. By doing a simple approximation we say that $\sigma$ and $\epsilon$ in equation \ref{eq:pot} is not affected by this change in volume. This will make the later implementation simpler. We can then calculate the volume dependence as 
+We want to look at how the volume of a crystal changes the frequencies of the phonons in the crystal. Trough approximation we say that $\sigma$ and $\epsilon$ in equation \ref{eq:pot} is not affected by this change in volume. This will make calculations way simpler. We can then calculate the volume dependence as 
 \begin{equation}
 	\gamma_j(\mathbf{q}) = - \frac{\partial \ln{ \omega(\mathbf{q},j)}}{\partial \ln{V}}
 \end{equation}
@@ -71,34 +78,74 @@ Which then can be solved using a finite difference approximation scheme for the 
 	\label{eq:derivate}
 \end{equation}
 \subsection{Heat Capacity}
-One can derive an expression for the heat capacity as follows\cite{bib:solid}
+One can derive expression for heat capacity using both thermal physics and solid state physics. Historically the models described by thermal physics has been empirically correct in the relatively high temperatures that we humans tend to live in \cite{bib:thermo}. But for lower temperature the theory seem to break apart. Solid state physics can describe what happens at lower temperatures to heat capacity \cite{bib:solid}. To make sure that the heat capacity derived by solid state theory approaches the heat capacity derived through thermal physics in the high temperature limit we will derive values from both theories and compare them. If they converge at higher temperatures it  would clearly indicate the correctness of the written software.
+\subsubsection{Solid State Physics}
+One can derive the following expression for the heat capacity using solid state physics models\cite{bib:solid}
 \begin{equation}
 	C_V = k_B \sum_{\mathbf{q}, j} \Big[\frac{\hbar \omega(\mathbf{q},j)}{k_B T}\Big]^2
 	\frac{\exp{\Big[\frac{\hbar \omega(\mathbf{q},j)}{k_B T}\Big]}}{\Big(\exp{\Big[\frac{\hbar \omega(\mathbf{q},j)}{k_B T}\Big]}-1\Big)^2}
 	\label{eq:CV}
 \end{equation}
-where $k_B$ is the Boltzmann constant and $j$ just represent each spacial direction possible. 
+where $k_B$ is the Boltzmann constant and $j$ just represent each spacial direction. 
 
-Where not quite happy yet though, the most relevant information would be heat capacity per unit volume. To do this we look divide with the volume we have calculated the heat capacity for. This end up being for one brillouin zone. Here we take great care to not overdoing the summing of values at every site, thus we divide with the appropriate ''sphere volume'', inhabited by each site in the crystal, and avoid summing the sphere volume at every site that is outside the brilliouin zone. Thus we get some weight at every site described by $\mathbf{q}$ \footnote{$\mathbf{q}$ is a simple rewrite of the familiar $\mathbf{k}$ with some constants}. The final expression becomes
+Where not quite happy yet though, the most relevant information would be heat capacity per unit volume. This can be done for macroscopically large crystals by approximating the discrete $\mathbf{k}$ sum as an integral, due to the intricacies of solid state physics this approximation becomes
+\begin{equation}
+	\sum_\mathbf{k} \rightarrow \frac{V}{(2\pi)^3} \int d\mathbf{k}
+\end{equation}
+And voilà, we get an expression for the volume we can divide away. But to make things numerically simpler we will abuse symmetry and only integrate over 1/48 part of the Brillouin zone\footnote{If you don't know what the author talks about it is recommended that you read \cite{bib:solid} since describing this is outside the scope of this document}. We can then multiply by 48 do obtain the correct result. To calculate the integral numerically we then go on and approximate it by a sum of unit volumes $\Delta\mathbf{k}$ times the integrand. Basically right now we are at the expression
+\begin{equation}
+	\frac{C_V}{V} = \frac{1}{(2\pi)^3} \sum_j \sum_\mathbf{q} \Delta\mathbf{k} f_j(\mathbf{q})
+\end{equation}
+where $f_j$ is the terms in equation \ref{eq:CV} without the summation sign. Left now is to move from using the $\mathbf{k}$ and $\mathbf{q}$ representation for each $\mathbf{k}$ vector to only use $\mathbf{q}$. Ontop of that we need to take care to not over summing the $\mathbf{k}$ vectors that lies on the boundary of the Brillouin zone. There is also extra care needed to be taking since we only actually integrate over 1/48 part of the Brillouin zone. Doing the conversion of $\mathbf{k}\rightarrow\mathbf{q}$ and caring about not over summing we get the expression
 \begin{equation}
 	\frac{C_V}{V} = \frac{1}{(2\pi)^3} \frac{4}{1000} \big(\frac{\pi}{a})^3 \sum_j \sum_{\mathbf{q}} W(\mathbf{q})f_j(\mathbf{q}) 
 \end{equation}
-where $f_j$ is the expression within the sum sign in equation \ref{eq:CV} multiplied with boltzmann constant, $W(\mathbf{q})$ is the weight for a certain $\mathbf{q}$, to compensate for the volume added that is outside the brillouin zone. 
+where $W(\mathbf{q})$ is a weight that take care of not over summing, and the $\mathbf{q}$ we are summing over are specified in the code as 48 values with weights in the beginning of the program. 
 
+\subsubsection{Thermal Physics}
+We define the heat capacity at constant volume as
+\begin{equation}
+	C_V = \Big(\frac{\partial U}{\partial V}\Big)_V
+\end{equation}
+where $U$ is the energy of the gas. Using the equipartition theorem we end up with an expression for the energy in a gas\cite{bib:thermo}
+\begin{equation}
+	U = \frac{Nfk_BT}{2}
+\end{equation}
+where $N$ is the number of particles, $f$ is the degrees of freedom, $k_B$ is the Boltzmann constant and $T$ is the temperature.  One can rewrite $N = nV$ where $V$ is the volume and $n$ is the number of particles per unit volume. Putting this together we end up with expression
+\begin{equation}
+	\frac{C_V}{V} = \frac{nfk_B}{2}
+	\label{eq:thermoCv}
+\end{equation}
 
+Now in this report we only look at rare gases that confusingly enough are solids because of the cold temperatures we will be looking at. This yeilds six degrees of freedoms. Beyond that we also have to calculate $n$. Because of this we need to look at the crystal structure the rare gases we are looking at form when they go over into the solid state. This is depicted in figure \ref{fig:fcc}. If we say that the length of the sides in the cube are 2$a$  and think about the radius of the spherical volume that each site occupy must be the distance to the nearest neighbor ($r_{nn}$) divided by half we get an expression for $n$
+\begin{equation}
+	n = \Big(\frac{8}{8}\frac{r_{nn}}{2} + \frac{6}{2}\frac{r_{nn}}{2}\Big)/(2a)^3
+\end{equation}
+Noting that $r_{nn} = \sqrt{2}a$ we get
+\begin{equation}
+	n = \Big(\frac{8}{16} + \frac{6}{4}\Big)/((2\sqrt{2})^3(r_{nn})^2)
+	\label{eq:n}
+\end{equation}
+and by using this equation in equation \ref{eq:thermoCv} we can calculate the heat capacity in the high temperature limit using thermal physics. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{fcc.png}
+	\caption{A picture showing the fcc structure of the rare gas solids considered in this document.}
+	\label{fig:fcc}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CODE
 \section{Code}
-In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases discussed and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. We will go through both the algorithm design and the code in more detail. 
+In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases discussed and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. Here we go through the code and its design.
 \subsection{Algorithm design}
-The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the frequencies possible in different gases at different sites given certain properties. This is done by solving the eigenvalue problem described in equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calcualtion in this file is as follows
+The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the phonon frequencies possible in certain rare gases. This is done by solving the eigenvalue problem described by equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calculation in this file is as follows
 \begin{lstlisting}
  void frequencies(double A, double B, double m, double *q, 
 				double *omega, double *eps);
 \end{lstlisting}
-where A and B are the constants described in equation \ref{eq:AB}, $m$ is the mass of the atoms at the sites in the lattice, q is the modified k vector values, omega and eps are the return values where omega is the frequencies in the tree different directions and eps is the vector corresponding to each frequency describing its direction. This is a separate function since it is essential in not only calculating the frequency but the volume dependency of the frequency as well as the heat capacity of the rare gas. 
+where \verb+A+ and \verb+B+ are the constants described by equation \ref{eq:AB}, \verb+m+ is the mass of the atoms at the sites in the lattice, \verb+q+ are the modified k vector values, \verb+omega+ and \verb+eps+ are the return values where \verb+omega+ are the frequencies in the tree different directions and \verb+eps+ are the vector corresponding to each frequency describing its direction. This is a separate function since it is essential in not only calculating the frequency but the volume dependency of the frequency as well as the heat capacity of the rare gas. Its worth to also note that the eigenvalues \verb+omega+ and its corresponding eigenvector \verb+eps+ is sorted so by eigenvalue value in descending order.
 
-In \verb+phonons.c+ the rest of the program resides. Its main function is to use the frequency function to use the frequencies function to print usuable data, calcualate the volume dependency of the phonon frequencies as well as calculating heat capacity in the gases. In order to keep track of all the different gas properties a structure is declared in \verb+phonons.c+ as follows
+In \verb+phonons.c+ the rest of the program resides. Its main function is to use the frequency function to print usable data, calculate the volume dependency of the phonon frequencies as well as calculating heat capacity using solid state theory of the rare gases. In order to keep track of all the different gas properties a substance structure is declared in \verb+phonons.c+ as follows
 \begin{lstlisting}
 typedef struct sp{
 	double sigma;
@@ -113,7 +160,7 @@ In order to use the \verb+frequencies+ function and write out different phonon f
 \begin{lstlisting}
 double* freqEval(sp sub, double* q)
 \end{lstlisting} 
-has been written. The inputs are simply a substance properties structure \verb+sub+ and a \verb+q+ vector, describing for which point the frequencies should be evaluated. The function returns an array with the three frequencies at the position described by \verb+q+. In order to calculate multiple frequencies evenly distributed between two positions described by two \verb+q+ vectors a function declared as 
+has been written. The inputs are simply a substance properties structure \verb+sub+ and a \verb+q+ vector, describing for which point the frequencies should be evaluated. The function returns an array with the three frequencies at the position described by \verb+q+. In order to calculate multiple frequencies evenly distributed between two \verb+q+ vectors a function declared as 
 \begin{lstlisting}
 void nEval(sp sub, double *q1, double *q2, int n, double* (*evalFunc)(sp, double*))
 \end{lstlisting}
@@ -125,19 +172,19 @@ In order to calculate the volume dependency of the phonon frequencies a function
 \begin{lstlisting}
 double* volDepEval(sp sub, double *q)
 \end{lstlisting} 
-has been written. The input is the substance properties structure \verb+sub+ and a vector \verb+q+ again describing the position we are interested in. The return value are the volume dependencies for the phonon frequencies. In order to calculate the volume dependency equation \ref{eq:volDep} has been used, then to estimate the derivate equation \ref{eq:derivate} is used. In order to calculate multiple frequencies evenly distributed between two positions described by two \verb+q+ vectors we can use \verb+nEval+ again as done previously with \verb+freqEval+. The difference is that the last argument in \verb+freqEval+ becomes \verb+volDepEval+.
+has been written. The input are the substance properties structure \verb+sub+ and a vector \verb+q+ again describing the position we are interested in. The return value are the volume dependencies for the phonon frequencies. In order to calculate the volume dependency equation \ref{eq:volDep} has been used, then to estimate the derivate equation \ref{eq:derivate} is used. In order to calculate multiple frequencies evenly distributed between two \verb+q+ vectors we can use \verb+nEval+ again as done previously with \verb+freqEval+. The difference is that the last argument in \verb+nEval+ becomes \verb+volDepEval+.
 
 If one instead are only interested in the heat capacity for one of the gases the function declared as
 \begin{lstlisting}
 double cvEval(sp sub, double T)
 \end{lstlisting} 
-has been written. Here the input is only the substance properties structure \verb+sub+ and the temperature in Kelvin \verb+T+. Th e function returns the heat capacity. The heat capacity is calculated using equation \ref{eq:CV} and a some predefined values for \verb+q+ and the weights that holds for all gases that the program is implemented for. Since this equation do not follow the same structure as \verb+freqEval+ and \verb+volDepEval+ a separate function to calculate multiple heat capacities between two temperatures has been written. This function is declared
+has been written. Here the input is only the substance properties structure \verb+sub+ and the temperature in Kelvin \verb+T+. The function returns the heat capacity. The heat capacity is calculated using equation \ref{eq:CV} and a some predefined values for \verb+q+ and the weights that holds for all gases that the program is implemented for. Since this equation do not follow the same structure as \verb+freqEval+ and \verb+volDepEval+ a separate function to calculate multiple heat capacities between two temperatures has been written. This function is declared as
 \begin{lstlisting}
 void nCvEval(sp sub, double T1, double T2, int n)
 \end{lstlisting}
 where the input is the substance properties structure \verb+sub+, the two temperatures \verb+T1+ and \verb+T2+ which between the heat capacity shall be calculated in \verb+n+ points.  
 
-Outside of that the code is responsible for user input/output. Making sure that the input is correctly interpreted and that the output follows a proper output formatting that was described in the program specification. This is mainly done via the nested switch statement in the \verb+main+ function and \verb+printVal+ function.
+Outside of that the code is responsible for user input/output. Making sure that the input is correctly interpreted and that the output follows a proper output formatting that was described in the program specification. This is mainly done via the nested switch statement in the \verb+main+ function and the \verb+printVal+ function.
 
 \subsection{Typical Program Execution}
 When the arguments are passed to the program at execution the proper substance structure is loaded and the calculation starts. Depending on what one are interested in, phonon frequencies, volume dependency of phonon frequencies or heat capacity of the gas, different functions are called in a nested switch statement in the main function. The code has been clearly divided for the different use cases so the sturcture should be very clear for a beginner who reads the code. There is also basic error checking made to make sure that the input is properly formatted.
@@ -145,6 +192,9 @@ When the arguments are passed to the program at execution the proper substance s
 An example command could be
 \begin{lstlisting}
 >phonons Xe cv 50 100
+\end{lstlisting}
+Then the program loads the substance structure related to \verb+Xe+ and the function \verb+nCvEval+ is be called so that it evaluate the heat capacity of a Xe-gas at ten points between 50 and 100 Kelvin spaced equally. \verb+nCvEval+ in turns call \verb+cvEval+ for every point that needs to be evaluated and \verb+cvEval+ calculate the heat capacity with help of the \verb+frequencies+ function and outputs
+\begin{lstlisting}
 50 678837
 55 685602
 60 690814
@@ -156,7 +206,6 @@ An example command could be
 90 706393
 95 707694
 \end{lstlisting}
-Then the program loads the substance structure related to \verb+Xe+ and the function \verb+nCvEval+ is be called so that it evaluate the heat capacity of a Xe-gas at ten points between 50 and 100 Kelvin spaced equally. \verb+nCvEval+ in turns call \verb+cvEval+ for every point that needs to be evaluated and \verb+cvEval+ calculate the heat capacity with help of the \verb+frequencies+ function and outputs the results so the user can read it.
 
 \subsection{Solving the Eigenvalue Problem}
 In order to solve the eigenvalue problem in the \verb+frequencies+ function we have used the GSL library. More specifically the function declared as
@@ -167,26 +216,7 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 
 \newpage
 \section{Results}
-\begin{figure}[H]
-	\centering
-	\newlength\figureheight 
-	\newlength\figurewidth 
-	\setlength\figureheight{15cm} 
-	\setlength\figurewidth{15cm}
-	\input{../src/plots/Freq.tikz}
-	\caption{The dispersion relation plotted in different symmetry directions for different rare gases. The x-axis shows the position in the lattice as it goes in different symmetry directions.}
-	\label{fig:Freq}
-\end{figure}
-\newpage
-\begin{figure}[H]
-	\centering
-	\setlength\figureheight{18cm} 
-	\setlength\figurewidth{14cm}
-	\input{../src/plots/VolDep.tikz}
-	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
-	\label{fig:VolDep}
-\end{figure}
-\newpage
+\iftikz
 \begin{figure}[H]
 	\centering
 	\setlength\figureheight{8cm} 
@@ -195,7 +225,37 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
 	\label{fig:Ne440}
 \end{figure}
+\fi
+\section{Discussion}
+\appendix
+\section{Phonon Frequencies in Symmetry Directions}
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{15cm} 
+	\setlength\figurewidth{15cm}
+	\input{../src/plots/Freq.tikz}
+	\caption{The dispersion relation plotted in different symmetry directions for different rare gases. The x-axis shows the position in the lattice as it goes in different symmetry directions.}
+	\label{fig:Freq}
+\end{figure}
+\fi
 \newpage
+\section{Volume Depdence for Phonon Frequencies in Symmetry Direction}
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{18cm} 
+	\setlength\figurewidth{14cm}
+	\input{../src/plots/VolDep.tikz}
+	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
+	\label{fig:VolDep}
+\end{figure}
+\fi
+\newpage
+
+\newpage
+\section{Heat Capacities for all Considered Rare Gases}
+\iftikz
 \begin{figure}[H]
 	\centering
 	\setlength\figureheight{16cm} 
@@ -204,7 +264,7 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
 	\label{fig:Cv}
 \end{figure}
-
+\fi
 
 
 \section{Conclusions}
@@ -212,6 +272,7 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 \bibitem{bib:wiki:mlj} [2015-03-15] \url{http://en.wikipedia.org/wiki/Lennard-Jones_potential}
 \bibitem{bib:solid} Neil W. Ashcroft , N. David Mermin, \textit{Solid State Physics} (Cengage Learning 1976)
 \bibitem{bib:num} Gene H. Golub, Charles F. Van Loan \textit{Matrix Computations} (JHU Press 1996)
+\bibitem{bib:thermo} Daniel V. Schroeder \textit{An introduction to thermal physics} (Addison Wesley 2000)
 \end{thebibliography}
 
 \end{document}
