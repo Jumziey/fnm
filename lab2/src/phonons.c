@@ -141,6 +141,7 @@ volDepEval(sp sub, double *q)
 	
 	//Array order is minus, normal, plus
 	for(i=0; i<3; i++) {
+		//Here we would have 0/0 - undefined point!
 		if((omega[2][i] - omega[0][i]) == 0 && omega[1][i] == 0)
 			return NULL;
 		gamma[i] = (omega[2][i] - omega[0][i])/(pow(rnn[2],3)-pow(rnn[0],3));
