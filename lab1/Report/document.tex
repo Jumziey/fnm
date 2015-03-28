@@ -20,7 +20,7 @@ and compare it with its true theoretical Fourier transform
 	\label{fig:gaussianFFT}
 \end{figure}
 
-As we can see in figure \ref{fig:gaussianFFT} the fast fourier transform seem to be pretty spot on. The resolution of the frequencies dependent on the sampling frequency and the amount of samples taken. This because the amount of samples taken directly translates on to how many different frequency values we can get out of the transform\footnote{Due to the linearity of the transform we get one output for each input}. The sample frequency tells us which frequencies we could possibly have caught since one needs two points to capture a period. Basically we have frequencies in the range $[-\frac{1}{2 \Delta},\frac{1}{2 \Delta}]$, where $\Delta$ is the time between samples and since we simulate that we take 1024 samples we get 
+As we can see in figure \ref{fig:gaussianFFT} the fastc fourier transform seem to be pretty spot on. The resolution of the frequencies dependent on the sampling frequency and the amount of samples taken. This because the amount of samples taken directly translates on to how many different frequency values we can get out of the transform\footnote{Due to the linearity of the transform we get one output for each input}. The sample frequency tells us which frequencies we could possibly have caught since one needs two points to capture a period. Basically we have frequencies in the range $[-\frac{1}{2 \Delta},\frac{1}{2 \Delta}]$, where $\Delta$ is the time between samples and since we simulate that we take 1024 samples we get 
 \begin{align}
 	&(\frac{1}{2 \Delta} +\frac{1}{2 \Delta})/\textit{number of jumps between frequency values} \\ 
 	=& (\frac{1}{2\Delta} +\frac{1}{2\Delta})/1023\\
