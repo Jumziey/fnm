@@ -143,7 +143,7 @@ volDepEval(sp sub, double *q)
 	for(i=0; i<3; i++) {
 		if((omega[2][i] - omega[0][i]) == 0) {
 			gamma[i] = 0;
-			break;
+			continue;
 		}
 		gamma[i] = (omega[2][i] - omega[0][i])/(pow(rnn[2],3)-pow(rnn[0],3));
 		gamma[i] = fabs(gamma[i]*pow(rnn[1],3)/omega[1][i]);
