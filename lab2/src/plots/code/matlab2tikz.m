@@ -1218,7 +1218,7 @@ function [m2t, options] = getAxisOptions(m2t, handle, axis)
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     % get axis label
-1    axisLabel = get(get(handle, [upper(axis),'Label']), 'String');
+    axisLabel = get(get(handle, [upper(axis),'Label']), 'String');
     if ~isempty(axisLabel)
         axisLabelInterpreter = ...
             get(get(handle, [upper(axis),'Label']), 'Interpreter');

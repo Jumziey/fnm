@@ -3,7 +3,7 @@
 \newlength\figureheight 
 \newlength\figurewidth
 \newif\iftikz
-\tikzfalse
+\tikztrue
 
 
 \begin{document}
@@ -16,22 +16,23 @@ The structure of crystals is typically described by using a lattice $\mathbf{l} 
 	m \ddot{u}^l_{\alpha} = - \sum_{\mathbf{l}'\beta} D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} u^{\mathbf{l}'}_{\beta}
 	\label{eq:motion}
 \end{equation}
-where $\alpha$ and $\beta$ can have the integer value of one, two or three\footnote{Representing the spacial dimensions}, $m$ is the mass of whatever inhabit the sites in the crystal\footnote{we are only gonna look at monoatomic gases so $m$ should be the same for all the sites}, $\mathbf{l}$ and $\mathbf{l}'$ are only different site positions in the lattice. Lastly we have term $D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta}$ which actually is written
+where $\alpha$ and $\beta$ can have the integer value of one, two or three\footnote{Representing the spacial dimensions}, $m$ is the mass of whatever inhabit the sites in the crystal\footnote{we are only gonna look at mono-atomic gases so $m$ should be the same for all the sites}, $\mathbf{l}$ and $\mathbf{l}'$ are only different site positions in the lattice. Lastly we have term $D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta}$ which actually is written
 \begin{equation}
 	D^{\mathbf{l}\mathbf{l}'}_{\alpha \beta} = \delta_{\mathbf{l} \mathbf{l}'} \sum_{\mathbf{l}''} \frac{\partial^2 \phi (\mathbf{l}-\mathbf{l}'')}{\partial x_{\alpha} \partial x_{\beta}}
 	-
 	\frac{\partial^2 \phi (\mathbf{l}-\mathbf{l}')}{\partial x_{\alpha} \partial x_{\beta}}
 \end{equation}
-where $\phi$ is the potential force felt by every individual site in the lattice, $\delta_{\mathbf{l}\mathbf{l}'}$ is the kronecker delta and $\mathbf{l}''$ is yet another seperate index for the different sites in the lattice.
+where $\phi$ is the potential force felt by every individual site in the lattice, $\delta_{\mathbf{l}\mathbf{l}'}$ is the Kronecker delta and $\mathbf{l}''$ is yet another separate index for the different sites in the lattice.
 \subsection{Model for a Rare Gas Crystal}
 Looking at equation \ref{eq:motion} we can see that we have a number of harmonic oscillators, thus we can start to see that we will be able to form an eigenvalue problem to solve for the different frequencies that can propagate through a crystal. But in order to simplify things we will only look at a couple of rare gases: Ne, Ar, Kr and Xe. One beautiful thing with these gases is that the crystal structure is so arranged that all the sites are a $\sqrt{2}a$ distance away from its closest neighbor. We can then use as simple version of the Mie-Lennard-Jones potential to simulate the individual potential forces at each site, this gives a potential of
 \begin{equation}
 	\phi(r) = 2 \epsilon \big[\frac{1}{2} \big(\frac{\sigma}{r}\big)^{12} - \big(\frac{\sigma}{r}\big)^6\big]
 	\label{eq:pot}
 \end{equation}
-where $\sigma$ is the distance between two sites in the lattice where the potential is zero, $\epsilon$ is the depth of the lennard-jones potential well\footnote{This is expanded on in \cite{bib:wiki:mlj}} and $r$ are the distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
+where $\sigma$ is the distance between two sites in the lattice where the potential is zero, $\epsilon$ is the depth of the Lennard-Jones potential well\footnote{This is expanded on in \cite{bib:wiki:mlj}} and $r$ are the distance between two sites. Using this information we can set up the dynamic matrix and solve for the frequency. To start with we write out the whole system described by equation \ref{eq:motion} and \ref{eq:pot}. After that we do the ansatz that 
 \begin{equation}
 	u^l_{\alpha} = \frac{\epsilon_{\alpha}}{\sqrt{m}}e^{i(\mathbf{k}\cdot\mathbf{r}_l-\omega t)}
+	\label{eq:ansatz}
 \end{equation}
 and we end up with 
 \begin{align}
@@ -49,7 +50,7 @@ where
 \end{align}
 And we have replaced the vector $\mathbf{k}$ with the vector $\mathbf{q} = \mathbf{k}a/\pi$. And the subindexes $x,y,z$ corresponds to a spacial direction.
 
-If one were to look at the crystal structure for these gases we can see that they are symetric in x,y and z-direction. Thus with some simple permutations we get
+If one were to look at the crystal structure for these gases we can see that they are symmetric in x,y and z-direction. Thus with some simple permutations we get
 \begin{align}
 	\omega^2\varepsilon_y = &\big( \frac{1}{2m} [A+B][8-4\cos{q_y\pi}\cos{q_z\pi}-4\cos{q_y\pi}\cos{q_x\pi}] \\
 	&+ \frac{B}{m}[4-4\cos{q_z\pi}\cos{q_x\pi}]\big)\varepsilon_y \\
@@ -117,7 +118,7 @@ where $N$ is the number of particles, $f$ is the degrees of freedom, $k_B$ is th
 	\label{eq:thermoCvFirst}
 \end{equation}
 
-Now in this report we only look at rare gases that confusingly enough are solids because of the cold temperatures we will be looking at. This yeilds six degrees of freedoms. Beyond that we also have to calculate $n$. Because of this we need to look at the crystal structure the rare gases we are looking at form when they go over into the solid state. This is depicted in figure \ref{fig:fcc}. If we say that the length of the sides in the cube are 2$a$  and think about the radius of the spherical volume that each site occupy must be the distance to the nearest neighbor ($r_{nn}$) divided by half we get an expression for $n$
+Now in this report we only look at rare gases that confusingly enough are solids because of the cold temperatures we will be looking at. This yields six degrees of freedoms. Beyond that we also have to calculate $n$. Because of this we need to look at the crystal structure the rare gases we are looking at form when they go over into the solid state. This is depicted in figure \ref{fig:fcc}. If we say that the length of the sides in the cube are 2$a$  and think about the radius of the spherical volume that each site occupy must be the distance to the nearest neighbor ($r_{nn}$) divided by half we get an expression for $n$
 \begin{equation}
 	n = \frac{4}{(2a)^3}
 \end{equation}
@@ -139,9 +140,18 @@ and by using this equation in equation \ref{eq:thermoCvFirst} we finally get
 	\label{fig:fcc}
 \end{figure}
 
+\section{The Brillouin Zone and Symmetry Direction}
+While its beyond this report to describe the Brillouin zone and its relation to the crystal structure in proper way, it is instructive to have a short note about it. Basically the $\mathbf{k}$ vectors in the ansatz made in equation \ref{eq:ansatz} are inside this zone. Thus we should have periodicy in the symmetry directions as we look at the frequencies. In figure \ref{fig:fccBrillouin} we can see this Brillouin zone for the crystal structure we are looking at. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{fccBrillouin.png}
+	\caption{A picture showing the first Brillouin zone for solids in the fcc structure. The symmetry directions are marked as $\mathbf{k}_x$,$\mathbf{k}_y$ and $\mathbf{k}_z$ }
+	\label{fig:fccBrillouin}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CODE
 \section{Code}
-In order to obtain usuable values for the volume dependency of phonon frequencies in the rare gases discussed and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. Here we go through the code and its design.
+In order to obtain usable values for the volume dependency of phonon frequencies in the rare gases discussed and the heat capacity using solid state physics theory, we have developed some code that calculate this numerically. Here we go through the code and its design.
 \subsection{Algorithm design}
 The code is written in $C$ and has been divided into two files: \verb+phonons.c+ and \verb+frequencies.c+. In \verb+frequencies.c+ we calculate the phonon frequencies possible in certain rare gases. This is done by solving the eigenvalue problem described by equation \ref{eq:omega} and \ref{eq:omegaRest}. The declaration of the frequencies function that does this calculation in this file is as follows
 \begin{lstlisting}
@@ -192,7 +202,7 @@ where the input is the substance properties structure \verb+sub+, the two temper
 Outside of that the code is responsible for user input/output. Making sure that the input is correctly interpreted and that the output follows a proper output formatting that was described in the program specification. This is mainly done via the nested switch statement in the \verb+main+ function and the \verb+printVal+ function.
 
 \subsection{Typical Program Execution}
-When the arguments are passed to the program at execution the proper substance structure is loaded and the calculation starts. Depending on what one are interested in, phonon frequencies, volume dependency of phonon frequencies or heat capacity of the gas, different functions are called in a nested switch statement in the main function. The code has been clearly divided for the different use cases so the sturcture should be very clear for a beginner who reads the code. There is also basic error checking made to make sure that the input is properly formatted.
+When the arguments are passed to the program at execution the proper substance structure is loaded and the calculation starts. Depending on what one are interested in, phonon frequencies, volume dependency of phonon frequencies or heat capacity of the gas, different functions are called in a nested switch statement in the main function. The code has been clearly divided for the different use cases so the structure should be very clear for a beginner who reads the code. There is also basic error checking made to make sure that the input is properly formatted.
 
 An example command could be
 \begin{lstlisting}
@@ -221,14 +231,48 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 
 \newpage
 \section{Results}
+In this section we will go through different results specifically for the Argon solid, plots for the other gases exists in the appendix. Basically the same conclusions can be drawn from all the gases except small differences. Looking at figure \ref{fig:ArFreqResult} we can see the frequencies in the symmetry directions. Why the plot is not going on longer can clearly be seen in figure \ref{fig:ArFreqResultLonger}. The frequencies are basically periodic in the Brillouin zone. This then translates to the volume dependency of the phonon frequencies, as seen in figure \ref{fig:ArVolDepResult}. Lastly we can see the heat capacity calculated for the Argon solid using both the numerically solved for solid state theory and using thermal physics theory in figure \ref{fig:ArCvResult}.
 \iftikz
 \begin{figure}[H]
 	\centering
-	\setlength\figureheight{8cm} 
-	\setlength\figurewidth{14cm}
-	\input{../src/plots/Ne440.tikz}
-	\caption{The dispersion relation plotted in different symmetry directions for different rare gases.}
-	\label{fig:Ne440}
+	\setlength\figureheight{4cm} 
+	\setlength\figurewidth{15cm}
+	\input{../src/plots/ArFreqResult.tikz}
+	\caption{Here we can see the phonon frequencies in the Argon solid from the middle of the first Brillouin zone to the middle of the second. All frequencies has been plotted (x,y and z) in each window. Due to sorting ascending frequency value we do not have the same color of all directions in the [110] direction.}
+	\label{fig:ArFreqResult}
+\end{figure}
+\fi
+
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{6cm} 
+	\setlength\figurewidth{12cm}
+	\input{../src/plots/ArFreqResultLonger.tikz}
+	\caption{This picture highlights the periodicity of the frequency. The red vertical lines shows the boundary of the Brillouin zone and the cyan colored line shows the middle of the second Brillouin zone.}
+	\label{fig:ArFreqResultLonger}
+\end{figure}
+\fi
+
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{4cm} 
+	\setlength\figurewidth{15cm}
+	\input{../src/plots/ArVolDepResult.tikz}
+	\caption{We can see the volume dependency of the phonon frequencies in the different symmetry directions. }
+	\label{fig:ArVolDepResult}
+\end{figure}
+\fi
+
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{5cm} 
+	\setlength\figurewidth{12cm}
+	\input{../src/plots/ArCvResult.tikz}
+	\caption{Here we can see the two models for the heat capacity approaching each other in the high temperature limits.}
+	\label{fig:ArCvResult}
 \end{figure}
 \fi
 \section{Discussion}
@@ -245,7 +289,7 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 \end{figure}
 \fi
 \newpage
-\section{Volume Depdence for Phonon Frequencies in Symmetry Direction}
+\section{Volume Dependency for Phonon Frequencies in Symmetry Direction}
 \iftikz
 \begin{figure}[H]
 	\centering
@@ -272,7 +316,9 @@ where the the input is the matrix \verb+A+ and the output \verb+eval+ and \verb+
 \fi
 
 
-\section{Conclusions}
+\section{Discussion}
+
+
 \begin{thebibliography}{99}
 \bibitem{bib:wiki:mlj} [2015-03-15] \url{http://en.wikipedia.org/wiki/Lennard-Jones_potential}
 \bibitem{bib:solid} Neil W. Ashcroft , N. David Mermin, \textit{Solid State Physics} (Cengage Learning 1976)

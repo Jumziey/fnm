@@ -1,0 +1,96 @@
+*Checking out your frequencies.c
+++ Your frequencies routine seems to work!
+*Compiling your program
+++Seems to be possible to compile your program
+*Checking that your program behaves reasonably
+
+Given the command-line
+phonons Xe cv 0.1
+Your program should exit with a zero status and print some result on
+standard output. Yours does not.
+Your program exits with status 0
+
+Given the command-line
+phonons Xe gamma 0.1 0.1 0.1 0.2 0.2 0.2 7
+Your program should exit with a zero status and print some result on
+standard output. Yours does not.
+Your program exits with status 0
+
+Given the command-line
+phonons Ne cv 0.1 0.2 100
+Your program should exit with a zero status and print some result on
+standard output. Yours does not.
+Your program exits with status 0
+Your program tries to calculate gamma for q=(0,0,0). Please note
+that gamma is not defined in this point (there is no well-defined
+limit of gamma as q tends to zero). In this case there should be no
+output on standard output.
+-- There are something lacking in your program's behaviour
+*Checking that your program calculates omega correctly
+++ Your program calculates the correct phonon frequencies
+*Checking that your program calculates gamma correctly
+
+invoked as
+phonons Ar gamma 0.1 0.1 0.1 0.4 0.5 0.6
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Ar gamma 0 0 1 0 1 0
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Ne gamma 0.1 0.1 0.1 0.4 0.5 0.6
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Ne gamma 0 0 1 0 1 0
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Kr gamma 0.1 0.1 0.1 0.4 0.5 0.6
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Kr gamma 0 0 1 0 1 0
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Xe gamma 0.1 0.1 0.1 0.4 0.5 0.6
+There are the wrong number of rows in the output!
+
+invoked as
+phonons Xe gamma 0 0 1 0 1 0
+There are the wrong number of rows in the output!
+-- Your program does not properly calculate gamma
+Since your program passes the test for the phonons, you are probably just
+calculating the derivative erroneously. Check that you are using the correct
+formula etc.
+*Checking that your program calculates cv correctly
+
+invoked as
+phonons Ar cv 1
+There are the wrong number of rows in the output! (Make sure that
+no extra stuff is printed on standard output).
+
+invoked as
+phonons Ar cv 100
+There are the wrong number of rows in the output! (Make sure that
+no extra stuff is printed on standard output).
+
+invoked as
+phonons Kr cv 1 100 17
+There are the wrong number of rows in the output! (Make sure that
+no extra stuff is printed on standard output).
+
+invoked as
+phonons Ar cv 1 101 26
+There are the wrong number of rows in the output! (Make sure that
+no extra stuff is printed on standard output).
+
+invoked as
+phonons Kr cv 1 101 26
+There are the wrong number of rows in the output! (Make sure that
+no extra stuff is printed on standard output).
+Too many failed tests, quitting
+
+17 of 73 tests failed. Fix the errors then try again.

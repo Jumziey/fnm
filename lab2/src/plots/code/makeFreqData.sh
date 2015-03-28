@@ -17,3 +17,8 @@ do
 	done
 done
 
+echo "Extras:"
+commando="../../phonons Ar omega 0 0 0 4 4 0 800"
+echo $commando
+eval $commando > ../data/"ArFreq440"
+

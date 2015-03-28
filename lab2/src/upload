@@ -1,0 +1,3 @@
+#!/bin/sh
+scp $1 jeve0010@sesam.lu.umu.se:fnm/lab2/test/
+

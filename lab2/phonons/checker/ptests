@@ -1,0 +1,7 @@
+Ar gamma 0.1 0.1 0.1
+Xe cv 0.1
+Kr omega 0.1 0.1 0.1
+Xe gamma 0.1 0.1 0.1 0.2 0.2 0.2 7
+Ne omega 0.1 0.1 0.1 0.2 0.2 0.2
+Ar gamma 0.1 0.1 0.1
+Ne cv 0.1 0.2 100

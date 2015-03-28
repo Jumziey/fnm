@@ -1,0 +1,687 @@
+#! /bin/bash
+
+tempdir=/var/tmp/phonons_check.$$
+PATH=$tempdir:$PATH
+FAILED=0 ; DONE=0
+
+if [ -e $tempdir ] ; then
+  rm -rf $tempdir
+fi
+
+mkdir $tempdir
+
+# First things first: The functions that handle traps.
+
+function myonexit () {
+    cd /
+    rm -rf $tempdir
+}
+
+function myonsignal () {
+    cat <<EOF
+The test script caught a signal
+$FAILED of $DONE tests failed
+EOF
+    exit 0;
+}
+
+# The traps
+
+trap myonexit EXIT
+trap myonsignal HUP INT QUIT ILL TRAP ABRT BUS FPE KILL USR1 SEGV USR2 PIPE ALRM TERM CHLD CONT STOP TSTP TTIN TTOU URG XCPU XFSZ VTALRM PROF WINCH
+
+function failexit() {
+    FAILED=$(($FAILED+1))
+    cat <<EOF
+
+$FAILED of $DONE tests failed. Fix the errors then try again.
+EOF
+    exit 0;
+}
+
+function maybefailexit () {
+    if [ $FAILED -gt 15 ] ; then
+	echo "Too many failed tests, quitting"
+	failexit
+    fi
+    FAILED=$(($FAILED+1))
+}
+
+function passexit () {
+    cat <<EOF
+
+ALL TESTS PASSED
+EOF
+    exit 0;
+}
+
+# Utility function.
+function xxxrun () { $* ; }
+
+#==================================================================    
+# And here are the real tests:
+#
+# Test one: check for frequencies.c and see that it compiles ...
+DONE=$(($DONE + 1))
+if [ ! -e ./frequencies.c ]; then
+    cat<<EOF
+You don't have a frequencies.c file, further testing is impossible.
+EOF
+    failexit
+fi
+
+# Olsson added "-std=c99" to the compilation of frequencies, 2015-02-13
+cp ./frequencies.c $tempdir
+pushd $tempdir >/dev/null 2>&1
+gcc -std=c99 -c -O2 frequencies.c >/dev/null 2>&1
+if [ ! -e frequencies.o ] ; then
+    cat <<EOF
+You have a file frequencies.c but it doesn't compile, further testing is 
+impossible.
+EOF
+    failexit
+fi
+
+#------------------------------------------------------------------
+# Test two check that frequencies links with the reference and that
+# it gives correct eigenvalues and vectors
+DONE=$(($DONE + 1))
+echo "*Checking out your frequencies.c"
+
+cp /home/fnm/phonons/checker64/fcheck.o .
+gcc -o fcheck fcheck.o frequencies.o -lgsl -lgslcblas -lm > gcc.err 2>&1
+
+if [ $? -ne 0 ] ; then
+    cat <<EOF
+I can't link with your frequencies.c, make sure that the function
+frequencies is defined as specified:
+
+void frequencies(double A, double B, double m, double *q,
+                 double *omega, double *eps)
+
+The output from the linker was:
+EOF
+    cat gcc.err
+    echo "This makes further testing impossible."
+    failexit
+fi
+
+xxxrun fcheck 0 2> yyy > zzz
+grep -l 'Segmentation fault' yyy >/dev/null 2>&1
+if [ $? -ne 1 ] ; then
+    cat <<EOF
+When calling your frequencies routine I get a segmentation fault, 
+make sure that the routine frequencies is defined as specified:
+
+void frequencies(double A, double B, double m, double *q,
+                 double *omega, double *eps)
+
+This makes further testing impossible.
+EOF
+    failexit
+fi
+if [ -s zzz ] ; then
+    qq=`cat zzz`
+else
+    cat <<EOF
+There is something wrong with your frequencies routine
+
+This makes further testing impossible.
+EOF
+fi
+    
+xxxrun fcheck 1 2> yyy >zzz
+grep -l 'Segmentation fault' yyy >/dev/null 2>&1
+ss=$(( $? == 0 ))
+qqq=`cat zzz`
+
+xxxrun fcheck 2 2> yyy >zzz
+qqqq=`cat zzz`
+grep -l 'Segmentation fault' yyy >/dev/null 2>&1
+sss=$(( $? == 0 ))
+
+if [ "x$qq" = x0 -a "x$qqq" = x0 -a "x$qqqq" = x0 ] ; then
+    echo "++ Your frequencies routine seems to work!"
+elif [ "x$qq" = x12 ] ; then
+    cat <<EOF
+Your frequencies routine produces incorrect frequencies
+and eigenvectors.
+
+This makes further testing pointless.
+EOF
+    failexit
+elif [  "x$qq" = x1 ] ; then
+    cat <<EOF
+Your frequencies routine produces incorrect frequencies. (But
+correct eigenvectors, have you forgotten that the frequency is
+the square root of the eigenvalue?).
+
+This makes further testing pointless.
+EOF
+    failexit
+elif [ "x$qq" = x17 -o  "x$qq" = x7 ] ; then
+cat <<EOF
+Your frequencies routine produces incorrect frequencies and/or
+eigenvectors. However, your eigenvectors are almost correct. Check:
+
+    1) Are you using pi with enough digits? (remember that a double
+       has a precision of about 16 digits, so use M_PI)
+
+    2) You might have some small error in your dynamical matrix
+
+This makes further testing pointless.
+EOF
+    failexit
+elif [ "x$qq" = x2 ] ; then
+    cat <<EOF
+Your frequencies routine produces incorrect eigenvectors.
+
+This makes further testing pointless.
+EOF
+    failexit
+elif [ "x$qqqq" = x1 ]; then
+    cat <<EOF
+Your frequencies routine produces NaN's (non-arithmetic numbers)
+for special values of q (like q=(1,1,1)). Please check that you
+make sure that you never take the square root of negative number.
+
+This makes further testing pointless.
+EOF
+    failexit
+elif [ "x$qq" = x0 -a "x$ss" = x1 ]; then
+    cat <<EOF
+Your frequencies routine does not handle the case where eps is a
+NULL pointer correctly. It causes a segmentation fault in this
+case.
+EOF
+    failexit
+fi
+
+if [ !  "x$qq$qqq$qqqq" = x000 ] ; then
+    cat <<EOF
+There was an unspecified error when testing your frequencies routine.
+Make sure thet your frequencies routine does not print anything on
+standard output. If this is not the reason then please mail the
+following line to dion@tp.umu.se
+EOF
+    echo a $qq b $qqq c $qqqq d $ss e $sss
+cat <<EOF
+
+This makes further testing pointless, I'm afraid.
+EOF
+    failexit
+fi
+
+#----------------------------------------------------------------------------
+# Test to build and Make etc.
+DONE=$(($DONE + 1))
+echo "*Compiling your program"
+
+popd >/dev/null 2>&1
+
+if [ ! -e Makefile ] ; then
+    cat <<EOF
+You have no Makefile!
+
+This makes further testing pointless.
+EOF
+    failexit
+fi
+if [ ! -e phonons.c ] ; then
+    cat <<EOF
+You have no phonons.c
+
+This makes further testing pointless.
+EOF
+    failexit
+fi
+
+rm $tempdir/* >/dev/null  2>&1
+cp Makefile frequencies.c phonons.c $tempdir
+pushd $tempdir >/dev/null  2>&1
+
+make >make.out 2>&1
+if [ ! -x phonons ]; then
+    cat <<EOF
+Executing make did not produce an executable named phonons. Have you
+followed the specification? Everything should be in the two files
+phonons.c and frequencies.c
+
+This makes further testing pointless.
+EOF
+    failexit
+fi
+
+popd >/dev/null 2>&1
+if [ -e qvekt ]; then
+    cp qvekt $tempdir
+fi
+
+pushd $tempdir >/dev/null  2>&1
+
+echo "++Seems to be possible to compile your program"
+
+
+#----------------------------------------------------------------------------
+# Testing that the program produces a diagnostic and no output
+DONE=$(($DONE + 1))
+echo "*Checking that your program behaves reasonably"
+FFF=0
+
+IFS='
+'
+for as in `cat /home/fnm/phonons/checker/dtests` ; do
+    FF=0
+    unset IFS
+    DONE=$(($DONE + 1))
+    xxxrun ./phonons $as 2> yyy > zzz
+    ex=$?
+    grep -l 'Segmentation fault' yyy >/dev/null 2>&1
+    ss=$?
+    if [ $ex -eq 0 -o ! -s yyy ] ; then
+	FF=1
+	echo
+	echo "Given the command-line"
+	echo phonons $as
+	cat <<EOF
+Your program should print a diagnostic on standard error and exit
+with a nonzero status. Yours does not.
+EOF
+	if [ -s zzz ]; then
+	    cat <<EOF
+In this case nothing should be printed on standard output. Your program
+prints
+EOF
+	    cat zzz
+	    echo "on standard ouput"
+	fi
+	echo
+    fi
+    if [ $ss -ne 1 ] ; then
+	FF=1
+	echo "Given the command-line"
+	echo phonons $as
+	echo "Your programs gives a Segmentation fault. It should not."
+	echo
+    fi
+    if [ $FF -ne 0 ] ; then
+	maybefailexit
+    fi
+    FFF=$(($FFF + $FF))
+done
+IFS='
+'
+for as in `cat /home/fnm/phonons/checker/ptests` ; do
+    FF=0
+    unset IFS
+    DONE=$(($DONE + 1))
+    xxxrun ./phonons $as 2> yyy > zzz
+    ex=$?
+    grep -l 'Segmentation fault' yyy >/dev/null 2>&1
+    ss=$?
+    if [ $ex -ne 0 -o ! -s zzz ]; then
+	FF=1
+	echo
+	echo "Given the command-line"
+	echo phonons $as
+	cat <<EOF
+Your program should exit with a zero status and print some result on
+standard output. Yours does not.
+EOF
+	if [ -s yyy ]; then
+	    cat <<EOF
+In this case nothing should be printed on standard error. Your program
+prints
+EOF
+	    cat yyy
+	    echo "on standard error"
+	fi
+	echo "Your program exits with status $ex"
+    fi
+    if [ $ss -ne 1 ] ; then
+	FF=1
+	echo "Given the command-line"
+	echo phonons $as
+	echo "Your programs gives a Segmentation fault. It should not."
+	echo
+    fi
+    if [ $FF -ne 0 ] ; then
+	maybefailexit
+    fi
+    FFF=$(($FFF + $FF))
+done
+
+./phonons Ar gamma 0.0 0.0 0.0  2> yyy >zzz
+ex=$?
+grep -l 'NaN' zzz >/dev/null 2>&1
+nn=$?
+if [ -s zzz ] ; then
+    FFF=1
+cat <<EOF
+Your program tries to calculate gamma for q=(0,0,0). Please note
+that gamma is not defined in this point (there is no well-defined
+limit of gamma as q tends to zero). In this case there should be no
+output on standard output.
+EOF
+    maybefailexit
+fi
+
+if [ $FFF -eq 0 ]; then
+    echo "++ Your program makes behaves reasonably"
+else
+    echo "-- There are something lacking in your program's behaviour"
+fi
+
+#-----------------------------------------------------------------------
+# Testing omega correctness
+echo "*Checking that your program calculates omega correctly"
+FFA=0
+FFB=0
+FFC=0
+FFF=0
+
+IFS='
+'
+for as in `cat /home/fnm/phonons/checker/otests` ; do
+    unset IFS
+    DONE=$(($DONE + 1))
+    qq=`echo $as | mawk '
+	NF == 4 { printf "3 3 1  2e-7 2e7 phonons %s omega %s %s %s\n", $1, $2, $3, $4}
+	NF == 7 { printf "3 3 11 2e-7 2e7 phonons %s omega %s %s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7}
+	NF == 8 { printf "3 3 %s 2e-7 2e7 phonons %s omega %s %s %s %s %s %s %s\n", $8, $1, $2, $3, $4, $5, $6, $7, $8}'`
+    axs=`echo $as | mawk '
+	NF == 4 { printf "phonons %s omega %s %s %s\n", $1, $2, $3, $4}
+	NF == 7 { printf "phonons %s omega %s %s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7}
+	NF == 8 { printf "phonons %s omega %s %s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7, $8}'`
+    STRANGE=0 ; NAN=0 ; ROWS=0 ; RMS=0 ; RMSA=0; RMSB=0; RMSC=0; ERROR=1
+    eval `/home/fnm/phonons/checker64/docheck $qq`
+    if [ $ERROR -ne 0 ]; then
+	echo
+	echo "invoked as"
+	echo $axs
+	if [ $NAN -ne 0 ] ; then
+	    FFF=1 
+	    cat <<EOF
+Your program produces NaN's in the output. It should not.
+EOF
+	fi
+	if [ $ROWS -ne 0 ]; then
+	    FFF=1 
+	    cat <<EOF
+There are the wrong number of rows in the output!
+EOF
+	fi
+	if [ $RMS -ne 0 ] ; then
+	    FFF=1 
+	    cat <<EOF
+The value printed for the q-values are not correct !?!
+EOF
+	fi
+	if [ $RMSA -ne 0 ]; then
+	    FFA=1
+	    cat <<EOF
+Your program produces the wrong phonon frequencies (way off).
+EOF
+	fi
+	if [ $RMSB -ne 0 ]; then
+	    FFB=1
+	    cat <<EOF
+You have a problem with the precision in the frequencies 
+(check all values of epsilon, sigma, rnn and m).
+EOF
+	fi
+	if [ $RMSC -ne 0 ]; then
+	    FFC=1
+	    cat <<EOF
+You have a small problem with the precision in the frequencies 
+(check all values of epsilon, sigma, rnn and m).
+EOF
+	fi
+	maybefailexit
+	if [ $STRANGE -ne 0 ]; then
+cat<<EOF
+There was a serious error with the testing procedure.
+
+This makes further testing pointless, I'm afraid.
+EOF
+	    failexit
+	fi
+    fi
+done
+
+if [ $FFF -eq 0 -a $FFA -eq 0 -a $FFB -eq 0 -a $FFC -eq 0 ] ; then
+    echo "++ Your program calculates the correct phonon frequencies"
+fi
+
+if [ $FFF -ne 0 -o $FFA -ne 0 ]; then
+    FFF=1
+    echo "-- Your program does not properly calculate phonon frequencies"
+fi
+
+if [ $FFB -ne 0 ]; then
+    FFF=1
+    echo "-- There is a problem with the precision of the phonon frequencies"
+fi
+
+if [ $FFC -ne 0 ]; then
+    FFF=1
+    echo "-- The phonon frequencies are not quite accurate"
+fi
+
+if [ $FFF -gt 0 ] ; then
+    FAILED=$(($FAILED - 1))
+    failexit
+fi
+
+
+#-----------------------------------------------------------------------
+# Testing gamma correctness
+echo "*Checking that your program calculates gamma correctly"
+FFA=0
+FFB=0
+FFC=0
+FFF=0
+
+IFS='
+'
+for as in `cat /home/fnm/phonons/checker/gtests` ; do
+    unset IFS
+    DONE=$(($DONE + 1))
+    qq=`echo $as | mawk '
+	NF == 4 { printf "3 3 1  2e-7 1e-5 phonons %s gamma %s %s %s\n", $1, $2, $3, $4}
+	NF == 7 { printf "3 3 11 2e-7 1e-5 phonons %s gamma %s %s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7}
+	NF == 8 { printf "3 3 %s 2e-7 1e-5 phonons %s gamma %s %s %s %s %s %s %s\n", $8, $1, $2, $3, $4, $5, $6, $7, $8}'`
+    axs=`echo $as | mawk '
+	NF == 4 { printf "phonons %s gamma %s %s %s\n", $1, $2, $3, $4}
+	NF == 7 { printf "phonons %s gamma %s %s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7}
+	NF == 8 { printf "phonons %s gamma %s %s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7, $8}'`
+    STRANGE=0 ; NAN=0 ; ROWS=0 ; RMS=0 ; RMSA=0; RMSB=0; RMSC=0; ERROR=1
+    eval `/home/fnm/phonons/checker64/docheck $qq`
+    if [ $ERROR -ne 0 ]; then
+	echo
+	echo "invoked as"
+	echo $axs
+	if [ $NAN -ne 0 ] ; then
+	    FFF=1 
+	    cat <<EOF
+Your program produces NaN's in the output. It should not.
+EOF
+	fi
+	if [ $ROWS -ne 0 ]; then
+	    FFF=1 
+	    cat <<EOF
+There are the wrong number of rows in the output!
+EOF
+	fi
+	if [ $RMS -ne 0 ] ; then
+	    FFF=1 
+	    cat <<EOF
+The valuse printed for the q-values are not correct !?!
+EOF
+	fi
+	if [ $RMSA -ne 0 ]; then
+	    FFA=1
+	    cat <<EOF
+Your program produces the wrong gammas (way off).
+EOF
+	fi
+	if [ $RMSB -ne 0 ]; then
+	    FFB=1
+	    cat <<EOF
+You have a problem with the precision of the gammas. 
+EOF
+	fi
+	if [ $RMSC -ne 0 ]; then
+	    FFC=1
+	    cat <<EOF
+You have a small problem with the precision of the gamma.
+EOF
+	fi
+	maybefailexit
+	if [ $STRANGE -ne 0 ]; then
+cat<<EOF
+There was a serious error with the testing procedure.
+
+This makes further testing pointless, I'm afraid.
+EOF
+	    failexit
+	fi
+    fi
+done
+
+if [ $FFF -eq 0 -a $FFA -eq 0 -a $FFB -eq 0 -a $FFC -eq 0 ] ; then
+    echo "++ Your program calculates the correct values for gamma"
+fi
+
+if [ $FFF -ne 0 -o $FFA -ne 0 ]; then
+    echo "-- Your program does not properly calculate gamma"
+    cat <<EOF
+Since your program passes the test for the phonons, you are probably just
+calculating the derivative erroneously. Check that you are using the correct
+formula etc.
+EOF
+fi
+
+if [ $FFB -ne 0 -o $FFC -ne 0 ]; then
+    echo "-- There is a problem with the precision of the gamma values"
+    cat <<EOF
+Since your program passes the test for the phonons, then this is likely dependant
+on how you calculate the derivative, remember:
+   1) Always use a symmetric interval when calculating a numerical derivative.
+   2) Make sure that the change in r_nn is small enough.
+EOF
+fi
+
+#-----------------------------------------------------------------------
+# Testing cv correctness
+echo "*Checking that your program calculates cv correctly"
+FFA=0
+FFB=0
+FFC=0
+FFF=0
+
+IFS='
+'
+for as in `cat /home/fnm/phonons/checker/ctests` ; do
+    unset IFS
+    DONE=$(($DONE + 1))
+    qq=`echo $as | mawk '
+	NF == 2 { printf "1 1 1  2e-7 1e1 phonons %s cv %s\n", $1, $2}
+	NF == 3 { printf "1 1 11 2e-7 1e1 phonons %s cv %s %s\n", $1, $2, $3}
+	NF == 4 { printf "1 1 %s 2e-7 1e1 phonons %s cv %s %s %s\n", $4, $1, $2, $3, $4}
+	NF == 5 { printf "1 1 %s %s 1e1 phonons %s cv %s %s %s\n", $4, $5, $1, $2, $3, $4}'`
+    axs=`echo $as | mawk '
+	NF == 2 { printf "phonons %s cv %s\n", $1, $2}
+	NF == 3 { printf "phonons %s cv %s %s\n", $1, $2, $3}
+	NF == 4 { printf "phonons %s cv %s %s %s\n", $1, $2, $3, $4}
+	NF == 5 { printf "phonons %s cv %s %s %s\n", $1, $2, $3, $4}'`
+    STRANGE=0 ; NAN=0 ; ROWS=0 ; RMS=0 ; RMSA=0; RMSB=0; RMSC=0; ERROR=1
+    eval `/home/fnm/phonons/checker64/docheck $qq`
+    if [ $ERROR -ne 0 ]; then
+	echo
+	echo "invoked as"
+	echo $axs
+	if [ $NAN -ne 0 ] ; then
+	    FFF=1 
+	    cat <<EOF
+Your program produces NaN's in the output. It should not.
+EOF
+	fi
+	if [ $ROWS -ne 0 ]; then
+	    FFF=1 
+	    cat <<EOF
+There are the wrong number of rows in the output! (Make sure that
+no extra stuff is printed on standard output).
+EOF
+	fi
+	if [ $RMS -ne 0 ] ; then
+	    FFF=1 
+	    cat <<EOF
+The valuse printed for the temperatures are not correct !?!
+EOF
+	fi
+	if [ $RMSA -ne 0 ]; then
+	    FFA=1
+	    cat <<EOF
+Your program produces the wrong Cv (way off).
+EOF
+	fi
+	if [ $RMSB -ne 0 ]; then
+	    FFB=1
+	    cat <<EOF
+You have a problem with the precision of Cv. 
+EOF
+	fi
+	if [ $RMSC -ne 0 ]; then
+	    FFC=1
+	    cat <<EOF
+You have a small problem with the precision of Cv.
+EOF
+	fi
+	maybefailexit
+	if [ $STRANGE -ne 0 ]; then
+cat<<EOF
+There was a serious error with the testing procedure.
+
+This makes further testing pointless, I'm afraid
+EOF
+	    failexit
+	fi
+    fi
+done
+
+if [ $FFF -eq 0 -a $FFA -eq 0 -a $FFB -eq 0 -a $FFC -eq 0 ] ; then
+    echo "++ Your program calculates the correct values for Cv"
+fi
+
+if [ $FFF -ne 0 ]; then
+    echo "-- Your program does not produce the correct output when calculating Cv"
+    cat <<EOF
+Make sure that you are printing the correct values.
+EOF
+fi
+
+if [ $FFF -eq 0 -a $FFA -ne 0 ]; then
+    echo "-- Your program does not properly calculate Cv"
+    cat <<EOF
+Since your program passes the test for the phonons, you are probably just
+calculating the sum over q erroneously. Check that you are using the correct
+formula, etc.
+EOF
+fi
+
+if [ $FFB -ne 0 -o $FFC -ne 0 ]; then
+    echo "-- There is a problem with the precision of Cv"
+    cat <<EOF
+Since your program passes the test for the phonons, then this is likely dependant
+on details in your program; e.g., are you using the right value for a ... ?
+EOF
+fi
+
+## And finally, at the end
+
+if [ $FAILED -gt 0 ] ; then
+    FAILED=$(($FAILED - 1))
+    failexit
+fi
+passexit

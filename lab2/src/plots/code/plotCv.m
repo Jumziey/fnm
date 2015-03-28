@@ -10,32 +10,32 @@ for gas=gases
 		dataFile = sprintf('../data/%s%s',char(gas),prop);
 		data = load(dataFile);
 		hold on
-		plot(data(:,1),data(:,2), 'colo
-		r', [1 .5 0])
+		plot(data(:,1),data(:,2), 'color', [1 .5 0])
 		title(sprintf('%s %s Heat Capacity', char(gas),prop))
-		ylabel('C_v')
+		ylabel('C_v (j/m^3 K)')
 		xlabel('Temp (K)')
 		j=j+1;
 end
 
 filename = sprintf('../%s.tikz',prop);
-matlab2tikz(filename, 'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['ticklabel style={font=\tiny},' 'xlabel style={font=\small}']);
+matlab2tikz(filename, 'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions', ['ticklabel style={font=\tiny},' 'xlabel style={font=\small}']);
 
-CvAna=[ 3 0.134
-		4 0.347
-		5 0.749
-		6 1.350
-		7 2.13
-		8 3.10
-		9 4.19
-		10 5.36
-		11 6.66
-		12 7.89
-		13 9.08
-		14 10.10
-		15 11.1
-		16 12.0
-		17 12.9
-		18 13.9
-		19 15.0
-		20 15.9]
+figure(2)
+
+%argon
+gas = gases(2);
+kb = 1.3806488e-23;
+rnn = 3.7477e-10;
+CvAna = 3*kb*sqrt(2)^3/(2*rnn^3);
+
+dataFile = sprintf('../data/%s%s',char(gas),prop);
+data = load(dataFile);
+hold on
+plot(data(:,1),data(:,2), 'color', [1 .5 0])
+plot([0 max(data(:,1))],[1 1]*CvAna, 'b')
+title(sprintf('%s %s Heat Capacity', char(gas),prop))
+ylabel('C_v (j/m^3 K)')
+xlabel('Temp (K)')
+legend('Solid State Physics Value', 'Thermal Physics Value', 'Location', 'southeast')
+
+matlab2tikz('../ArCvResult.tikz', 'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions', ['ticklabel style={font=\tiny},' 'xlabel style={font=\small}']);
