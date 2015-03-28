@@ -3,7 +3,7 @@
 \newlength\figureheight 
 \newlength\figurewidth
 \newif\iftikz
-\tikztrue
+\tikzfalse
 
 
 \begin{document}
@@ -114,19 +114,24 @@ where $U$ is the energy of the gas. Using the equipartition theorem we end up wi
 where $N$ is the number of particles, $f$ is the degrees of freedom, $k_B$ is the Boltzmann constant and $T$ is the temperature.  One can rewrite $N = nV$ where $V$ is the volume and $n$ is the number of particles per unit volume. Putting this together we end up with expression
 \begin{equation}
 	\frac{C_V}{V} = \frac{nfk_B}{2}
-	\label{eq:thermoCv}
+	\label{eq:thermoCvFirst}
 \end{equation}
 
 Now in this report we only look at rare gases that confusingly enough are solids because of the cold temperatures we will be looking at. This yeilds six degrees of freedoms. Beyond that we also have to calculate $n$. Because of this we need to look at the crystal structure the rare gases we are looking at form when they go over into the solid state. This is depicted in figure \ref{fig:fcc}. If we say that the length of the sides in the cube are 2$a$  and think about the radius of the spherical volume that each site occupy must be the distance to the nearest neighbor ($r_{nn}$) divided by half we get an expression for $n$
 \begin{equation}
-	n = \Big(\frac{8}{8}\frac{r_{nn}}{2} + \frac{6}{2}\frac{r_{nn}}{2}\Big)/(2a)^3
+	n = \frac{4}{(2a)^3}
 \end{equation}
-Noting that $r_{nn} = \sqrt{2}a$ we get
+Noting that $a = \frac{r_{nn}}{\sqrt{2}}$ we get
 \begin{equation}
-	n = \Big(\frac{8}{16} + \frac{6}{4}\Big)/((2\sqrt{2})^3(r_{nn})^2)
+	n = \frac{\sqrt{2}^3}{2r_{nn}^3}
 	\label{eq:n}
 \end{equation}
-and by using this equation in equation \ref{eq:thermoCv} we can calculate the heat capacity in the high temperature limit using thermal physics. 
+and by using this equation in equation \ref{eq:thermoCvFirst} we finally get 
+\begin{equation}
+	\frac{C_V}{V} = \frac{3k_B\sqrt{2}^3}{2r_{nn}^3}
+	\label{eq:thermoCv}
+\end{equation}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{fcc.png}

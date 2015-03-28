@@ -21,3 +21,21 @@ end
 filename = sprintf('../%s.tikz',prop);
 matlab2tikz(filename, 'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['ticklabel style={font=\tiny},' 'xlabel style={font=\small}']);
 
+CvAna=[ 3 0.134
+		4 0.347
+		5 0.749
+		6 1.350
+		7 2.13
+		8 3.10
+		9 4.19
+		10 5.36
+		11 6.66
+		12 7.89
+		13 9.08
+		14 10.10
+		15 11.1
+		16 12.0
+		17 12.9
+		18 13.9
+		19 15.0
+		20 15.9]
