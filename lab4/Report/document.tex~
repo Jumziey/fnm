@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+\usepackage{report}
+\newif\iftikz
+\tikztrue
+
+\begin{document}
+\section{Exercise 1}
+By substituting $\Phi$ with $\varphi/r$ in equation 15 from the lab instruction, substituting in the expression for $\rho(r)$ and simplifying we get an expression
+\begin{equation}
+\frac{\partial^2 \varphi(r)}{\partial r^2} = -\frac{1}{2} e^{-r}r
+\end{equation}
+Putting this into the Numerov scheme we get
+\begin{equation}
+	\varphi_{j+1} = 2 \varphi_j - \varphi_{j-1} + \frac{h^2}{12} (S_{j+1} + 10S_j +S_{j-1})
+\end{equation}
+where $S_j$ is 
+\begin{equation}
+	S_j = \frac{1}{2}e^{-r}r
+\end{equation}
+Which is slightly confusing since $S$ from the Numerov's method should be $-\frac{1}{2}e^{-r}r$. But due to it being simpler to write we defined $S$ in this slightly obfuscated way. 
+
+
+\section{Exercise 2}
+The following three tables shows the values requested in the lab instructions.
+\begin{table}[h]
+\center
+\caption{Table with values using $\varphi(1)$ as the analytical value}
+\begin{tabular}{c|c|c}
+r (cm) & $\varphi(r)$ (statvolt/cm) & error \\ \hline
+2 & 0.72933 & -7.529e-07 \\ \hline 
+4 & 0.945055 & -1.91455e-06 \\ \hline 
+6 & 0.990088 & -3.08937e-06 \\ \hline 
+8 & 0.998327 & -4.26028e-06 \\ \hline 
+10 & 0.999733 & -5.42988e-06 \\ \hline 
+12 & 0.999964 & -6.5992e-06 \\ \hline 
+14 & 1 & -7.76847e-06 \\ \hline 
+16 & 1.00001 & -8.93773e-06 \\ \hline 
+18 & 1.00001 & -1.0107e-05 \\ \hline 
+20 & 1.00001 & -1.12762e-05 \\ 
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\center
+\caption{Table with values using $\varphi(1)$ as the numerical value of $\Phi(0)$ multiplied with the step length}
+\begin{tabular}{c|c|c}
+r (cm) & $\varphi(r)$ (statvolt/cm) & error \\ \hline
+2 & 0.730916 & -0.00158653 \\ \hline 
+4 & 0.948227 & -0.00317347 \\ \hline 
+6 & 0.994845 & -0.00476043 \\ \hline 
+8 & 1.00467 & -0.00634738 \\ \hline 
+10 & 1.00766 & -0.00793432 \\ \hline 
+12 & 1.00948 & -0.00952127 \\ \hline 
+14 & 1.0111 & -0.0111082 \\ \hline 
+16 & 1.01269 & -0.0126952 \\ \hline 
+18 & 1.01428 & -0.0142821 \\ \hline 
+20 & 1.01587 & -0.0158691 \\ 
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\center
+\caption{Table with values using $\varphi(1)$ as 95\% of the analytical value}
+\begin{tabular}{c|c|c}
+r (cm) & $\varphi(r)$ (statvolt/cm) & error \\ \hline
+2 & 0.679409 & 0.04992 \\ \hline 
+4 & 0.845214 & 0.0998395 \\ \hline 
+6 & 0.840326 & 0.149759 \\ \hline 
+8 & 0.798644 & 0.199679 \\ \hline 
+10 & 0.750129 & 0.249598 \\ \hline 
+12 & 0.700439 & 0.299518 \\ \hline 
+14 & 0.650556 & 0.349437 \\ \hline 
+16 & 0.600642 & 0.399357 \\ \hline 
+18 & 0.550724 & 0.449276 \\ \hline 
+20 & 0.500804 & 0.499196 \\
+\end{tabular}
+\end{table}
+
+\newpage
+\section{Exercise 3}
+In figure \ref{fig:phi3} and \ref{fig:phi3reg} we can see the difference between only using the  $\varphi(h)$ value that is off by 5\% and using the value compensated according how the lab instruction specified. The error has also been plotted for illustration. Lastly we have table with values for the compensated plots as done in the previous exercise.
+\iftikz
+\begin{figure}[H]
+	\centering
+	\newlength\figureheight 
+	\newlength\figurewidth
+	\setlength\figureheight{7cm} 
+	\setlength\figurewidth{14cm}
+	\input{../src/plots/phi3.tikz}
+	\caption{Showing the value for $\varphi$ when $\varphi(h)$ was off by 5\%.}
+	\label{fig:phi3}
+\end{figure}
+\fi
+\iftikz
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{7cm} 
+	\setlength\figurewidth{14cm}
+	\input{../src/plots/phi3reg.tikz}
+	\caption{Showing the compensated $\varphi$.}
+	\label{fig:phi3reg}
+\end{figure}
+\fi
+
+\begin{table}[h]
+\center
+\caption{Table with values using $\varphi(1)$ as 95\% of the analytical value, but compensated for the error.}
+\begin{tabular}{c|c|c}
+r (cm) & $\varphi(r)$ (statvolt/cm) & error \\ \hline
+2 & 0.729329 & 4.33527e-07 \\ \hline
+4 & 0.945054 & -9.16666e-07 \\ \hline
+6 & 0.990086 & -1.00871e-06 \\ \hline
+8 & 0.998324 & -1.31314e-06 \\ \hline
+10 & 0.999729 & -1.39958e-06 \\ \hline
+12 & 0.999959 & -2.00949e-06 \\ \hline
+14 & 0.999996 & -2.65223e-06 \\ \hline
+16 & 1 & -3.01282e-06 \\ \hline
+18 & 1 & -4.1523e-06 \\ \hline
+20 & 1 & -4.02267e-06 \\ 
+\end{tabular}
+\end{table}
+
+\section{How to Run and Find Code}
+The \verb+c+ code developed for this assignment can be found in the directory
+\begin{verbatim}
+~jeve0010/Documents/jesper/fnm/lab4/src
+\end{verbatim}
+To compile the code simply use the \verb+make+ command. To run the \verb+c+ code execute the command \verb+./num+. This program generate the plot and table values in the subdirectory \verb+plots/data+. In order to plot this data and generate the table for the compensated $\varphi$ values when using a bad start value simple execute the matlab script \verb+phiPlot.m+ that resides in the subdirectory \verb+plots/code+. 
+\end{document}
