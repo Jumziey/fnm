@@ -117,9 +117,6 @@ volDepEval(sp sub, double *q)
 	//minus,normal, plus
 	double omega[3][3], pdir[3][9], rnn[3], A[3], B[3], *gamma;
 	double h = 1E-20;// small compared to rnn
-	
-	if(q[0]+q[1]+q[2] < 1E-20)
-		return NULL; // Not defined for this point
 		
 	gamma = calloc(3, sizeof(double));
 	

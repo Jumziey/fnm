@@ -11,9 +11,9 @@
 \BOOKMARK [2][-]{subsection.4.1}{Algorithm design}{section.4}% 11
 \BOOKMARK [2][-]{subsection.4.2}{Typical Program Execution}{section.4}% 12
 \BOOKMARK [2][-]{subsection.4.3}{Solving the Eigenvalue Problem}{section.4}% 13
-\BOOKMARK [1][-]{section.5}{Results}{}% 14
-\BOOKMARK [1][-]{section.6}{Discussion}{}% 15
-\BOOKMARK [1][-]{appendix.A}{Phonon Frequencies in Symmetry Directions}{}% 16
-\BOOKMARK [1][-]{appendix.B}{Volume Dependency for Phonon Frequencies in Symmetry Direction}{}% 17
-\BOOKMARK [1][-]{appendix.C}{Heat Capacities for all Considered Rare Gases}{}% 18
-\BOOKMARK [1][-]{appendix.D}{Discussion}{}% 19
+\BOOKMARK [2][-]{subsection.4.4}{Running the Code}{section.4}% 14
+\BOOKMARK [1][-]{section.5}{Results}{}% 15
+\BOOKMARK [1][-]{section.6}{Discussion}{}% 16
+\BOOKMARK [1][-]{appendix.A}{Phonon Frequencies in Symmetry Directions}{}% 17
+\BOOKMARK [1][-]{appendix.B}{Volume Dependency for Phonon Frequencies in Symmetry Direction}{}% 18
+\BOOKMARK [1][-]{appendix.C}{Heat Capacities for all Considered Rare Gases}{}% 19

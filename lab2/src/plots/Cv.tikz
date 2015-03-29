@@ -10,7 +10,7 @@
 \begin{axis}[%
 width=0.95092\figurewidth,
 height=0.193548\figureheight,
-at={(0\figurewidth,0.806452\figureheight)},
+at={(0\figurewidth,0.9\figureheight)},
 scale only axis,
 xmin=0,
 xmax=200,
@@ -432,7 +432,7 @@ ticklabel style={font=\tiny},xlabel style={font=\small}
 \begin{axis}[%
 width=0.95092\figurewidth,
 height=0.193548\figureheight,
-at={(0\figurewidth,0.268817\figureheight)},
+at={(0\figurewidth,0.3\figureheight)},
 scale only axis,
 xmin=0,
 xmax=200,
@@ -854,7 +854,7 @@ ticklabel style={font=\tiny},xlabel style={font=\small}
 \begin{axis}[%
 width=0.95092\figurewidth,
 height=0.193548\figureheight,
-at={(0\figurewidth,0.537634\figureheight)},
+at={(0\figurewidth,0.6\figureheight)},
 scale only axis,
 xmin=0,
 xmax=200,
