@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.13)  29 MAR 2015 15:45
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.13)  27 MAR 2015 16:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1515,54 +1515,38 @@ LaTeX Info: Redefining \addtolength on input line 77.
 )
 \c@@todonotes@numberoftodonotes=\count289
 ))
-\figureheight=\skip76
-\figurewidth=\skip77
-
-(./document.aux
-
-LaTeX Warning: Label `fig:fftU1-3' multiply defined.
-
-
-LaTeX Warning: Label `fig:fftU1-3@cref' multiply defined.
-
-
-LaTeX Warning: Label `fig:fftU1-10' multiply defined.
-
-
-LaTeX Warning: Label `fig:fftU1-10@cref' multiply defined.
-
-)
+(./document.aux)
 \openout1 = `document.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 6.
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Package nag Info: pgf.sty is broken: disabling dollar check on input line 8.
+Package nag Info: pgf.sty is broken: disabling dollar check on input line 6.
 Package nag Info: Command \frontmatter not defined, skipping amendment on input
- line 8.
+ line 6.
 Package nag Info: Command \mainmatter not defined, skipping amendment on input 
-line 8.
+line 6.
 Package nag Info: Command \backmatter not defined, skipping amendment on input 
-line 8.
+line 6.
 Package nag Info: Command \RaggedLeft not defined, skipping amendment on input 
-line 8.
+line 6.
 Package nag Info: Command \RaggedRight not defined, skipping amendment on input
- line 8.
+ line 6.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1598,7 +1582,7 @@ Package nag Info: Command \RaggedRight not defined, skipping amendment on input
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 8.
+LaTeX Info: Redefining \microtypecontext on input line 6.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1714,7 +1698,7 @@ Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box68
-Package hyperref Info: Link coloring OFF on input line 8.
+Package hyperref Info: Link coloring OFF on input line 6.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
@@ -1723,9 +1707,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count297
 )
-LaTeX Info: Redefining \ref on input line 8.
-LaTeX Info: Redefining \pageref on input line 8.
-LaTeX Info: Redefining \nameref on input line 8.
+LaTeX Info: Redefining \ref on input line 6.
+LaTeX Info: Redefining \pageref on input line 6.
+LaTeX Info: Redefining \nameref on input line 6.
 
 (./document.out) (./document.out)
 \@outlinefile=\write4
@@ -1777,17 +1761,17 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 ])
 Package nag Info: Command \captionabove not defined, skipping amendment on inpu
-t line 8.
+t line 6.
 Package nag Info: Command \captionbelow not defined, skipping amendment on inpu
-t line 8.
+t line 6.
 Package nag Info: Command \hc@caption not defined, skipping amendment on input 
-line 8.
+line 6.
 Package nag Info: Command \topcaption not defined, skipping amendment on input 
-line 8.
+line 6.
 \c__siunitx_mathsf_int=\count298
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 8.
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 8.
+(Font)              <10.95> on input line 6.
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 6.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1797,7 +1781,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 \c__siunitx_mathtt_int=\count299
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 8.
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 6.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1806,35 +1790,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-Package epstopdf Info: Source file: <../ex1/gaussianFFT.eps>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 249940 bytes
-(epstopdf)             Output file: <./figures/gaussianFFT.generated.pdf>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 55943 bytes
-(epstopdf)             Command: <repstopdf --outfile=./figures/gaussianFFT.gene
-rated.pdf ../ex1/gaussianFFT.eps>
-(epstopdf)             \includegraphics on input line 22.
-Package epstopdf Info: Output file is already uptodate.
-
-<./figures/gaussianFFT.generated.pdf, id=39, 421.575pt x 316.18124pt>
-File: ./figures/gaussianFFT.generated.pdf Graphic file (type pdf)
-
-<use ./figures/gaussianFFT.generated.pdf>
-Package pdftex.def Info: ./figures/gaussianFFT.generated.pdf used on input line
- 22.
-(pdftex.def)             Requested size: 418.25368pt x 313.69583pt.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 27.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 27.
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.32 \end{align}
-                 [1 <./figures/gaussianFFT.generated.pdf>]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 37.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 9.
 
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1843,136 +1799,90 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-Package epstopdf Info: Source file: <../ex2/fftU1-3.eps>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 39547 bytes
-(epstopdf)             Output file: <./figures/fftU1-3.generated.pdf>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 16038 bytes
-(epstopdf)             Command: <repstopdf --outfile=./figures/fftU1-3.generate
-d.pdf ../ex2/fftU1-3.eps>
-(epstopdf)             \includegraphics on input line 50.
-Package epstopdf Info: Output file is already uptodate.
-
-<./figures/fftU1-3.generated.pdf, id=68, 421.575pt x 316.18124pt>
-File: ./figures/fftU1-3.generated.pdf Graphic file (type pdf)
-
-<use ./figures/fftU1-3.generated.pdf>
-Package pdftex.def Info: ./figures/fftU1-3.generated.pdf used on input line 50.
-
-(pdftex.def)             Requested size: 418.25368pt x 313.69583pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 51.
+(Font)              <14.4> on input line 15.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 51.
-Package epstopdf Info: Source file: <../ex2/fftU1-10.eps>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 39710 bytes
-(epstopdf)             Output file: <./figures/fftU1-10.generated.pdf>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 15983 bytes
-(epstopdf)             Command: <repstopdf --outfile=./figures/fftU1-10.generat
-ed.pdf ../ex2/fftU1-10.eps>
-(epstopdf)             \includegraphics on input line 56.
-Package epstopdf Info: Output file is already uptodate.
+(Font)              <10> on input line 15.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 15.
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.49 \begin{verbatim}
+                      [1]
+\figureheight=\skip76
+\figurewidth=\skip77
+ (../ex2/plots/forwardData.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 12063.
+)
+(../ex2/plots/backwardData.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) (../ex2/plots/forwardDataError.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) [2]
+(../ex2/plots/backwardDataError.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) [3]
 
-<./figures/fftU1-10.generated.pdf, id=69, 421.575pt x 316.18124pt>
-File: ./figures/fftU1-10.generated.pdf Graphic file (type pdf)
+Package nag Warning: Unmatched ``\center'' command on line 13.
 
-<use ./figures/fftU1-10.generated.pdf>
-Package pdftex.def Info: ./figures/fftU1-10.generated.pdf used on input line 56
-.
-(pdftex.def)             Requested size: 418.25368pt x 313.69583pt.
- [2] [3 <./figures/fftU1-3.generated.pdf>]
-Package epstopdf Info: Source file: <../ex2/fftU1-3-double-same.eps>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 39468 bytes
-(epstopdf)             Output file: <./figures/fftU1-3-double-same.generated.pd
-f>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 15498 bytes
-(epstopdf)             Command: <repstopdf --outfile=./figures/fftU1-3-double-s
-ame.generated.pdf ../ex2/fftU1-3-double-same.eps>
-(epstopdf)             \includegraphics on input line 63.
-Package epstopdf Info: Output file is already uptodate.
 
-<./figures/fftU1-3-double-same.generated.pdf, id=94, 421.575pt x 316.18124pt>
-File: ./figures/fftU1-3-double-same.generated.pdf Graphic file (type pdf)
+Package nag Warning: 1 complaints in total.
 
-<use ./figures/fftU1-3-double-same.generated.pdf>
-Package pdftex.def Info: ./figures/fftU1-3-double-same.generated.pdf used on in
-put line 63.
-(pdftex.def)             Requested size: 418.25368pt x 313.69583pt.
-Package epstopdf Info: Source file: <../ex2/fftU1-3-double.eps>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 39432 bytes
-(epstopdf)             Output file: <./figures/fftU1-3-double.generated.pdf>
-(epstopdf)                    date: 2015-02-16 14:49:55
-(epstopdf)                    size: 15439 bytes
-(epstopdf)             Command: <repstopdf --outfile=./figures/fftU1-3-double.g
-enerated.pdf ../ex2/fftU1-3-double.eps>
-(epstopdf)             \includegraphics on input line 69.
-Package epstopdf Info: Output file is already uptodate.
-
-<./figures/fftU1-3-double.generated.pdf, id=95, 421.575pt x 316.18124pt>
-File: ./figures/fftU1-3-double.generated.pdf Graphic file (type pdf)
-
-<use ./figures/fftU1-3-double.generated.pdf>
-Package pdftex.def Info: ./figures/fftU1-3-double.generated.pdf used on input l
-ine 69.
-(pdftex.def)             Requested size: 418.25368pt x 313.69583pt.
- [4 <./figures/fftU1-10.generated.pdf>] [5 <./figures/fftU1-3-double-same.gener
-ated.pdf>] [6 <./figures/fftU1-3-double.generated.pdf>] [7] (../ex3/freqPowSpec
-.tikz) (../ex3/signal.tikz)
-[8]
-No complaints by nag.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 117.
-
-Overfull \hbox (29.82916pt too wide) in paragraph at lines 116--117
-\T1/lmr/m/n/10.95 (-20) To run the pro-gram do-ing the fft sim-ple call []\T1/l
-mtt/m/n/10.95 make \T1/lmr/m/n/10.95 (-20) then ex-e-cute []\T1/lmtt/m/n/10.95 
-./decode [message to decode]
- []
-
-[9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 117.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 102.
+[4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 102.
  (./document.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 117.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 117.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 102.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 102.
 Package rerunfilecheck Info: File `document.out' has not changed.
-(rerunfilecheck)             Checksum: 31DB0F5E2770319ACCD7A65B2E68F2D4;412.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 117.
+(rerunfilecheck)             Checksum: 4DD5F81D58C18F8DF7DB6B0C48C0B7B4;334.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 102.
  ) 
 Here is how much of TeX's memory you used:
- 38148 strings out of 494958
- 1749940 string characters out of 6179213
- 3671059 words of memory out of 5000000
- 40496 multiletter control sequences out of 15000+600000
- 111389 words of font info for 133 fonts, out of 8000000 for 9000
+ 38359 strings out of 494958
+ 1742619 string characters out of 6179213
+ 3682081 words of memory out of 5000000
+ 40780 multiletter control sequences out of 15000+600000
+ 91197 words of font info for 107 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 70i,12n,83p,138657b,1836s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dv
-ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/s
-hare/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/public/lm
-/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texm
-f/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi
-6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts
-/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></
-usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/
-texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lm
-r8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts
-/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb>
-</usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1
-/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on document.pdf (10 pages, 646474 bytes).
+ 70i,20n,83p,80743b,2029s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/en
+c/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/s
+hare/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
+-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex
+10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb
+></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type
+1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/
+fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></u
+sr/share/texmf/fonts/type1/public/lm/lmtt9.pfb>
+Output written on document.pdf (5 pages, 501053 bytes).
 PDF statistics:
- 230 PDF objects out of 1000 (max. 8388607)
- 183 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
- 37974 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 162 PDF objects out of 1000 (max. 8388607)
+ 135 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
+ 31805 words of extra memory for PDF output out of 35830 (max. 10000000)
 

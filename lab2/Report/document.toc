@@ -1,0 +1,20 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Theory}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Potential in a Crystal}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Model for a Rare Gas Crystal}{2}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Volume Dependency of Phonon frequencies}{4}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Heat Capacity}{4}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Solid State Physics}{5}{subsubsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.2}Thermal Physics}{5}{subsubsection.2.4.2}
+\contentsline {section}{\numberline {3}The Brillouin Zone and Symmetry Direction}{7}{section.3}
+\contentsline {section}{\numberline {4}Code}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Algorithm design}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Typical Program Execution}{9}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Solving the Eigenvalue Problem}{10}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Running the Code}{10}{subsection.4.4}
+\contentsline {section}{\numberline {5}Results}{11}{section.5}
+\contentsline {section}{\numberline {6}Discussion}{12}{section.6}
+\contentsline {section}{\numberline {A}Phonon Frequencies in Symmetry Directions}{14}{appendix.A}
+\contentsline {section}{\numberline {B}Volume Dependency for Phonon Frequencies in Symmetry Direction}{15}{appendix.B}
+\contentsline {section}{\numberline {C}Heat Capacities for all Considered Rare Gases}{16}{appendix.C}
