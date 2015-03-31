@@ -18,11 +18,9 @@ frequencies(double A, double B, double m, double *q,
 	
 	//I really don't care about efficiency here
 	for(i=0; i<3; i++) {
-		//printf("%d %d %d\n", i, (i+1)%3, (i+2)%3);
 		gsl_matrix_set(D, i, i, 0.5/m*(A+B)*(8-4*cos(q[i]*M_PI)*cos(q[(i+1)%3]*M_PI)
 						- 4*cos(q[i]*M_PI)*cos(q[(i+2)%3]*M_PI))
 						+ B/m*(4-4*cos(q[(i+1)%3]*M_PI)*cos(q[(i+2)%3]*M_PI)));
-		
 		gsl_matrix_set(D, i, (i+1)%3, 0.5/m*(A-B)*4*sin(q[i]*M_PI)*sin(q[(i+1)%3]*M_PI));
 		gsl_matrix_set(D, i, (i+2)%3, 0.5/m*(A-B)*4*sin(q[i]*M_PI)*sin(q[(i+2)%3]*M_PI));
 	}
