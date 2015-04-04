@@ -277,7 +277,7 @@ main(int argc, char** argv)
 					if(ret != NULL)
 						printVal(q1,ret);
 					else
-						error("Not defined at [%g %g %g]\n", q1[0], q1[1], q1[2]);
+						error("Not defined at the given point\n");
 					break;
 				case 9:
 					//Two points, need to be spaced 11
