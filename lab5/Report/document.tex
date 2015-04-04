@@ -3,13 +3,13 @@
 \newlength\figureheight 
 \newlength\figurewidth
 \newif\iftikz
-\tikzfalse
+\tikztrue
 
 
 \begin{document}
 \section{Free Evolution}
 \subsection{Selection of Time Step}
-In order to find the biggest possible time steps we could use we simply started with reducing increasing the timestep until it we saw significant error. But we went so far that the the time step got so large that it went through the solution space ($x=[0,1]$) after just a few steps. Thus the smallest time step we used was  $3.45\cdot 10^{-4}$. The smallest spacial step we used before the solution started to get jaggy was $0.01$. Since the solution took such a small time to solve for we will use significantly smaller time steps and spacial time steps for the rest of the exercises.
+In order to find the biggest possible time steps we could use we simply started with reducing increasing the timestep until it we saw significant error. But we went so far that the the time step got so large that it went through the solution space ($x=[0,1]$) after just a few steps. Thus the smallest time step we used was  $3.45\cdot 10^{-4}$. The smallest spacial step we used before the solution started to get jaggy was $0.01$. Since the solution took such a small time to solve for we will use significantly smaller time steps and spacial time steps for the rest of the exercises, such a solution is given as an example in figure \ref{fig:smallError}.
 
 \iftikz
 \begin{figure}[H]
@@ -32,6 +32,27 @@ In order to find the biggest possible time steps we could use we simply started 
 	\caption{The numerical solution at the largest tested time and spacial step. One can clearly see in figure \ref{fig:biggestStepPlot} that the solution is starting to get jaggy from the spacial step. The larger time step never gets to the point where the solution seem to go bad before just running off our solution space $x=[0,1]$ in just a few steps. The error is not particularly large compared to the solution values, as seen in figure \ref{fig:biggestStepError}}
 \end{figure}
 \fi
+\iftikz
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.9\linewidth}
+		\setlength\figureheight{.5\linewidth} 
+		\setlength\figurewidth{.9\linewidth}
+		\input{../freeEvo/plots/smallErrorPlot.tikz}
+		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
+		\label{fig:smallErrorPlot}
+	\end{subfigure}
+	\begin{subfigure}{.9\linewidth}
+		\setlength\figureheight{.5\linewidth} 
+		\setlength\figurewidth{.9\linewidth}
+		\input{../freeEvo/plots/smallErrorError.tikz}
+		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
+		\label{fig:smallErrorError}
+	\end{subfigure}
+	\label{fig:smallError}
+	\caption{Here we see the error using smaller timesteps and spacial steps to get good resolution and precision on how the function will look in the end.}
+\end{figure}
+\fi
 \subsection{Behavior at the end of the Solution Space}
 looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior of the numerical solution. This is in a stark contrast against the numerical solution. This probably lies in the fast fourier transform package used. This because the discrete fourier transform can only be done on periodic problems. Thus as soon we are outside of our spacial solutions space of $x=[0,1]$ we will get significant error. This is highlighted in figure \ref{fig:periodicInfError}.
 \iftikz
@@ -51,7 +72,7 @@ looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
 		\label{fig:periodicInfError}
 	\end{subfigure}
-	\label{fig:periodicInf}
+	\label{fig:smallError}
 	\caption{The numerical and analytical solution as it passes its solution space of $x=[0,1]$. One can clearly see in figure \ref{fig:periodicInfPlot} that the numerical solution is periodic. The error caused by this is highlighted in figure \ref{fig:periodicInfError}}
 \end{figure}
 \fi

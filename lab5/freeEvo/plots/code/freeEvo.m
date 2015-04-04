@@ -1,6 +1,6 @@
 close all; clear all;
 prob = {'freeEvo'};
-parameters = {'biggestStep', 'periodicInf'};
+parameters = {'biggestStep', 'periodicInf', 'smallError'};
 savePlot = true;
 
 pw = 1;

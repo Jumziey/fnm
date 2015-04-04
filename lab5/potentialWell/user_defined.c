@@ -9,7 +9,22 @@ void
 initialize_user_observe (const parameters params, const int argc, char ** const argv){}
 
 void
-user_observe (const parameters params, const double t, const double complex * const psi){}
+user_observe (const parameters params, const double t, const double complex * const psi)
+{
+	int hwp,i;
+	double v0 = 5.0e4, width=0.032;
+	FILE* fp;
+		
+	//half of well points
+	hwp = ceil((width/p.dx)/2);
+	
+	for(i=0; i<p.nx; i++)
+		if(i<ceil(p.nx/2)-hwp)
+			//Reflection
+		else if(i>ceil(p.nx/2)+hwp)
+			//Transmission
+	
+	//Write down data
 
 void
 potential(const parameters p, const double t, double* const pot)
@@ -18,9 +33,12 @@ potential(const parameters p, const double t, double* const pot)
 	double v0 = 5.0e4, width=0.032;
 		
 	//half of well points
-	hwp = (width/p.dx)/2;
+	hwp = ceil((width/p.dx)/2);
 	
 	for(i=0; i<p.nx; i++)
+		if(i>ceil(p.nx/2)-hwp && i<ceil(p.nx/2)+hwp)
+			pot[i] = v0;
+		else
 			pot[i] = 0;
 }
 

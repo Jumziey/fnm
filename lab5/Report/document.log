@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.13)  4 APR 2015 15:50
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.13)  4 APR 2015 16:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1518,7 +1518,14 @@ LaTeX Info: Redefining \addtolength on input line 77.
 \figureheight=\skip76
 \figurewidth=\skip77
 
-(./document.aux)
+(./document.aux
+
+LaTeX Warning: Label `fig:smallError' multiply defined.
+
+
+LaTeX Warning: Label `fig:smallError@cref' multiply defined.
+
+)
 \openout1 = `document.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
@@ -1795,54 +1802,112 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
 
 
-LaTeX Warning: Reference `fig:periodicInf' on page 1 undefined on input line 36
-.
+Package caption Warning: \label without proper \caption on input line 75.
+See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `fig:periodicInfError' on page 1 undefined on input li
-ne 36.
+LaTeX Warning: Reference `fig:smallError' on page 1 undefined on input line 12.
 
-No complaints by nag.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 62.
+
+(../freeEvo/plots/biggestStepPlot.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 348.
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 21.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 21.
+ (../freeEvo/plots/biggestStepError.tikz)
+
+Package nag Warning: \label in float, but not after \caption on input line 31.
+
+
+Package nag Warning: \label in float, but not after \caption on input line 31.
+
+(../freeEvo/plots/smallErrorPlot.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) (../freeEvo/plots/smallErrorError.tikz)
+
+Package nag Warning: \label in float, but not after \caption on input line 52.
+
+
+Package nag Warning: \label in float, but not after \caption on input line 52.
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.62 \end{document}
-                    [1]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 62.
+l.54 \end{figure}
+                  [1] [2]
+
+LaTeX Warning: Reference `fig:periodicInf' on page 3 undefined on input line 57
+.
+
+(../freeEvo/plots/periodicInfPlot.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) (../freeEvo/plots/periodicInfError.tikz)
+
+Package nag Warning: \label in float, but not after \caption on input line 75.
+
+
+Package nag Warning: \label in float, but not after \caption on input line 75.
+
+[3]
+
+Package nag Warning: 6 complaints in total.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 83.
+[4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 83.
  (./document.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 62.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 62.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 83.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 83.
 Package rerunfilecheck Info: File `document.out' has not changed.
 (rerunfilecheck)             Checksum: 9B1993DE30735D3824B722440F1B405C;259.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 62.
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 83.
  ) 
 Here is how much of TeX's memory you used:
- 37375 strings out of 494958
- 809094 string characters out of 6179213
- 951858 words of memory out of 5000000
- 39860 multiletter control sequences out of 15000+600000
- 52455 words of font info for 66 fonts, out of 8000000 for 9000
+ 38100 strings out of 494958
+ 2446076 string characters out of 6179213
+ 4431865 words of memory out of 5000000
+ 40521 multiletter control sequences out of 15000+600000
+ 92630 words of font info for 106 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 70i,11n,83p,10449b,774s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,23n,89p,134136b,2304s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share
 /texmf/fonts/enc/dvips/lm/lm-mathit.enc}</usr/share/texmf/fonts/type1/public/lm
 /lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texm
-f/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr1
-0.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts
-/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></u
-sr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmsy8.pfb>
-Output written on document.pdf (2 pages, 152556 bytes).
+f/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi
+6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb></usr/share/texmf/fonts
+/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/p
+ublic/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/
+texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lm
+r8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmsy5.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb>
+</usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb>
+Output written on document.pdf (5 pages, 682101 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
- 6 named destinations out of 1000 (max. 500000)
- 16429 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 107 compressed objects within 2 object streams
+ 12 named destinations out of 1000 (max. 500000)
+ 28717 words of extra memory for PDF output out of 29859 (max. 10000000)
 
