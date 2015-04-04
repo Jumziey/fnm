@@ -20,7 +20,7 @@ typedef struct sp{
 const double kb = 1.3806488E-23;
 const double hbar = 1.0545717E-34;
 
-//Substances
+//Substances 
 const sp Ne = {3.035E-10, 0.0721E-20, 3.1562E-10, 0.335092E-25};
 const sp Ar = {3.709E-10, 0.236E-20, 3.7477E-10, 0.66335E-25};
 const sp Kr = {3.966E-10, 0.325E-20, 3.9922E-10, 1.3915E-25};
