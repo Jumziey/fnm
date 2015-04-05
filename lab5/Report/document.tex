@@ -17,19 +17,19 @@ In order to find the biggest possible time steps we could use we simply started 
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../freeEvo/plots/biggestStepPlot.tikz}
+		\input{../src/plots/biggestStepPlot.tikz}
 		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
 		\label{fig:biggestStepPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../freeEvo/plots/biggestStepError.tikz}
+		\input{../src/plots/biggestStepError.tikz}
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
 		\label{fig:biggestStepError}
 	\end{subfigure}
 	\label{fig:freeEvo}
-	\caption{The numerical solution at the largest tested time and spacial step. One can clearly see in figure \ref{fig:biggestStepPlot} that the solution is starting to get jaggy from the spacial step. The larger time step never gets to the point where the solution seem to go bad before just running off our solution space $x=[0,1]$ in just a few steps. The error is not particularly large compared to the solution values, as seen in figure \ref{fig:biggestStepError}}
+	\caption{The numerical solution at the largest tested time and spacial step. One can clearly see in figure \ref{fig:biggestStepError} that the solution is starting to get jaggy from the spacial step. The larger time step never gets to the point where the solution seem to go bad before just running off our solution space $x=[0,1]$ in just a few steps. The error is not particularly large compared to the solution values, as seen in figure \ref{fig:biggestStepError}}
 \end{figure}
 \fi
 \iftikz
@@ -38,19 +38,19 @@ In order to find the biggest possible time steps we could use we simply started 
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../freeEvo/plots/smallErrorPlot.tikz}
+		\input{../src/plots/smallErrorPlot.tikz}
 		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
 		\label{fig:smallErrorPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../freeEvo/plots/smallErrorError.tikz}
+		\input{../src/plots/smallErrorError.tikz}
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
 		\label{fig:smallErrorError}
 	\end{subfigure}
-	\label{fig:smallError}
 	\caption{Here we see the error using smaller timesteps and spacial steps to get good resolution and precision on how the function will look in the end.}
+	\label{fig:smallError}
 \end{figure}
 \fi
 \subsection{Behavior at the end of the Solution Space}
@@ -61,14 +61,14 @@ looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../freeEvo/plots/periodicInfPlot.tikz}
+		\input{../src/plots/periodicInfPlot.tikz}
 		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
 		\label{fig:periodicInfPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../freeEvo/plots/periodicInfError.tikz}
+		\input{../src/plots/periodicInfError.tikz}
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
 		\label{fig:periodicInfError}
 	\end{subfigure}
@@ -77,7 +77,50 @@ looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior
 \end{figure}
 \fi
 \section{Potential Well}
-
-
+We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part of the wavefunction is reflected by it, while a large part goes trough it.
+\iftikz
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.9\linewidth}
+		\setlength\figureheight{.5\linewidth} 
+		\setlength\figurewidth{.9\linewidth}
+		\input{../src/plots/potWellPlot.tikz}
+		\caption{The numerical solution of $|\psi_n(x,t)|^2$ after it has hit the potential well.}
+		\label{fig:potWellfPlot}
+	\end{subfigure}
+	\begin{subfigure}{.9\linewidth}
+		\setlength\figureheight{.5\linewidth} 
+		\setlength\figurewidth{.9\linewidth}
+		\input{../src/plots/potWellTR.tikz}
+		\caption{Here we clearly see the transmission and reflection before and after the wave function hits the potential well.}
+		\label{fig:potWellTR}
+	\end{subfigure}
+	\label{fig:potWell}
+	\caption{Here we depict the effect of the wave function hitting the potential well.}
+\end{figure}
+\fi
+\section{Square Barrier}
+In figure \ref{fig:squareBarrTR} we can see the effect of the square barrier on the wave function. After the wave function hits the square barrier part of it is trapped a while before a large part is reflected and a small part tunnels trough. 
+\iftikz
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.9\linewidth}
+		\setlength\figureheight{.5\linewidth} 
+		\setlength\figurewidth{.9\linewidth}
+		\input{../src/plots/squareBarrPlot.tikz}
+		\caption{The numerical solution of $|\psi_n(x,t)|^2$ after it has hit the square barrier.}
+		\label{fig:squareBarrfPlot}
+	\end{subfigure}
+	\begin{subfigure}{.9\linewidth}
+		\setlength\figureheight{.5\linewidth} 
+		\setlength\figurewidth{.9\linewidth}
+		\input{../src/plots/squareBarrTR.tikz}
+		\caption{Here we clearly see the transmission and reflection before and after the wave function hits the square barrier.}
+		\label{fig:squareBarrTR}
+	\end{subfigure}
+	\label{fig:squareBarr}
+	\caption{Here we depict the effect of the wave function hitting the square barrier. Note in figure \ref{fig:squareBarrTR} how a certain part of the wave function is trapped inside for while before a large part is reflected and a small part tunnels through.}
+\end{figure}
+\fi
 
 \end{document}
