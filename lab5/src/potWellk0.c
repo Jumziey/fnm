@@ -91,8 +91,6 @@ initialize_wf(const parameters p, const int argc, char** const argv, double comp
 				fprintf(stderr, "we shouldnt be here\n");
 		}
 	}
-	fp = fopen("potWellk0.dat", "w");
-	fclose(fp);
 	
 	for(i=0; i<p.nx; i++)
 		psi[i] = pow(1/(M_PI*s0*s0),0.25) * cexp(I*k0*p.x[i])*cexp(-pow((p.x[i]-x0),2)/(2*s0*s0));		
