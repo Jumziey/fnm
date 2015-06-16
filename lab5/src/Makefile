@@ -22,5 +22,8 @@ potWellWavek0: wavepacket.o potWellk0.o
 	
 squareBarrWave:	wavepacket.o squareBarr.o
 	$(CC) -o squareBarrWave $^ $(LDLIBS)
+	
+clean:
+	rm *.o squareBarrWave potWellWavek0 potWellWave freeEvoWave
 
 
