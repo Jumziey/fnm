@@ -5,8 +5,8 @@
 \newif\iftikz
 \tikztrue
 
-
 \begin{document}
+
 \section{Free Evolution}
 \subsection{Selection of Time Step}
 In order to find the biggest possible time steps we could use we simply started with reducing increasing the timestep until it we saw significant error. But we went so far that the the time step got so large that it went through the solution space ($x=[0,1]$) after just a few steps. Thus the smallest time step we used was  $3.45\cdot 10^{-4}$. The smallest spacial step we used before the solution started to get jaggy was $0.01$. Since the solution took such a small time to solve for we will use significantly smaller time steps and spacial time steps for the rest of the exercises, such a solution is given as an example in figure \ref{fig:smallError}.
