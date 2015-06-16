@@ -17,6 +17,9 @@ freeEvoWave:	wavepacket.o freeEvo.o
 potWellWave:	wavepacket.o potWell.o
 	$(CC) -o potWellWave $^ $(LDLIBS)
 	
+potWellWavek0: wavepacket.o potWellk0.o
+	$(CC) -o potWellWavek0 $^ $(LDLIBS)
+	
 squareBarrWave:	wavepacket.o squareBarr.o
 	$(CC) -o squareBarrWave $^ $(LDLIBS)
 

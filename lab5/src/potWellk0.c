@@ -2,8 +2,12 @@
 #include <complex.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <getopt.h>
 #include <gsl/gsl_math.h> //LAZY!
 #include "wavepacket.h"
+
+double k0;
 
 void
 initialize_potential (const parameters params, const int argv, char ** const argc){}
@@ -37,10 +41,13 @@ user_observe(const parameters p, const double t, const double complex * const ps
 	T *= dx;
 	R *= dx;
 	
-	//Write down data
-	fp = fopen("potWellk0.dat", "a");
-	fprintf(fp,"%g %g %g\n", t, R,T);
-	fclose(fp);
+	if((fabs(t - 0.0011))<1e-12) {
+		//Write down data
+		fp = fopen("potWellk0.dat", "a");
+		fprintf(fp,"%g %g %g\n", k0, T, R);
+		fclose(fp);
+		fprintf(stderr,"####################################WRITING\n");
+	}
 }
 
 void
@@ -60,12 +67,32 @@ potential(const parameters p, const double t, double* const pot)
 }
 
 void
-initialize_wf(const parameters p, const int argv, char** const argc, double complex *psi)
+initialize_wf(const parameters p, const int argc, char** const argv, double complex *psi)
 {
-	int i;
-	double k0 = 200;
+	int i, opt;
+	char* check;
+	FILE* fp;
+
 	double x0 = 1.0/4.0;
 	double s0 = 1.0/40.0;
+	
+	
+		while((opt=getopt(argc,argv,"k:")) != -1) {
+		switch(opt) {
+			case 'k':
+				optarg++;//Removing equal sign
+				k0 = strtol(optarg,&check,10);
+				if(*check != '\0')
+					fprintf(stderr,"only take integers as argument to k\n");
+				break;
+			case '?':
+				continue;
+			default:
+				fprintf(stderr, "we shouldnt be here\n");
+		}
+	}
+	fp = fopen("potWellk0.dat", "w");
+	fclose(fp);
 	
 	for(i=0; i<p.nx; i++)
 		psi[i] = pow(1/(M_PI*s0*s0),0.25) * cexp(I*k0*p.x[i])*cexp(-pow((p.x[i]-x0),2)/(2*s0*s0));		
