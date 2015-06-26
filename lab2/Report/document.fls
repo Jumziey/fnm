@@ -1,4 +1,4 @@
-PWD /home/frost/Documents/jesper/fnm/lab2/Report
+PWD /home/jumzi/Documents/edu/fnm/lab2/Report
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
@@ -9,6 +9,7 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
+INPUT /usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT report.sty
 INPUT report.sty
@@ -173,6 +174,11 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/translator.sty
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/translator.sty
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/translator.sty
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/translator-language-mappings.tex
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/translator-language-mappings.tex
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
@@ -367,6 +373,8 @@ INPUT /usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/dicts/translator-basic-dictionary/translator-basic-dictionary-English.dict
+INPUT /usr/share/texmf/tex/latex/beamer/base/translator/dicts/translator-basic-dictionary/translator-basic-dictionary-English.dict
 INPUT /usr/share/texlive/texmf-dist/tex/latex/siunitx/config/siunitx-abbreviations.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/siunitx/config/siunitx-abbreviations.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty

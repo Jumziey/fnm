@@ -8,8 +8,8 @@
 #include <gsl/gsl_odeiv2.h>
 #include "top.h"
 
-const double epsrel = 1E-12;
-const double epsabs = 1E-8;
+const double epsrel = 1E-14;
+const double epsabs = 1E-10;
 
 //System Constants
 typedef struct par {
@@ -145,18 +145,20 @@ topJac(double time, const double v[], double *dfdv, double *dfdt, void *params)
 void
 spin(double *v, double h, double t, double tEnd, double res, par *p, char* file, 
 	int (*func)(double,const double*,double*,void*),
-	int (*jac) (double,const double*,double*,double*,void*)) 
+	int (*jac) (double,const double*,double*,double*,void*), double energy) 
 {
 	int status,i,steps;
-	double  verr[6],tMeas, energy, eDiff, c, s;
+	double  verr[6],tMeas, eDiff;
 	gsl_odeiv2_system sys = {func, jac, 6, p};
-	gsl_odeiv2_step *stepMem = gsl_odeiv2_step_alloc(gsl_odeiv2_step_rkf45, 6);
+	gsl_odeiv2_step *stepMem = gsl_odeiv2_step_alloc(gsl_odeiv2_step_bsimp, 6);
 	
 	//Constants
 	double i1 = p->i1;
 	double i3 = p->i3;
 	double mgl = p->mgl;
-	
+	double c = cos(v[2]), s = sin(v[2]);
+
+		
 	//Lets run simulation
 	FILE *fp;
 	fp = fopen(file,"w");
@@ -169,7 +171,9 @@ spin(double *v, double h, double t, double tEnd, double res, par *p, char* file,
 			break;
 		}
 		if(fabs(tMeas) > res) {
-			fprintf(fp,"%.6f %.6f %.6f\n", v[0], v[1], v[2]);
+			c = cos(v[2]); s = sin(v[2]);
+			eDiff = energy - (pow(v[5],2)/(2*i1) + pow((v[3]-v[4]*c),2)/(2*i1*pow(s,2)) + pow(v[4],2)/(2*i3) + mgl*c);
+			fprintf(fp,"%.8f %.8f %.8f %e %e %e \n", v[0], v[1], v[2], v[3], v[4], eDiff);
 			tMeas = 0;
 		}
 		tMeas = tMeas+h;
@@ -202,17 +206,20 @@ main()
 		F.params = NULL;
 		gsl_integration_qags(&F, 0, 5, epsabs, epsrel, limit, w, &consts[i] , &abserr);
 	}
-	//M, Ml, i1, i3
-	p.mgl = consts[1]*982;
+	//Mgl, i1, i3
+	p.mgl = consts[1]*9.82;
 	p.i1 = consts[2];
 	p.i3 = consts[3];
 
 	//Here we run the simulation
-	double v[] = {0.0, 0.0, M_PI/9, p.i3*20*M_PI*cos(M_PI/9), p.i3*20*M_PI, 0.0};
-	double h = 1e-4;
+	//double v[] = {0.0, 0.0, M_PI/9, p.i3*20*M_PI*cos(M_PI/9), p.i3*20*M_PI, 0.0};
+	double v[] = {0.0, 0.0, M_PI/9, p.i3*cos(M_PI/9)*20*M_PI, p.i3*20*M_PI, 0.0};
+	double c = cos(v[2]), s = sin(v[2]);
+	double energy = pow(v[5],2)/(2*p.i1) + pow((v[3]-v[4]*c),2)/(2*p.i1*pow(s,2)) + pow(v[4],2)/(2*p.i3) + p.mgl*c;
+	double h = 1e-5;
 	double res = 2e-3;
-	spin(v, h, 0, 4, res, &p,"./plots/data/forwardData", &topHam, &topJac);
-	spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topHam, &topJac);
+	spin(v, h, 0, 4, res, &p,"./plots/data/forwardData", &topHam, &topJac, energy);
+	spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topHam, &topJac, energy);
 
 	return 0;
 }

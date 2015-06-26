@@ -1,7 +1,7 @@
 close all; clear all;
 prob = {'potWell'};
 parameters = {'potWell'};
-savePlot = true;
+savePlot = false;
 
 pw = 1;
 plotWindows = 2;
@@ -20,6 +20,7 @@ for para=parameters
 	potWellStart = ceil(nx/2)-hwp;
 	potWellEnd = ceil(nx/2)+hwp;
 
+%{
 	cd ../..
 	[status, cmdout] = system(sprintf('./%sWave parameters/%s',char(prob),char(para)));
 	cd plots/code
@@ -27,6 +28,7 @@ for para=parameters
 		disp(cmdout)
 		return;
 	end
+%}
 
 	%Get ce data
 	A = importdata('../../wavefunc.dat',' ',1);

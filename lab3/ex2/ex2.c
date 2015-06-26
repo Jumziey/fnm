@@ -91,10 +91,10 @@ topLagrange(double time, const double v[], double d[], void *params)
 
 void
 spin(double *v, double h, double t, double tEnd, double res, par *p, char* file, 
-	int (*func)(double,const double*,double*,void*)) 
+	int (*func)(double,const double*,double*,void*), double energy) 
 {
 	int status,i,steps;
-	double k[2], verr[6], kDiff[2],tMeas, energy, eDiff, c, s;
+	double k[2], verr[6], kDiff[2],tMeas, eDiff, c, s;
 	gsl_odeiv2_system sys = {func, NULL, 6, p};
 	gsl_odeiv2_step *stepMem = gsl_odeiv2_step_alloc(gsl_odeiv2_step_rkf45, 6);
 	
@@ -105,7 +105,6 @@ spin(double *v, double h, double t, double tEnd, double res, par *p, char* file,
 	s = sin(v[2]);c = cos(v[2]);
 	k[0] = i1*v[3]*pow(s,2) + i3*(v[4]+v[3]*c)*c;
 	k[1] = i3*(v[4]+v[3]*c);
-	energy =  (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + mgl*c);
 	
 	//Lets run simulation
 	FILE *fp;
@@ -163,10 +162,17 @@ main()
 
 	//Here we run the simulation
 	double v[] = {0.0, 0.0, M_PI/9, 0.0, 20*M_PI, 0.0};
-	double h = 1e-4;
+	//Constants
+	double i1 = p.i1;
+	double i3 = p.i3;
+	double mgl = p.mgl;
+	double s = sin(v[2]);double c = cos(v[2]);
+	double energy =  (i1/2 * (pow(v[5],2) + pow(v[3]*s,2)) + i3/2 * pow((v[4] + v[3]*c),2) + mgl*c);
+	
+	double h = 1e-5;
 	double res = 2e-3;
-	spin(v, h, 0, 4, res, &p,"./plots/data/forwardData", &topLagrange);
-	spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topLagrange);
+	spin(v, h, 0, 4, res, &p,"./plots/data/forwardData", &topLagrange, energy);
+	spin(v, -h, 4, 0, res, &p,"./plots/data/backwardData", &topLagrange, energy);
 
 	return 0;
 }

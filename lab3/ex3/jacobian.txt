@@ -1,0 +1,14 @@
+J_{33} &=P_{\psi}^2/I_1 - mgl  \cos{\theta} + (P_{\phi} - P_{\psi}  \cos{\theta})^2/(I_1  \sin{\theta}^2) + \\
+       &(3  \cos{\theta}^2 (P_{\phi} - P_{\psi}  \cos{\theta})^2)/(I_1  \sin{\theta}^4) - \\
+       &(3 P_{\psi}  \cos{\theta} (P_{\phi} - P_{\psi}  \cos{\theta}))/(I_1  \sin{\theta}^2) \\
+J_{34} &=P_{\psi}/(I_1  \sin{\theta}) - ( \cos{\theta} (2 P_{\phi} - 2 P_{\psi}  \cos{\theta}))/(I_1  \sin{\theta}^3) \\
+J_{35} &=(P_{\phi} - P_{\psi}  \cos{\theta})/(I_1  \sin{\theta}) - (P_{\psi}  \cos{\theta})/(I_1  \sin{\theta}) + \\
+       &(2  \cos{\theta}^2 (P_{\phi} - P_{\psi}  \cos{\theta}))/(I_1  \sin{\theta}^3) \\
+J_{43} &=P_{\psi}/(I_1  \sin{\theta}) - ( \cos{\theta} (2 P_{\phi} - 2 P_{\psi}  \cos{\theta}))/(I_1  \sin{\theta}^3) \\
+J_{44} &=1/(I_1  \sin{\theta}^2) \\
+J_{45} &=- \cos{\theta}/(I_1  \sin{\theta}^2) \\
+J_{53} &=(P_{\phi} - P_{\psi}  \cos{\theta})/(I_1  \sin{\theta}) - (P_{\psi}  \cos{\theta})/(I_1  \sin{\theta}) + \\
+       &(2  \cos{\theta}^2 (P_{\phi} - P_{\psi}  \cos{\theta}))/(I_1  \sin{\theta}^3) \\
+J_{54} &=- \cos{\theta}/(I_1  \sin{\theta}^2) \\
+J_{55} &=1/I_3 +  \cos{\theta}^2/(I_1  \sin{\theta}^2) \\
+J_{66} &=1/I_1
