@@ -9,7 +9,7 @@
 
 \section{Free Evolution}
 \subsection{Selection of Time Step}
-In order to find the biggest possible time steps we could use we simply started with reducing increasing the timestep until it we saw significant error. But we went so far that the the time step got so large that it went through the solution space ($x=[0,1]$) after just a few steps. Thus the smallest time step we used was  $3.45\cdot 10^{-4}$. The smallest spacial step we used before the solution started to get jaggy was $0.01$. Since the solution took such a small time to solve for we will use significantly smaller time steps and spacial time steps for the rest of the exercises, such a solution is given as an example in figure \ref{fig:smallError}.
+In order to find the biggest possible time steps we could use we simply started with reducing increasing the timestep until it we saw significant error. But we went so far that the the time step got so large that it went through the solution space ($x=[0,1]$) after just a few steps. Thus the smallest time step we used was  $3.45\cdot 10^{-4}$. The smallest spacial step we used before the solution started to get jaggy was $0.01$. Since the solution took such a small time to solve for we will use significantly smaller time steps and spacial time steps for the rest of the exercises, such a solution is given as an example in figure \ref{fig:smallError}. In order to look at what $k_0$ to use wee looked at
 
 \iftikz
 \begin{figure}[H]
@@ -77,8 +77,7 @@ looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior
 \end{figure}
 \fi
 \section{Potential Well}
-We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part of the wavefunction is reflected by it, while a large part goes trough it.
-\iftikz
+We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part of the wavefunction is reflected by it, while a large part goes trough it. Here we had to change the time step to $1\cdot10^{-7}$ in order to get a smooth plot. 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.9\linewidth}
@@ -100,27 +99,25 @@ We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part o
 \end{figure}
 \fi
 \section{Square Barrier}
-In figure \ref{fig:squareBarrTR} we can see the effect of the square barrier on the wave function. After the wave function hits the square barrier part of it is trapped a while before a large part is reflected and a small part tunnels trough. 
-\iftikz
+In figure \ref{fig:squareBarrTR} we can see the effect of the square barrier on the wave function. After the wave function hits the square barrier part of it is trapped a while before a large part is reflected and a small part tunnels trough. Here we also had the timestep on $1\cdot10^{-7}$
+
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
-		\setlength\figurewidth{.9\linewidth}
-		\input{../src/plots/squareBarrPlot.tikz}
+		\includegraphics[width=1\textwidth]{../src/plots/squareBarrPlot.png}
 		\caption{The numerical solution of $|\psi_n(x,t)|^2$ after it has hit the square barrier.}
 		\label{fig:squareBarrfPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
 		\setlength\figureheight{.5\linewidth} 
 		\setlength\figurewidth{.9\linewidth}
-		\input{../src/plots/squareBarrTR.tikz}
+		\includegraphics[width=1\textwidth]{../src/plots/squareBarrTR.png}
 		\caption{Here we clearly see the transmission and reflection before and after the wave function hits the square barrier.}
 		\label{fig:squareBarrTR}
 	\end{subfigure}
 	\label{fig:squareBarr}
 	\caption{Here we depict the effect of the wave function hitting the square barrier. Note in figure \ref{fig:squareBarrTR} how a certain part of the wave function is trapped inside for while before a large part is reflected and a small part tunnels through.}
 \end{figure}
-\fi
+
 
 \end{document}

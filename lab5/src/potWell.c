@@ -38,7 +38,7 @@ user_observe(const parameters p, const double t, const double complex * const ps
 	R *= dx;
 	
 	//Write down data
-	fp = fopen("potWellk0.dat", "a");
+	fp = fopen("potWell.dat", "a");
 	fprintf(fp,"%g %g %g\n", t, R,T);
 	fclose(fp);
 }

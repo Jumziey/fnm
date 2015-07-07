@@ -15,7 +15,7 @@ initialize_potential (const parameters params, const int argv, char ** const arg
 void
 initialize_user_observe (const parameters params, const int argc, char ** const argv)
 {
-	FILE* fp = fopen("potWell.dat","w+");
+	FILE* fp = fopen("potWellk0.dat","w+");
 	fclose(fp);
 }
 
