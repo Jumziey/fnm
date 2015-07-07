@@ -13,11 +13,7 @@ void
 initialize_potential (const parameters params, const int argv, char ** const argc){}
 
 void
-initialize_user_observe (const parameters params, const int argc, char ** const argv)
-{
-	FILE* fp = fopen("potWellk0.dat","w+");
-	fclose(fp);
-}
+initialize_user_observe (const parameters params, const int argc, char ** const argv){}
 
 void
 user_observe(const parameters p, const double t, const double complex * const psi)
