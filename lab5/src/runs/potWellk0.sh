@@ -3,10 +3,10 @@
 cd ..
 for k in {150..300}
 do
-	runfile="potWellk0_$k"
-	tail -n +2 parameters/potWellk0 > parameters/$runfile
-	echo "wf_output_text =wavefunc_potWellk0_$k.dat" >> parameters/$runfile
-	command="./potWellWavek0 parameters/$runfile -k=$k"
+	runfile="parameters/potWellk0_$k"
+	tail -n +2 parameters/potWellk0 > $runfile
+	echo "wf_output_text =wavefunc_potWellk0_$k.dat" >> $runfile
+	command="./potWellWavek0 $runfile -k=$k"
 	echo $command
 	eval $command
 done

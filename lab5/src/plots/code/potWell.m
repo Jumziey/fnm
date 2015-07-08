@@ -1,7 +1,7 @@
 close all; clear all;
 prob = {'potWell'};
 parameters = {'potWell'};
-savePlot = true;
+savePlot = false;
 
 pw = 1;
 plotWindows = 2;
