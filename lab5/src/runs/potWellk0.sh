@@ -12,5 +12,5 @@ do
 	echo "nt =$nt" >> $runfile
 	command="./potWellWavek0 $runfile -k=$k"
 	echo $command
-	#eval $command
+	eval $command
 done
