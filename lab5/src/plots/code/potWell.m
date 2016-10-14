@@ -1,7 +1,8 @@
-close all; clear all;
+clear all; close all;
 prob = {'potWell'};
+
 parameters = {'potWell'};
-savePlot = false;
+savePlot = true;
 
 pw = 1;
 plotWindows = 2;
@@ -14,7 +15,7 @@ for para=parameters
 	nx = p.data(5);
 	dt = p.data(6);
 	nt = p.data(7);
-	
+
 	width = 0.032;
 	hwp = ceil((width/((x_max-x_min)/nx))/2);
 	potWellStart = ceil(nx/2)-hwp;
@@ -33,24 +34,23 @@ for para=parameters
 	legend('|\psi_n(x,t)|^2', 'imag(\psi_n(x,t))','Potential Well', 'Location', 'northwest')
 	title('Numerical Solution with a Potential Well')
 	xlabel('Position')
-	
+
 	if savePlot == true
-		filename = sprintf('../%sPlot.tikz',char(para));
+		filename = sprintf('../%sPlot.tikz',char(prob));
 		matlab2tikz(filename, 'parseStrings', true,'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['title style={font=\small},' 'ticklabel style={font=\tiny}']);
 	end
-	
+
 	figure(pw+1)
-	tr = load(sprintf('../../%s.dat',char(prob)));
+	tr = load(sprintf('../../%s.dat',char(para)));
 	plot(tr(:,1),tr(:,2))
 	hold on
 	plot(tr(:,1),tr(:,3))
 	legend('Reflection', 'Transmission', 'Location','west')
-	
+
 	if savePlot == true
 		filename = sprintf('../%sTR.tikz',char(para));
 		matlab2tikz(filename, 'parseStrings', true,'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['title style={font=\small},' 'ticklabel style={font=\tiny}']);
 	end
-	
+
 	pw = pw+plotWindows;
 end
-

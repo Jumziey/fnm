@@ -15,14 +15,13 @@ for para=parameters
 	plot(k0,T)
 	hold on
 	plot(k0,R)
-	legend('Transmission After Well', 'Reflection At Well', 'Location', 'east')
+	legend('Transmission', 'Reflection', 'Location', 'east')
 	title('T/R Vs k0')
 	xlabel('k0')
 	ylabel('Reflection/Transmission Magnitude')
-	
+
 	if savePlot == true
 		filename = sprintf('../%sPlot.tikz',char(para));
 		matlab2tikz(filename, 'parseStrings', true,'height', '\figureheight', 'width', '\figurewidth', 'extraaxisoptions',['title style={font=\small},' 'ticklabel style={font=\tiny}']);
 	end
 end
-

@@ -1,12 +1,13 @@
 \documentclass[11pt]{article}
 \usepackage{report}
-\newlength\figureheight 
+\newlength\figureheight
 \newlength\figurewidth
 \newif\iftikz
 \tikztrue
 
 \begin{document}
 
+\newpage
 \section{Free Evolution}
 \subsection{Selection of Time Step}
 In order to find the biggest possible time steps we could use we simply started with reducing increasing the timestep until it we saw significant error. But we went so far that the the time step got so large that it went through the solution space ($x=[0,1]$) after just a few steps. Thus the smallest time step we used was  $3.45\cdot 10^{-4}$. The smallest spacial step we used before the solution started to get jaggy was $0.01$. Since the solution took such a small time to solve for we will use significantly smaller time steps and spacial time steps for the rest of the exercises, such a solution is given as an example in figure \ref{fig:smallError}. In order to look at what $k_0$ to use wee looked at
@@ -15,14 +16,14 @@ In order to find the biggest possible time steps we could use we simply started 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/biggestStepPlot.tikz}
 		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
 		\label{fig:biggestStepPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/biggestStepError.tikz}
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
@@ -36,14 +37,14 @@ In order to find the biggest possible time steps we could use we simply started 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/smallErrorPlot.tikz}
 		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
 		\label{fig:smallErrorPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/smallErrorError.tikz}
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
@@ -53,20 +54,22 @@ In order to find the biggest possible time steps we could use we simply started 
 	\label{fig:smallError}
 \end{figure}
 \fi
+
+\newpage
 \subsection{Behavior at the end of the Solution Space}
 looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior of the numerical solution. This is in a stark contrast against the numerical solution. This probably lies in the fast fourier transform package used. This because the discrete fourier transform can only be done on periodic problems. Thus as soon we are outside of our spacial solutions space of $x=[0,1]$ we will get significant error. This is highlighted in figure \ref{fig:periodicInfError}.
 \iftikz
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/periodicInfPlot.tikz}
 		\caption{The numerical solution ($\psi_n$) plotted against the analytical solution ($\psi_a$).}
 		\label{fig:periodicInfPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/periodicInfError.tikz}
 		\caption{The error is defined as the difference between the analytical solution and numerical solution.}
@@ -76,19 +79,21 @@ looking at figure \ref{fig:periodicInf} we can clearly see the periodic behavior
 	\caption{The numerical and analytical solution as it passes its solution space of $x=[0,1]$. One can clearly see in figure \ref{fig:periodicInfPlot} that the numerical solution is periodic. The error caused by this is highlighted in figure \ref{fig:periodicInfError}}
 \end{figure}
 \fi
+
+\newpage
 \section{Potential Well}
-We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part of the wavefunction is reflected by it, while a large part goes trough it. Here we had to change the time step to $1\cdot10^{-7}$ in order to get a smooth plot. 
+We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part of the wavefunction is reflected by it, while a large part goes trough it. Here we had to change the time step to $1\cdot10^{-7}$ in order to get a smooth plot.
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/potWellPlot.tikz}
 		\caption{The numerical solution of $|\psi_n(x,t)|^2$ after it has hit the potential well.}
 		\label{fig:potWellfPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\input{../src/plots/potWellTR.tikz}
 		\caption{Here we clearly see the transmission and reflection before and after the wave function hits the potential well.}
@@ -98,6 +103,7 @@ We can see in figure \ref{fig:potWell} the effect of a potential barrier. Part o
 	\caption{Here we depict the effect of the wave function hitting the potential well.}
 \end{figure}
 
+\newpage
 \section{Square Barrier}
 In figure \ref{fig:squareBarrTR} we can see the effect of the square barrier on the wave function. After the wave function hits the square barrier part of it is trapped a while before a large part is reflected and a small part tunnels trough. Here we also had the timestep on $1\cdot10^{-7}$
 
@@ -109,7 +115,7 @@ In figure \ref{fig:squareBarrTR} we can see the effect of the square barrier on 
 		\label{fig:squareBarrfPlot}
 	\end{subfigure}
 	\begin{subfigure}{.9\linewidth}
-		\setlength\figureheight{.5\linewidth} 
+		\setlength\figureheight{.5\linewidth}
 		\setlength\figurewidth{.9\linewidth}
 		\includegraphics[width=1\textwidth]{../src/plots/squareBarrTR.png}
 		\caption{Here we clearly see the transmission and reflection before and after the wave function hits the square barrier.}
@@ -117,6 +123,18 @@ In figure \ref{fig:squareBarrTR} we can see the effect of the square barrier on 
 	\end{subfigure}
 	\label{fig:squareBarr}
 	\caption{Here we depict the effect of the wave function hitting the square barrier. Note in figure \ref{fig:squareBarrTR} how a certain part of the wave function is trapped inside for while before a large part is reflected and a small part tunnels through.}
+\end{figure}
+
+
+\section{The effect of changing $k_0$}
+In figure \ref{fig:k0} we can se how the constant $k_0$ affect the transmission and reflection of the wave function. It's clear that with a larger $k_0$ the transmission seem to approach nil while thee the reflection then of course are approaching total reflection.
+\begin{figure}[H]
+	\centering
+	\setlength\figureheight{.5\linewidth}
+	\setlength\figurewidth{.9\linewidth}
+	\input{../src/plots/trvk0Plot.tikz}
+	\caption{The reflektion and transmission through the potential well depending on the value of $k_0$}
+	\label{fig:k0}
 \end{figure}
 
 
